@@ -9,4 +9,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="heading_my_feed">My Feed</string>
+    <string name="heading_bills">Bills</string>
+    <string name="heading_committees">Committees</string>
+    <string name="heading_members">Members</string>
+    <string name="todo">TODO</string>
 </resources>

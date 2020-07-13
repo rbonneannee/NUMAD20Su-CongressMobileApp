@@ -1,36 +1,61 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.os.Bundle;
-
-import com.cs5520.numad20su_congressmobile.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
-
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.cs5520.numad20su_congressmobile.R;
+import com.cs5520.numad20su_congressmobile.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // Create the adapter that will return a fragment for each section
+        FragmentPagerAdapter mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(),
+                FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+            private final Fragment[] mFragments = new Fragment[]{
+                    new MyFeedFragment(),
+                    new BillsFragment(),
+                    new CommitteesFragment(),
+                    new MembersFragment()
+            };
+            private final String[] mFragmentNames = new String[]{
+                    getString(R.string.heading_my_feed),
+                    getString(R.string.heading_bills),
+                    getString(R.string.heading_committees),
+                    getString(R.string.heading_members),
+            };
+
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public Fragment getItem(int position) {
+                return mFragments[position];
             }
-        });
+
+            @Override
+            public int getCount() {
+                return mFragments.length;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mFragmentNames[position];
+            }
+        };
+
+        // Set up the ViewPager with the sections adapter.
+        binding.container.setAdapter(mPagerAdapter);
+        binding.tabs.setupWithViewPager(binding.container);
     }
 
     @Override
