@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.controllers.dummy.DummyContent.DummyItem;
+import com.cs5520.numad20su_congressmobile.content.DummyItem;
 
 import java.util.List;
 

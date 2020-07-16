@@ -1,8 +1,4 @@
-package com.cs5520.numad20su_congressmobile.database;
-
-import android.widget.ArrayAdapter;
-
-import org.json.JSONArray;
+package com.cs5520.numad20su_congressmobile.models;
 
 import java.util.ArrayList;
 import java.util.Date;

@@ -77,5 +77,6 @@ fabric.properties
 google-services.json
 
 # Gradle
+build/**
 .gradle/**
 local.properties

@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.controllers.dummy.DummyContent;
+import com.cs5520.numad20su_congressmobile.content.DummyContent;
 
 /**
  * A fragment representing a list of Items.

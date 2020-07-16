@@ -1,24 +1,26 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.content.Context;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.controllers.dummy.DummyContent;
+import com.cs5520.numad20su_congressmobile.content.DummyBillContent;
+import com.cs5520.numad20su_congressmobile.content.DummyContent;
+import com.cs5520.numad20su_congressmobile.network.DownloadCallback;
 
 /**
  * A fragment representing a list of Items.
  */
-public class BillsFragment extends Fragment {
+public class BillsFragment extends Fragment implements DownloadCallback {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -65,8 +67,29 @@ public class BillsFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new BillsRecyclerViewAdapter(DummyContent.ITEMS));
+            recyclerView.setAdapter(new BillsRecyclerViewAdapter(DummyBillContent.BILLS));
         }
         return view;
+    }
+
+    @Override
+    public void updateFromDownload(String result) {
+        // TODO
+    }
+
+    @Override
+    public NetworkInfo getActiveNetworkInfo() {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public void onProgressUpdate(int progressCode, int percentComplete) {
+        // TODO
+    }
+
+    @Override
+    public void finishDownloading() {
+        // TODO
     }
 }

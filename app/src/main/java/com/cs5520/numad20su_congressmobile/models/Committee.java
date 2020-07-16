@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.database;
+package com.cs5520.numad20su_congressmobile.models;
 
 import org.json.JSONArray;
 

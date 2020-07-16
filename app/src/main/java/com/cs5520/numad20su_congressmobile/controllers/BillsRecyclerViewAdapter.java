@@ -1,14 +1,16 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.controllers.dummy.DummyContent.DummyItem;
+import com.cs5520.numad20su_congressmobile.content.DummyItem;
+import com.cs5520.numad20su_congressmobile.models.Bill;
 
 import java.util.List;
 
@@ -18,12 +20,13 @@ import java.util.List;
  */
 public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Bill> mValues;
 
-    public BillsRecyclerViewAdapter(List<DummyItem> items) {
+    public BillsRecyclerViewAdapter(List<Bill> items) {
         mValues = items;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -34,8 +37,8 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).billId);
+        holder.mContentView.setText(mValues.get(position).summary);
     }
 
     @Override
@@ -43,19 +46,20 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Bill mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.content);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";

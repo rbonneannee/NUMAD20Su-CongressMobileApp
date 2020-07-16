@@ -1,20 +1,18 @@
-package com.cs5520.numad20su_congressmobile.database;
+package com.cs5520.numad20su_congressmobile.models;
 
 import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Dictionary;
 
 /**
  * https://projects.propublica.org/api-docs/congress-api/bills/#get-a-specific-bill
  * https://projects.propublica.org/api-docs/congress-api/bills/#get-subjects-for-a-specific-bill
- *
  */
 public class Bill {
 
     // ACCESS GIVEN BY 'GET A SPECIFIC BILL'
-    private String billId;
+    public String billId; // TODO Change access modifiers appropriately
     private String billType;
     private String number;
     private String billUri;
@@ -47,7 +45,7 @@ public class Bill {
     private Date housePassageVote;
     private Date senatePassageVote;
 
-    private String summary;
+    public String summary; // TODO Change access modifiers appropriately
     private String summaryShort;
     private JSONArray actions;
 
@@ -72,8 +70,10 @@ public class Bill {
 //    private JSONArray versions
 
 
-
-
-
-
+    // TODO Use GSON to parse a JSON string to create Bill objects
+    public Bill(String billId, String billType, String summary) {
+        this.billId = billId;
+        this.billType = billType;
+        this.summary = summary;
+    }
 }
