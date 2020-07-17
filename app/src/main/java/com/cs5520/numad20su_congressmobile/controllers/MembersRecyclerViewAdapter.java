@@ -27,7 +27,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_members, parent, false);
+                .inflate(R.layout.list_item_members, parent, false);
         return new ViewHolder(view);
     }
 

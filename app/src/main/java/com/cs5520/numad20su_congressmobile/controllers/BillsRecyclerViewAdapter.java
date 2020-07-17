@@ -9,60 +9,56 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.DummyItem;
 import com.cs5520.numad20su_congressmobile.models.Bill;
 
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Bill> mValues;
+    private List<Bill> items;
 
     public BillsRecyclerViewAdapter(List<Bill> items) {
-        mValues = items;
+        this.items = items;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_bills, parent, false);
+                .inflate(R.layout.list_item_bills, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).billId);
-        holder.mContentView.setText(mValues.get(position).summary);
+        holder.bill = items.get(position);
+        holder.idView.setText(items.get(position).bill_id);
+        holder.contentView.setText(items.get(position).title);
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return items.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public Bill mItem;
+        public final View view;
+        public final TextView idView;
+        public final TextView contentView;
+        public Bill bill;
 
         public ViewHolder(View view) {
             super(view);
-            mView = view;
-            mIdView = view.findViewById(R.id.item_number);
-            mContentView = view.findViewById(R.id.content);
+            this.view = view;
+            idView = view.findViewById(R.id.item_number);
+            contentView = view.findViewById(R.id.content);
         }
 
         @NonNull
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + contentView.getText() + "'";
         }
     }
+
 }

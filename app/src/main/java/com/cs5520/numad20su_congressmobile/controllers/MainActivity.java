@@ -1,6 +1,7 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,8 @@ import com.cs5520.numad20su_congressmobile.databinding.ActivityMainBinding;
 // TODO     i.e. Only use the UI thread for UI
 // TODO Respond to clicks of actions in action bar
 // TODO Put in a working search bar
-
+// TODO Cancel requests onSwipe for the ViewPager so as not to hold up other tabs
+// TODO     See "Cancel a request" at https://developer.android.com/training/volley/simple
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";

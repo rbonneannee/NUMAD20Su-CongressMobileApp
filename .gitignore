@@ -80,3 +80,6 @@ google-services.json
 build/**
 .gradle/**
 local.properties
+
+# Secret
+secret/**

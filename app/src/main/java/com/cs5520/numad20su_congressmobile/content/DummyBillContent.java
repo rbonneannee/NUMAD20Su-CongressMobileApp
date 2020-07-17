@@ -36,7 +36,7 @@ public class DummyBillContent {
 
     private static void addItem(Bill bill) {
         BILLS.add(bill);
-        ITEM_MAP.put(bill.billId, bill);
+        ITEM_MAP.put(bill.bill_id, bill);
     }
 
     private static Bill createDummyItem(int position) {

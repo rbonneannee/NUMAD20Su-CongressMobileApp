@@ -11,43 +11,46 @@ import java.util.Date;
  */
 public class Bill {
 
-    // ACCESS GIVEN BY 'GET A SPECIFIC BILL'
-    public String billId; // TODO Change access modifiers appropriately
-    private String billType;
-    private String number;
-    private String billUri;
-    private String title;
-    private String shortTitle;
+    // TODO Change access modifiers as appropriate
+    // TODO Make getter/setter methods so that this works with Firebase Realtime Database
 
-    private String sponsorId;
-    private String congressDotGovUrl;
-    private String introducedDate;
-    private boolean active;
+    // ACCESS GIVEN BY 'GET A SPECIFIC BILL'
+    public String bill_id; // TODO Change access modifiers appropriately
+    public String bill_type;
+    public String number;
+    public String billUri;
+    public String title;
+    public String shortTitle;
+
+    public String sponsorId;
+    public String congressDotGovUrl;
+    public String introducedDate;
+    public boolean active;
 
     // Dates
-    private Date lastVote;
-    private Date housePassage;
-    private Date senatePassage;
-    private Date enacted;
-    private Date vetoed;
+    public Date lastVote;
+    public Date housePassage;
+    public Date senatePassage;
+    public Date enacted;
+    public Date vetoed;
 
-    private Integer cosponsors;
-    private JSONArray cosponsorsByParty;
-    private Integer withdrawnCosponsors;
+    public Integer cosponsors;
+    public JSONArray cosponsorsByParty;
+    public Integer withdrawnCosponsors;
 
-    private String primarySubject;
-    private String committees;
-    private ArrayList<String> committeeCodes;
-    private ArrayList<String> subcommitteeCodes;
+    public String primarySubject;
+    public String committees;
+    public ArrayList<String> committeeCodes;
+    public ArrayList<String> subcommitteeCodes;
 
-    private Date latestMajorActionDate;
-    private String getLatestMajorAction;
-    private Date housePassageVote;
-    private Date senatePassageVote;
+    public Date latestMajorActionDate;
+    public String getLatestMajorAction;
+    public Date housePassageVote;
+    public Date senatePassageVote;
 
     public String summary; // TODO Change access modifiers appropriately
-    private String summaryShort;
-    private JSONArray actions;
+    public  String summaryShort;
+    public  JSONArray actions;
 
     // FIELDS WHOSE TYPE IS UNKNOWN
     // array "votes"
@@ -57,23 +60,23 @@ public class Bill {
 
 
 //  EXCLUDED FIELDS
-//    private String billSlug;
-//    private String congress;
-//    private String bill;
-//    private String sponsorTitle;
-//    private String sponsor;
-//    private String sponsorUri;
-//    private String sponsorParty;
-//    private String sponsorState;
-//    private String gpoPdfUri;
-//    private String govTrackUrl;
-//    private JSONArray versions
+//    public String billSlug;
+//    public String congress;
+//    public String bill;
+//    public String sponsorTitle;
+//    public String sponsor;
+//    public String sponsorUri;
+//    public String sponsorParty;
+//    public String sponsorState;
+//    public String gpoPdfUri;
+//    public String govTrackUrl;
+//    public JSONArray versions
 
 
     // TODO Use GSON to parse a JSON string to create Bill objects
     public Bill(String billId, String billType, String summary) {
-        this.billId = billId;
-        this.billType = billType;
+        this.bill_id = billId;
+        this.bill_type = billType;
         this.summary = summary;
     }
 }

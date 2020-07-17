@@ -54,7 +54,7 @@ public class MyFeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_feed_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_feed, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
