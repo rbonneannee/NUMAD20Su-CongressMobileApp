@@ -1,7 +1,6 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.databinding.ActivityMainBinding;
 
-// TODO Figure out how to cache files locally to avoid redundant requests
-// TODO     https://developer.android.com/training/efficient-downloads/redundant_redundant
-// TODO Make sure to use threading where needed (HTTP requests, database transactions, etc.)
-// TODO     i.e. Only use the UI thread for UI
+// TODO For each tab, grab content for both House and Senate
 // TODO Respond to clicks of actions in action bar
 // TODO Put in a working search bar
 // TODO Cancel requests onSwipe for the ViewPager so as not to hold up other tabs

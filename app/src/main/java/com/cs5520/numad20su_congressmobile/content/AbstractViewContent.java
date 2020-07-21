@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -11,7 +12,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.cs5520.numad20su_congressmobile.BuildConfig;
-import com.cs5520.numad20su_congressmobile.controllers.BillsRecyclerViewAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
     RequestQueue requestQueue;
     List<T> resultList;
     Gson gson;
-    BillsRecyclerViewAdapter viewAdapter;
+    RecyclerView.Adapter<? extends RecyclerView.ViewHolder> viewAdapter;
 
     public AbstractViewContent(Context context) {
         this.volleySingleton = VolleySingleton.getInstance(context);
@@ -46,17 +46,16 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
         @Override
         public Map<String, String> getHeaders() throws AuthFailureError {
             Map<String, String> result = new HashMap<>();
-             result.put("X-API-Key", BuildConfig.API_KEY);
+            result.put("X-API-Key", BuildConfig.API_KEY);
             return result;
         }
     }
 
     // TODO MainActivity (indirectly) calls this method and puts the
-    protected void submitRequest(String endpoint, String query) {
+    protected void submitRequest(String endpoint) {
         this.requestQueue.add(
                 new ProPublicaRequest(
-                        endpoint + query, this, this));
-
+                        endpoint, this, this));
     }
 
     @Override
@@ -71,7 +70,7 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
         Log.e(TAG, error.toString());
     }
 
-    public BillsRecyclerViewAdapter getViewAdapter() {
+    public RecyclerView.Adapter<? extends RecyclerView.ViewHolder> getViewAdapter() {
         return this.viewAdapter;
     }
 

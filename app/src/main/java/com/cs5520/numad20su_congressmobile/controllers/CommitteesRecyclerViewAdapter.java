@@ -1,29 +1,31 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.DummyItem;
+import com.cs5520.numad20su_congressmobile.content.models.Committee;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link Committee}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<CommitteesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Committee> mValues;
 
-    public CommitteesRecyclerViewAdapter(List<DummyItem> items) {
+    public CommitteesRecyclerViewAdapter(List<Committee> items) {
         mValues = items;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -35,7 +37,7 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).name);
     }
 
     @Override
@@ -43,11 +45,11 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Committee mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -56,6 +58,7 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
