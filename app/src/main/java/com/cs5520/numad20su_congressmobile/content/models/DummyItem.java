@@ -1,4 +1,6 @@
-package com.cs5520.numad20su_congressmobile.content;
+package com.cs5520.numad20su_congressmobile.content.models;
+
+import androidx.annotation.NonNull;
 
 /**
  * A dummy item representing a piece of content.
@@ -14,6 +16,7 @@ public class DummyItem {
         this.details = details;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return content;

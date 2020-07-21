@@ -15,8 +15,6 @@ import com.cs5520.numad20su_congressmobile.content.BillsViewContent;
 
 public class BillsFragment extends Fragment {
 
-    private BillsViewContent billsViewContent;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,19 +26,17 @@ public class BillsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bills, container, false);
 
-        this.billsViewContent = new BillsViewContent(this.getContext());
-
-        this.billsViewContent.getBills();
+        BillsViewContent billsViewContent = new BillsViewContent(this.getContext());
+        billsViewContent.getBills();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(this.billsViewContent.getViewAdapter());
+            recyclerView.setAdapter(billsViewContent.getViewAdapter());
         }
 
         return view;
     }
-
 }

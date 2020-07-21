@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.models.Bill;
+import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
 import java.util.List;
 

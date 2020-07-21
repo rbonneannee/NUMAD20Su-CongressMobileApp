@@ -1,15 +1,11 @@
 package com.cs5520.numad20su_congressmobile.content;
 
-import com.cs5520.numad20su_congressmobile.models.Bill;
+import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class JsonTextHandler {
-
-    ProPublicaResponse response;
-    Gson gson;
+public class BillsJsonTextHandler {
 
     static class ProPublicaResponse {
         String status;
@@ -23,18 +19,11 @@ public class JsonTextHandler {
         public int num_results;
         public int offset;
         public List<Bill> bills;
-
-        List<Bill> getBills() {
-            return new ArrayList<>(this.bills);
-        }
     }
 
-    public JsonTextHandler(String rawResponse) {
-        this.gson = new Gson();
-        this.response = this.gson.fromJson(rawResponse, ProPublicaResponse.class);
-    }
-
-    public List<Bill> getResults() {
+    public static List<Bill> extract(String jsonText) {
+        Gson gson = new Gson();
+        ProPublicaResponse response = gson.fromJson(jsonText, ProPublicaResponse.class);
         return response.results.get(0).bills;
     }
 }

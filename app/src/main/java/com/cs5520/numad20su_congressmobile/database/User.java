@@ -1,4 +1,7 @@
-package com.cs5520.numad20su_congressmobile.models;
+package com.cs5520.numad20su_congressmobile.database;
+
+import com.cs5520.numad20su_congressmobile.content.models.Bill;
+import com.cs5520.numad20su_congressmobile.content.models.Member;
 
 import java.util.ArrayList;
 
@@ -11,8 +14,6 @@ public class User {
     private ArrayList<String> likedTopics;
     private ArrayList<Bill> likedBills;
     private ArrayList<Member> membersOfUserDistrict;
-
-
 
 
 }

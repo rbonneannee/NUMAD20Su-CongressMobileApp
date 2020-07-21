@@ -1,29 +1,31 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.DummyItem;
+import com.cs5520.numad20su_congressmobile.content.models.Member;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link Member}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Member> mValues;
 
-    public MembersRecyclerViewAdapter(List<DummyItem> items) {
+    public MembersRecyclerViewAdapter(List<Member> items) {
         mValues = items;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -33,9 +35,11 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        Member member =  mValues.get(position);
+        holder.mItem = member;
+        holder.mIdView.setText(member.id);
+        String text = member.short_title + " " + member.first_name + " " + member.last_name;
+        holder.mContentView.setText(text);
     }
 
     @Override
@@ -43,11 +47,11 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Member mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -56,6 +60,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
