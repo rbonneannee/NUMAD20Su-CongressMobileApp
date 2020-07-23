@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +25,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.io.FileNotFoundException;
+
 // TODO Use anonymous sign-in
 // TODO Use Cloud Storage for Firebase to upload user photo
 // TODO Follow/Unfollow bills/members/committees, present in MyFeed, update in Settings
@@ -35,7 +36,7 @@ import com.google.firebase.auth.FirebaseUser;
 // TODO Put in a working search bar
 // TODO Cancel requests onSwipe for the ViewPager so as not to hold up other tabs
 // TODO     See "Cancel a request" at https://developer.android.com/training/volley/simple
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        targetImage = (ImageView)findViewById(R.id.profile_picture);
+        targetImage = (ImageView) findViewById(R.id.profile_picture);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -107,15 +108,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.manage_profile:
-                //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
-                getImage(this.getCurrentFocus());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.manage_profile) {//Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+            getImage(this.getCurrentFocus());
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void getImage(View view) {
@@ -133,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             Uri targetUri = data.getData();
             Bitmap bitmap;
             try {
+                assert targetUri != null;
                 bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
                 targetImage.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
@@ -141,16 +140,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-//    public void getImage(View arg0) {
-//        // TODO Auto-generated method stub
-////        Intent intent = new Intent(Intent.ACTION_PICK,
-////                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-////        startActivityForResult(intent, 0);
-//        Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
-//
-//
-//    }
 
 
     @Override
