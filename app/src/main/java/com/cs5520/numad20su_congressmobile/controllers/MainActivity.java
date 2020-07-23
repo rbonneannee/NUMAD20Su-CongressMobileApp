@@ -1,8 +1,15 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -28,11 +35,12 @@ import com.google.firebase.auth.FirebaseUser;
 // TODO Put in a working search bar
 // TODO Cancel requests onSwipe for the ViewPager so as not to hold up other tabs
 // TODO     See "Cancel a request" at https://developer.android.com/training/volley/simple
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     ActivityMainBinding binding;
+    private ImageView targetImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        targetImage = (ImageView)findViewById(R.id.profile_picture);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -92,8 +101,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.manage_profile:
+                //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+                getImage(this.getCurrentFocus());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void getImage(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 0);
+        //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            try {
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                targetImage.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+//    public void getImage(View arg0) {
+//        // TODO Auto-generated method stub
+////        Intent intent = new Intent(Intent.ACTION_PICK,
+////                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+////        startActivityForResult(intent, 0);
+//        Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+//
+//
+//    }
 
 
     @Override
