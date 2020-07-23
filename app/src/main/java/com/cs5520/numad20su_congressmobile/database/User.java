@@ -8,10 +8,10 @@ import java.util.ArrayList;
 public class User {
 
     private String registrationToken;
+    private String authenticationToken;
     private String username;
-    private String imageURL;
+    private String imageUrl;
 
-    private ArrayList<String> likedTopics;
     private ArrayList<Bill> likedBills;
     private ArrayList<Member> membersOfUserDistrict;
 
