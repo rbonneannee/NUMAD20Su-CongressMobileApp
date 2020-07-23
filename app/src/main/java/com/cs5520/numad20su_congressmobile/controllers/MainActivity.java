@@ -25,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// TODO Put link to https://icons8.com/license in Settings or About
 import java.io.FileNotFoundException;
 
 // TODO Use anonymous sign-in
@@ -145,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         // TODO Add handler for profile image click
+        // TODO Give focus to enter button so that you don't need to hide the keyboard
         int i = view.getId();
         if (i == R.id.buttonSignIn) {
             signInAnonymously();
