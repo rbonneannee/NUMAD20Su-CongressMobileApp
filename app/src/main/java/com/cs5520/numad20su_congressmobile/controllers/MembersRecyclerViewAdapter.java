@@ -29,13 +29,13 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_members, parent, false);
+                .inflate(R.layout.list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Member member =  mValues.get(position);
+        Member member = mValues.get(position);
         holder.mItem = member;
         holder.mIdView.setText(member.id);
         String text = member.short_title + " " + member.first_name + " " + member.last_name;

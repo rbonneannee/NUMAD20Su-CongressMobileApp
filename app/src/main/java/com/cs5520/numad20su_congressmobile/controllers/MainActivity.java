@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// TODO Put link to https://icons8.com/license in Settings or About
 // TODO Use anonymous sign-in
 // TODO Use Cloud Storage for Firebase to upload user photo
 // TODO Follow/Unfollow bills/members/committees, present in MyFeed, update in Settings
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         // TODO Add handler for profile image click
+        // TODO Give focus to enter button so that you don't need to hide the keyboard
         int i = view.getId();
         if (i == R.id.buttonSignIn) {
             signInAnonymously();

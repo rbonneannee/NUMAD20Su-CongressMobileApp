@@ -15,7 +15,7 @@
             android:id="@+id/layoutSignin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputLayout_username"
@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
