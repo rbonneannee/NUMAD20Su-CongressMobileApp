@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BillsSearchJsonTextHandler {
+public class BillsSubjectSearchJsonTextHandler {
 
     static class ProPublicaResponse {
         String status;

@@ -11,11 +11,13 @@ import java.util.List;
 public class BillsViewContent extends AbstractViewContent<Bill> {
 
     private String REQUEST_RECENT = "recent";
-    private String REQUEST_SEARCH = "search";
+    private String REQUEST_SUBJECT_SEARCH = "subject search";
+    private String REQUEST_KEYWORD_SEARCH = "subject search";
     private String REQUEST_FILTER = "filter";
 
     private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/both/bills/active.json";
-    private static final String ENDPOINT_SEARCH = "https://api.propublica.org/congress/v1/bills/subjects/";
+    private static final String ENDPOINT_SUBJECT_SEARCH = "https://api.propublica.org/congress/v1/bills/subjects/";
+    private static final String ENDPOINT_KEYWORD_SEARCH = "https://api.propublica.org/congress/v1/bills/search.json?query=";
 
     private static String requestType = "";
 
@@ -31,9 +33,9 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
         this.submitRequest(ENDPOINT);
     }
 
-    public void searchBills(String query) {
-        requestType = REQUEST_SEARCH;
-        this.submitRequest(ENDPOINT_SEARCH + query + ".json");
+    public void searchBillsBySubject(String subject) {
+        requestType = REQUEST_SUBJECT_SEARCH;
+        this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json");
     }
 
     @Override
@@ -41,8 +43,10 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
         switch (requestType) {
             case "recent":
                 return BillsJsonTextHandler.extract(jsonText);
-            case "search":
-                return BillsSearchJsonTextHandler.extract(jsonText);
+            case "subject search":
+                return BillsSubjectSearchJsonTextHandler.extract(jsonText);
+            case "keyword search":
+
             case "filter":
                 // TODO
             default:
