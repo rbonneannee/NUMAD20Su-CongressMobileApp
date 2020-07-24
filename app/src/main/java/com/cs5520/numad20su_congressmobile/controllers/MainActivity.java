@@ -1,9 +1,15 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +25,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// TODO Put link to https://icons8.com/license in Settings or About
+import java.io.FileNotFoundException;
+
 // TODO Use anonymous sign-in
 // TODO Use Cloud Storage for Firebase to upload user photo
 // TODO Follow/Unfollow bills/members/committees, present in MyFeed, update in Settings
@@ -33,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "MainActivity";
     private FirebaseAuth mAuth;
     ActivityMainBinding binding;
+    private ImageView targetImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
+        targetImage = (ImageView) findViewById(R.id.profile_picture);
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -92,13 +103,50 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.manage_profile) {//Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+            getImage(this.getCurrentFocus());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void getImage(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 0);
+        //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Uri targetUri = data.getData();
+            Bitmap bitmap;
+            try {
+                assert targetUri != null;
+                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+                targetImage.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
 
     @Override
     public void onClick(View view) {
         // TODO Add handler for profile image click
+        // TODO Give focus to enter button so that you don't need to hide the keyboard
         int i = view.getId();
         if (i == R.id.buttonSignIn) {
             signInAnonymously();
