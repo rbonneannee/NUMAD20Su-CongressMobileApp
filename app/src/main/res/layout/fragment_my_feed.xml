@@ -10,4 +10,4 @@
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
     tools:context=".controllers.MyFeedFragment"
-    tools:listitem="@layout/list_items_my_feed" />
+    tools:listitem="@layout/list_item" />
