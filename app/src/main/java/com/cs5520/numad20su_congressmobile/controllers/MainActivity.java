@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -120,9 +121,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void getImage(View view) {
-        Intent cameraIntent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(cameraIntent, 0);
+//        Intent cameraIntent = new Intent(Intent.ACTION_PICK,
+//                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//        startActivityForResult(cameraIntent, 0);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
         //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
     }
 
@@ -135,18 +140,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+//        if (resultCode == RESULT_OK) {
+//            Uri targetUri = data.getData();
+//            Bitmap bitmap;
+//            try {
+//                assert targetUri != null;
+//                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
+//                targetImage.setImageBitmap(bitmap);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//        }
         if (resultCode == RESULT_OK) {
-            Uri targetUri = data.getData();
-            Bitmap bitmap;
-            try {
-                assert targetUri != null;
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                targetImage.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            targetImage.setImageBitmap(bitmap);
         }
-
     }
 
 
