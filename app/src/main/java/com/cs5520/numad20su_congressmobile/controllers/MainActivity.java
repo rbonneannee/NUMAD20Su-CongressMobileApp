@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.databinding.ActivityMainBinding;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     getString(R.string.heading_my_feed),
                     getString(R.string.heading_bills),
                     getString(R.string.heading_committees),
-                    getString(R.string.heading_members),
+                    getString(R.string.heading_members)
             };
 
             @Override
@@ -110,18 +111,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.manage_profile) {//Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
-            getImage(this.getCurrentFocus());
+        if (item.getItemId() == R.id.manage_profile) {
+            //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+            openSettings(this.getCurrentFocus());
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void getImage(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK,
+        Intent cameraIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 0);
+        startActivityForResult(cameraIntent, 0);
         //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+    }
+
+    public void openSettings(View view) {
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 
     @Override
@@ -147,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         // TODO Add handler for profile image click
         // TODO Give focus to enter button so that you don't need to hide the keyboard
-        int i = view.getId();
+        int i = view.getId();  
         if (i == R.id.buttonSignIn) {
             signInAnonymously();
         }

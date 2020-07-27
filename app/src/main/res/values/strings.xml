@@ -19,4 +19,7 @@
     <string name="sign_in_anonymously">Sign In</string>
     <string name="week_9_firebase_hw">Week 9: Firebase HW</string>
     <string name="contributors">Contributors: R.Bonne-Annee, M.Denu, R.Newell</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 </resources>
