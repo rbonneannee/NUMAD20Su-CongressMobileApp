@@ -35,11 +35,13 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
     }
 
     @Override
+    // TODO On click unfollow this topic, bill, committee, or member
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
         holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+        holder.followIcon.setOnClickListener(null);
     }
 
     @Override
