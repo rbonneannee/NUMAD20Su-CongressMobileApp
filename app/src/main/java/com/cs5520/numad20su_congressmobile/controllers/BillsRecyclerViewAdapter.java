@@ -3,6 +3,7 @@ package com.cs5520.numad20su_congressmobile.controllers;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,7 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+                .inflate(R.layout.card_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -34,6 +35,7 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         holder.bill = items.get(position);
         holder.idView.setText(items.get(position).bill_id);
         holder.contentView.setText(items.get(position).title);
+        holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
     }
 
     @Override
@@ -46,12 +48,14 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         public final TextView idView;
         public final TextView contentView;
         public Bill bill;
+        public ImageView followIcon;
 
         public ViewHolder(View view) {
             super(view);
             this.view = view;
             idView = view.findViewById(R.id.item_number);
             contentView = view.findViewById(R.id.content);
+            followIcon = view.findViewById(R.id.follow_icon);
         }
 
         @NonNull
