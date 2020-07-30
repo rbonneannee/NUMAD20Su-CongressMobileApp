@@ -7,19 +7,25 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.controllers.BillsRecyclerViewAdapter;
 
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class BillsViewContent extends AbstractViewContent<Bill> {
 
-    private String REQUEST_RECENT = "recent";
-    private String REQUEST_SUBJECT_SEARCH = "subject search";
-    private String REQUEST_KEYWORD_SEARCH = "subject search";
-    private String REQUEST_FILTER = "filter";
+    private String REQUEST_RECENT = "RECENT";
+    private String REQUEST_SUBJECT_SEARCH = "SUBJECT SEARCH";
+    private String REQUEST_KEYWORD_SEARCH = "KEYWORD SEARCH";
+    private String REQUEST_FILTER = "FILTER";
 
     private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/both/bills/active.json";
     private static final String ENDPOINT_SUBJECT_SEARCH = "https://api.propublica.org/congress/v1/bills/subjects/";
     private static final String ENDPOINT_KEYWORD_SEARCH = "https://api.propublica.org/congress/v1/bills/search.json?query=";
 
+    private int OFFSET_INCREMENT = 20;
+
     private static String requestType = "";
+    private String query = "";
+    private static int offset = 0;
 
 
     public BillsViewContent(Context context) {
@@ -30,27 +36,53 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     // TODO Create filter methods to be called from a filter view
     public void getBills() {
         requestType = REQUEST_RECENT;
-        this.submitRequest(ENDPOINT);
+        this.submitRequest(ENDPOINT + "?offset=" + offset);
+        incrementOffset();
     }
 
     public void searchBillsBySubject(String subject) {
         requestType = REQUEST_SUBJECT_SEARCH;
+        this.query = subject;
         this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json");
+    }
+
+    public void searchBillsByKeyword(String keyword) {
+        requestType = REQUEST_KEYWORD_SEARCH;
+        this.query = keyword;
+        this.submitRequest(ENDPOINT_KEYWORD_SEARCH + keyword);
     }
 
     @Override
     List<Bill> getListFromJsonText(String jsonText) {
         switch (requestType) {
-            case "recent":
+            case "RECENT":
+            case "KEYWORD SEARCH":
                 return BillsJsonTextHandler.extract(jsonText);
-            case "subject search":
+            case "SUBJECT SEARCH":
                 return BillsSubjectSearchJsonTextHandler.extract(jsonText);
-            case "keyword search":
-
-            case "filter":
+            case "FILTER":
                 // TODO
             default:
                 return null;
         }
     }
+
+    private void incrementOffset() {
+        offset += OFFSET_INCREMENT;
+    }
+
+    public void loadMore(){
+        switch (requestType) {
+            case "RECENT":
+                getBills();
+            case "KEYWORD SEARCH":
+                searchBillsByKeyword(this.query);
+            case "SUBJECT SEARCH":
+                searchBillsBySubject(this.query);
+            case "FILTER":
+                // TODO
+        }
+    }
+
+
 }
