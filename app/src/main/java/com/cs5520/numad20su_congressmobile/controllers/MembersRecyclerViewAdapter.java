@@ -3,6 +3,7 @@ package com.cs5520.numad20su_congressmobile.controllers;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,7 +30,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item, parent, false);
+                .inflate(R.layout.card_layout, parent, false);
         return new ViewHolder(view);
     }
 
@@ -40,6 +41,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         holder.mIdView.setText(member.id);
         String text = member.short_title + " " + member.first_name + " " + member.last_name;
         holder.mContentView.setText(text);
+        holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
     }
 
     @Override
@@ -52,12 +54,14 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         public final TextView mIdView;
         public final TextView mContentView;
         public Member mItem;
+        public ImageView followIcon;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mIdView = view.findViewById(R.id.item_number);
+            mContentView = view.findViewById(R.id.content);
+            followIcon = view.findViewById(R.id.follow_icon);
         }
 
         @NonNull

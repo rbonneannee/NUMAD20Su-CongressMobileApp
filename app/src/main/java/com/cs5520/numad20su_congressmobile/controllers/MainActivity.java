@@ -1,17 +1,22 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -21,12 +26,14 @@ import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.databinding.ActivityMainBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 // TODO Put link to https://icons8.com/license in Settings or About
-import java.io.FileNotFoundException;
 
 // TODO Use anonymous sign-in
 // TODO Use Cloud Storage for Firebase to upload user photo
@@ -61,6 +68,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Click listeners
         binding.buttonSignIn.setOnClickListener(this);
 
+        // Add key listener for the enter button for the username entry
+        TextInputEditText mUsernameFld = findViewById(R.id.inputField_username);
+        mUsernameFld.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    hideKeyboard(view);
+                    signInAnonymously();
+                }
+                return false;
+            }
+        });
 
         // Create the adapter that will return a fragment for each section
         FragmentPagerAdapter mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager(),
@@ -75,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     getString(R.string.heading_my_feed),
                     getString(R.string.heading_bills),
                     getString(R.string.heading_committees),
-                    getString(R.string.heading_members),
+                    getString(R.string.heading_members)
             };
 
             @Override
@@ -97,51 +116,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Set up the ViewPager with the sections adapter.
         binding.container.setAdapter(mPagerAdapter);
         binding.tabs.setupWithViewPager(binding.container);
+
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.manage_profile) {//Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
-            getImage(this.getCurrentFocus());
+        if (item.getItemId() == R.id.manage_profile) {
+            //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+            openSettings(this.getCurrentFocus());
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     public void getImage(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK,
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 0);
-        //Toast.makeText(this, "braff", Toast.LENGTH_LONG).show();
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, 1);
+        }
+    }
+
+    public void openSettings(View view) {
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) {
-            Uri targetUri = data.getData();
-            Bitmap bitmap;
-            try {
-                assert targetUri != null;
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(targetUri));
-                targetImage.setImageBitmap(bitmap);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+            targetImage.setImageBitmap(bitmap);
         }
-
     }
-
 
     @Override
     public void onClick(View view) {
@@ -153,8 +168,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull String name, @NonNull Context context, @NonNull AttributeSet attrs) {
+        return super.onCreateView(name, context, attrs);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     private void signInAnonymously() {
         // Sign in anonymously. Authentication is required to read or write from Firebase Storage.
+        // TODO Save user to database
         mAuth.signInAnonymously()
                 .addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
                     @Override
@@ -173,10 +200,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void updateUI(FirebaseUser user) {
+        // TODO A new user is created with each install, is this okay?
         // TODO Update username and display it
         // TODO Add error checking for (empty) username
         // TODO Update registrationToken and authToken in database
-        // Signed in or Signed out
         if (user != null) {
             binding.layoutSignin.setVisibility(View.GONE);
             binding.layoutMain.setVisibility(View.VISIBLE);
@@ -184,5 +211,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             binding.layoutSignin.setVisibility(View.VISIBLE);
             binding.layoutMain.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        // TODO Remove this code for final version of app
+        super.onDestroy();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        Objects.requireNonNull(auth.getCurrentUser()).delete();
     }
 }
