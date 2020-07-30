@@ -15,51 +15,17 @@
             android:id="@+id/layoutSignin"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:visibility="gone">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/inputLayout_username"
-                android:layout_width="348dp"
-                android:layout_height="71dp"
-                app:helperText="Enter a username"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.341">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputField_username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/textview_first"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/week_9_firebase_hw"
-                app:layout_constraintBottom_toTopOf="@id/buttonSignIn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.499"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.331" />
+            tools:visibility="visible">
 
             <Button
                 android:id="@+id/buttonSignIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_in_anonymously"
+                android:text="@string/sign_in"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.606" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -80,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:visibility="visible">
+            tools:visibility="gone">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appbar"
@@ -96,8 +62,8 @@
                         android:id="@+id/profile_picture"
                         android:layout_width="78dp"
                         android:layout_height="65dp"
-                        app:srcCompat="@drawable/ic_launcher_background"
-                        android:contentDescription="@string/todo" />
+                        android:contentDescription="@string/todo"
+                        app:srcCompat="@drawable/ic_launcher_background" />
 
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/my_toolbar"

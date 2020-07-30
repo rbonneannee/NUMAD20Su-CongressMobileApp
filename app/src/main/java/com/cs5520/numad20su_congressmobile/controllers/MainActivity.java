@@ -5,13 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 
@@ -31,14 +31,15 @@ import java.util.Objects;
 // TODO Respond to clicks of actions in action bar
 // TODO Put in a working search bar
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, FirebaseAuth.AuthStateListener {
 
     private static final int RC_GET_IMAGE = 101;
     private static final int RC_SIGN_IN = 102;
 
     private ActivityMainBinding activityMainBinding;
     private FirebaseAuth firebaseAuthInstance;
-    
+    private AuthUI authUiInstance;
+
     public void getImage() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -62,21 +63,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case RC_SIGN_IN:
-                if (resultCode == RESULT_OK) {
-                    // Sign in succeeded
-                    updateUI(firebaseAuthInstance.getCurrentUser());
-                } else {
-                    // Sign in failed
+                if (resultCode != RESULT_OK) { // Sign in failed
                     Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show();
-                    updateUI(null);
                 }
                 break;
         }
     }
 
     @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        this.firebaseAuthInstance = firebaseAuth;
+        updateUI(firebaseAuth.getCurrentUser());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authUiInstance = AuthUI.getInstance();
         firebaseAuthInstance = FirebaseAuth.getInstance();
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
@@ -93,19 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Set listeners
         activityMainBinding.profilePicture.setOnClickListener(this);
         activityMainBinding.buttonSignIn.setOnClickListener(this);
-        activityMainBinding
-                .inputFieldUsername
-                .setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(View view, int keyCode, KeyEvent event) {
-                        if ((event.getAction() == KeyEvent.ACTION_DOWN)
-                                && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                            hideKeyboard(view);
-                            startSignIn();
-                        }
-                        return false;
-                    }
-                });
+        firebaseAuthInstance.addAuthStateListener(this);
     }
 
     @Override
@@ -117,17 +108,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int i = view.getId();
-        if (i == R.id.buttonSignIn) {
-            startSignIn();
-        } else if (i == R.id.profile_picture) {
-            getImage();
+        switch (view.getId()) {
+            case R.id.profile_picture:
+                getImage();
+                break;
+            case R.id.buttonSignIn:
+                startSignIn();
+                break;
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.manage_profile) {
-            openSettings(this.getCurrentFocus());
+        if (item.getItemId() == R.id.buttonSignOut) {
+            signOut();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -139,18 +133,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         updateUI(firebaseAuthInstance.getCurrentUser());
     }
 
-    public void openSettings(View view) {
-        Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
-
     private void signOut() {
-        AuthUI.getInstance().signOut(this);
-        updateUI(null);
+        authUiInstance.signOut(this);
     }
 
     private void startSignIn() {
-        startActivityForResult(AuthUI.getInstance().createSignInIntentBuilder().build(), RC_SIGN_IN);
+        startActivityForResult(authUiInstance.createSignInIntentBuilder().build(), RC_SIGN_IN);
     }
 
     private void updateUI(FirebaseUser user) {
@@ -165,4 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             activityMainBinding.layoutMain.setVisibility(View.GONE);
         }
     }
+
+
 }

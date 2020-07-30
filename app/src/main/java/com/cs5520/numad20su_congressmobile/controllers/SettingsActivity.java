@@ -1,16 +1,19 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
-import com.cs5520.numad20su_congressmobile.R;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.cs5520.numad20su_congressmobile.databinding.ActivitySettingsBinding;
+
 
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        ActivitySettingsBinding activitySettingsBinding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        setContentView(activitySettingsBinding.getRoot());
     }
+
 }
