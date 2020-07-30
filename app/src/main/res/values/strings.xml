@@ -13,7 +13,6 @@
     <string name="heading_bills">Bills</string>
     <string name="heading_committees">Committees</string>
     <string name="heading_members">Members</string>
-    <string name="todo">TODO</string>
 
     <string name="sign_in_prompt">Sign In to begin</string>
     <string name="sign_in_anonymously">Sign In</string>
@@ -22,4 +21,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="todo">TODO</string>
 </resources>

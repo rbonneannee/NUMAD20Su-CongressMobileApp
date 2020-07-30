@@ -13,6 +13,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        resConfigs "en" // And any other languages you support
     }
 
     buildTypes {
@@ -47,6 +49,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-auth'
 
+    implementation 'com.firebaseui:firebase-ui-auth:6.2.1'
+    
     implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'

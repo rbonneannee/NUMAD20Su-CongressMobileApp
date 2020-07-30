@@ -14,7 +14,7 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
 import java.util.List;
 
-public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
+public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> implements View.OnClickListener {
 
     private List<Bill> items;
 
@@ -35,12 +35,23 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         holder.bill = items.get(position);
         holder.idView.setText(items.get(position).bill_id);
         holder.contentView.setText(items.get(position).title);
+        // TODO draw heart depending on if following or not
         holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+        holder.followIcon.setOnClickListener(this);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    @Override
+    public void onClick(View view) {
+        ViewHolder vh = (ViewHolder) view.getParent();
+
+        // Get bill id from view
+        // Get current user from database
+        // Add this bill id to the user objects list of followed bills (or vice versa
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
