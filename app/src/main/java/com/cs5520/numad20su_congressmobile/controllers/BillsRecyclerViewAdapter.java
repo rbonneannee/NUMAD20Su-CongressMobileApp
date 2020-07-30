@@ -1,8 +1,11 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +20,8 @@ import java.util.List;
 public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
     private List<Bill> items;
+    private int lastPosition = -1;
+    private Context context;
 
     public BillsRecyclerViewAdapter(List<Bill> items) {
         this.items = items;
@@ -25,7 +30,8 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        this.context = parent.getContext();
+        View view = LayoutInflater.from(this.context)
                 .inflate(R.layout.card_layout, parent, false);
         return new ViewHolder(view);
     }
@@ -36,6 +42,11 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         holder.idView.setText(items.get(position).bill_id);
         holder.contentView.setText(items.get(position).title);
         holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+
+        Animation animation = AnimationUtils.loadAnimation(this.context,
+                (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
+        holder.itemView.startAnimation(animation);
+        lastPosition = position;
     }
 
     @Override
@@ -63,6 +74,12 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         public String toString() {
             return super.toString() + " '" + contentView.getText() + "'";
         }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
     }
 
 }

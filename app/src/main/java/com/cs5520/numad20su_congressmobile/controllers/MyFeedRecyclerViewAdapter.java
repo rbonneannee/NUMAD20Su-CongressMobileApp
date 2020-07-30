@@ -1,8 +1,11 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +24,8 @@ import java.util.List;
 public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecyclerViewAdapter.ViewHolder> {
 
     private final List<DummyItem> mValues;
+    private int lastPosition = -1;
+    private Context context;
 
     public MyFeedRecyclerViewAdapter(List<DummyItem> items) {
         mValues = items;
@@ -29,7 +34,8 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        this.context = parent.getContext();
+        View view = LayoutInflater.from(this.context)
                 .inflate(R.layout.card_layout, parent, false);
         return new ViewHolder(view);
     }
@@ -42,6 +48,11 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
         holder.mContentView.setText(mValues.get(position).content);
         holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
         holder.followIcon.setOnClickListener(null);
+
+        Animation animation = AnimationUtils.loadAnimation(this.context,
+                (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
+        holder.itemView.startAnimation(animation);
+        lastPosition = position;
     }
 
     @Override
@@ -69,5 +80,11 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull MyFeedRecyclerViewAdapter.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
     }
 }

@@ -1,8 +1,11 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +24,8 @@ import java.util.List;
 public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<CommitteesRecyclerViewAdapter.ViewHolder> {
 
     private final List<Committee> mValues;
+    private int lastPosition = -1;
+    private Context context;
 
     public CommitteesRecyclerViewAdapter(List<Committee> items) {
         mValues = items;
@@ -29,7 +34,8 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+        this.context = parent.getContext();
+        View view = LayoutInflater.from(this.context)
                 .inflate(R.layout.card_layout, parent, false);
         return new ViewHolder(view);
     }
@@ -40,6 +46,11 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).name);
         holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+
+        Animation animation = AnimationUtils.loadAnimation(this.context,
+                (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
+        holder.itemView.startAnimation(animation);
+        lastPosition = position;
     }
 
     @Override
@@ -67,5 +78,11 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull CommitteesRecyclerViewAdapter.ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
     }
 }
