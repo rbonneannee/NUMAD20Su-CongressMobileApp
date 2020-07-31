@@ -19,9 +19,6 @@ import java.util.List;
 
 public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
-
     private List<Bill> items;
     private int lastPosition = -1;
     private Context context;

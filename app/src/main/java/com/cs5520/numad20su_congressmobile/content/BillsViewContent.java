@@ -19,9 +19,8 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     private static final String ENDPOINT_KEYWORD_SEARCH = "https://api.propublica.org/congress/v1/bills/search.json?query=";
     private static final int OFFSET_INCREMENT = 20;
 
-    private static int RECENT_OFFSET = 0;
-    private static int SUBJECT_OFFSET = 0;
-    private static int SEARCH_OFFSET = 0;
+    private static int OFFSET = 0;
+
     private String searchQuery;
     private String subjectQuery;
     private RequestEnum lastRequestType;
@@ -32,24 +31,25 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     }
 
     public void getRecentBills() {
+        conditionalReset("", "", RequestEnum.RECENT, lastRequestType);
         this.lastRequestType = RequestEnum.RECENT;
-        this.submitRequest(ENDPOINT + "?offset=" + RECENT_OFFSET);
+        this.submitRequest(ENDPOINT + "?offset=" + OFFSET);
         incrementOffset(RequestEnum.RECENT);
     }
 
     public void getRecentBillsBySubject(String subject) {
         this.lastRequestType = RequestEnum.SUBJECT;
-        conditionalReset(subject, this.subjectQuery, RequestEnum.SUBJECT);
+        conditionalReset(subject, this.subjectQuery, RequestEnum.SUBJECT, lastRequestType);
         this.subjectQuery = subject;
-        this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json" + "?offset=" + SUBJECT_OFFSET);
+        this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json" + "?offset=" + OFFSET);
         incrementOffset(RequestEnum.SUBJECT);
     }
 
     public void searchBills(String query) {
         this.lastRequestType = RequestEnum.SEARCH;
-        conditionalReset(query, this.searchQuery, RequestEnum.SEARCH);
+        conditionalReset(query, this.searchQuery, RequestEnum.SEARCH, lastRequestType);
         this.searchQuery = query;
-        this.submitRequest(ENDPOINT_KEYWORD_SEARCH + query + "&offset=" + SEARCH_OFFSET);
+        this.submitRequest(ENDPOINT_KEYWORD_SEARCH + query + "&offset=" + OFFSET);
         incrementOffset(RequestEnum.SEARCH);
     }
 
@@ -67,34 +67,18 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     }
 
     private void incrementOffset(RequestEnum requestType) {
-        switch (requestType) {
-            case RECENT:
-                RECENT_OFFSET += OFFSET_INCREMENT;
-                break;
-            case SEARCH:
-                SEARCH_OFFSET += OFFSET_INCREMENT;
-                break;
-            case SUBJECT:
-                SUBJECT_OFFSET += OFFSET_INCREMENT;
-                break;
-        }
+        OFFSET += OFFSET_INCREMENT;
     }
 
-    private boolean conditionalReset(String s1, String s2, RequestEnum type) {
+    // Reset when either the query changes or the request type changes
+    private boolean conditionalReset(String s1,
+                                     String s2,
+                                     RequestEnum r1,
+                                     RequestEnum r2) {
         boolean result = false;
-        if (!s1.equals(s2)) {
-            result = true;
-            switch (type) {
-                case RECENT:
-                    RECENT_OFFSET = 0;
-                    break;
-                case SEARCH:
-                    SEARCH_OFFSET = 0;
-                    break;
-                case SUBJECT:
-                    SUBJECT_OFFSET = 0;
-                    break;
-            }
+        if ((!s1.equals(s2)) || (r1 != r2)) {
+            OFFSET = 0;
+            resetResultList();
         }
         return result;
     }
@@ -116,4 +100,9 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     public List<Bill> getResultList() {
         return this.resultList;
     }
+
+    public void resetResultList() {
+        this.resultList.clear();
+    }
+
 }

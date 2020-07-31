@@ -108,33 +108,6 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayout_keyword"
-                    android:layout_width="327dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    app:helperText="Keyword search">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditText_keyword"
-                        android:layout_width="329dp"
-                        android:layout_height="wrap_content" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <ImageButton
-                    android:id="@+id/imageButton_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="67dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@android:drawable/ic_menu_search" />
-
-            </LinearLayout>
-
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/container"
                 android:layout_width="match_parent"

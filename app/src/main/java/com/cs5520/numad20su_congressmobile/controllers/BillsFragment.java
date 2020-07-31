@@ -17,9 +17,9 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class BillsFragment extends Fragment {
 
-    private TextInputEditText mKeywordSearchFld;
     private boolean isLoading = false;
     private BillsViewContent billsViewContent = null;
+    private TextInputEditText searchFld;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -31,17 +31,28 @@ public class BillsFragment extends Fragment {
         billsViewContent.getRecentBills();
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(billsViewContent.getViewAdapter());
-            initScrollListener(recyclerView);
-        }
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        Context context = recyclerView.getContext();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(billsViewContent.getViewAdapter());
+        initScrollListener(recyclerView);
 
+        this.searchFld = view.findViewById(R.id.textInputEditText_keyword);
+        view.findViewById(R.id.imageButton_search).
+                setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String query = searchFld.getText().toString();
+                        billsViewContent.searchBills(query);
+
+                    }
+                });
         return view;
     }
 
+    // TODO Make sure this doesn't break for fast scrolling (test on physical device)
+    // TODO Use loading animation for 'Executing' Volley phase from submitRequest()
+    // TODO Use DownloadManager and loading animation if payload too big for Volley
     private void initScrollListener(RecyclerView recyclerView) {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
