@@ -7,93 +7,111 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.controllers.BillsRecyclerViewAdapter;
 
 import java.util.List;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
+// TODO Gather bills from both chambers for each endpoint
+// TODO Create filter methods to be called from a filter view
 public class BillsViewContent extends AbstractViewContent<Bill> {
 
-    private String REQUEST_RECENT = "RECENT";
-    private String REQUEST_SUBJECT_SEARCH = "SUBJECT SEARCH";
-    private String REQUEST_KEYWORD_SEARCH = "KEYWORD SEARCH";
-    private String REQUEST_FILTER = "FILTER";
+    enum RequestEnum {RECENT, SUBJECT, SEARCH;}
 
     private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/both/bills/active.json";
     private static final String ENDPOINT_SUBJECT_SEARCH = "https://api.propublica.org/congress/v1/bills/subjects/";
     private static final String ENDPOINT_KEYWORD_SEARCH = "https://api.propublica.org/congress/v1/bills/search.json?query=";
+    private static final int OFFSET_INCREMENT = 20;
 
-    private int OFFSET_INCREMENT = 20;
-
-    private String requestType = "";
-    private String query = "";
-    private static int offset = 0;
-
+    private static int RECENT_OFFSET = 0;
+    private static int SUBJECT_OFFSET = 0;
+    private static int SEARCH_OFFSET = 0;
+    private String searchQuery;
+    private String subjectQuery;
+    private RequestEnum lastRequestType;
 
     public BillsViewContent(Context context) {
         super(context);
         this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList);
     }
 
-    // TODO Create filter methods to be called from a filter view
-    public void getBills() {
-        resetLoad(REQUEST_RECENT);
-        this.submitRequest(ENDPOINT + "?offset=" + offset);
-        incrementOffset();
+    public void getRecentBills() {
+        this.lastRequestType = RequestEnum.RECENT;
+        this.submitRequest(ENDPOINT + "?offset=" + RECENT_OFFSET);
+        incrementOffset(RequestEnum.RECENT);
     }
 
-    public void searchBillsBySubject(String subject) {
-        resetLoad(REQUEST_SUBJECT_SEARCH);
-        this.query = subject;
-        this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json");
+    public void getRecentBillsBySubject(String subject) {
+        this.lastRequestType = RequestEnum.SUBJECT;
+        conditionalReset(subject, this.subjectQuery, RequestEnum.SUBJECT);
+        this.subjectQuery = subject;
+        this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json" + "?offset=" + SUBJECT_OFFSET);
+        incrementOffset(RequestEnum.SUBJECT);
     }
 
-    public void searchBillsByKeyword(String keyword) {
-        resetLoad(REQUEST_KEYWORD_SEARCH);
-        this.query = keyword;
-        this.submitRequest(ENDPOINT_KEYWORD_SEARCH + keyword);
+    public void searchBills(String query) {
+        this.lastRequestType = RequestEnum.SEARCH;
+        conditionalReset(query, this.searchQuery, RequestEnum.SEARCH);
+        this.searchQuery = query;
+        this.submitRequest(ENDPOINT_KEYWORD_SEARCH + query + "&offset=" + SEARCH_OFFSET);
+        incrementOffset(RequestEnum.SEARCH);
     }
 
     @Override
     List<Bill> getListFromJsonText(String jsonText) {
-        switch (requestType) {
-            case "RECENT":
-            case "KEYWORD SEARCH":
+        switch (this.lastRequestType) {
+            case RECENT:
+            case SEARCH:
                 return BillsJsonTextHandler.extract(jsonText);
-            case "SUBJECT SEARCH":
+            case SUBJECT:
                 return BillsSubjectSearchJsonTextHandler.extract(jsonText);
-            case "FILTER":
-                // TODO
             default:
                 return null;
         }
     }
 
-    private void incrementOffset() {
-        offset += OFFSET_INCREMENT;
-    }
-
-    private void resetLoad(String requestType) {
-        if (!this.requestType.equals(requestType)) {
-            this.requestType = requestType;
-            offset = 0;
-        }
-    }
-
-    public void loadMore(){
+    private void incrementOffset(RequestEnum requestType) {
         switch (requestType) {
-            case "RECENT":
-                getBills();
+            case RECENT:
+                RECENT_OFFSET += OFFSET_INCREMENT;
                 break;
-            case "KEYWORD SEARCH":
-                searchBillsByKeyword(this.query);
+            case SEARCH:
+                SEARCH_OFFSET += OFFSET_INCREMENT;
                 break;
-            case "SUBJECT SEARCH":
-                searchBillsBySubject(this.query);
+            case SUBJECT:
+                SUBJECT_OFFSET += OFFSET_INCREMENT;
                 break;
-            case "FILTER":
-                // TODO
         }
     }
 
+    private boolean conditionalReset(String s1, String s2, RequestEnum type) {
+        boolean result = false;
+        if (!s1.equals(s2)) {
+            result = true;
+            switch (type) {
+                case RECENT:
+                    RECENT_OFFSET = 0;
+                    break;
+                case SEARCH:
+                    SEARCH_OFFSET = 0;
+                    break;
+                case SUBJECT:
+                    SUBJECT_OFFSET = 0;
+                    break;
+            }
+        }
+        return result;
+    }
+
+    public void loadMore() {
+        switch (this.lastRequestType) {
+            case RECENT:
+                getRecentBills();
+                break;
+            case SEARCH:
+                searchBills(this.searchQuery);
+                break;
+            case SUBJECT:
+                getRecentBillsBySubject(this.subjectQuery);
+                break;
+        }
+    }
 
     public List<Bill> getResultList() {
         return this.resultList;
