@@ -6,6 +6,7 @@ import android.content.Context;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.controllers.BillsRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
@@ -23,7 +24,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
     private int OFFSET_INCREMENT = 20;
 
-    private String requestType = "";
+    private String requestType = REQUEST_RECENT;
     private String query = "";
     private static int offset = 0;
 
@@ -35,19 +36,25 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
     // TODO Create filter methods to be called from a filter view
     public void getBills() {
-        resetLoad(REQUEST_RECENT);
+        if (!this.requestType.equals(REQUEST_RECENT)) {
+            resetLoad(REQUEST_RECENT);
+        }
         this.submitRequest(ENDPOINT + "?offset=" + offset);
         incrementOffset();
     }
 
     public void searchBillsBySubject(String subject) {
-        resetLoad(REQUEST_SUBJECT_SEARCH);
+        if (!this.requestType.equals(REQUEST_SUBJECT_SEARCH) || !this.query.equals(subject)) {
+            resetLoad(REQUEST_SUBJECT_SEARCH);
+        }
         this.query = subject;
         this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json");
     }
 
     public void searchBillsByKeyword(String keyword) {
-        resetLoad(REQUEST_KEYWORD_SEARCH);
+        if (!this.requestType.equals(REQUEST_KEYWORD_SEARCH) || !this.query.equals(keyword)) {
+            resetLoad(REQUEST_KEYWORD_SEARCH);
+        }
         this.query = keyword;
         this.submitRequest(ENDPOINT_KEYWORD_SEARCH + keyword);
     }
@@ -72,10 +79,9 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     }
 
     private void resetLoad(String requestType) {
-        if (!this.requestType.equals(requestType)) {
             this.requestType = requestType;
+            this.resetResultList();
             offset = 0;
-        }
     }
 
     public void loadMore(){
@@ -97,5 +103,9 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
     public List<Bill> getResultList() {
         return this.resultList;
+    }
+
+    public void resetResultList() {
+        this.resultList.clear();
     }
 }

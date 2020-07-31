@@ -27,6 +27,8 @@ public class BillsFragment extends Fragment {
     private TextInputEditText mKeywordSearchFld;
     private boolean isLoading = false;
     private BillsViewContent billsViewContent = null;
+    private Button searchBtn;
+    private TextInputEditText searchFld;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,6 @@ public class BillsFragment extends Fragment {
 
         billsViewContent = new BillsViewContent(this.getContext());
         billsViewContent.getBills();
-        // billsViewContent.searchBillsByKeyword("meat");
 
         // Set the adapter
         RecyclerView recyclerView = view.findViewById(R.id.list);
@@ -50,6 +51,15 @@ public class BillsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(billsViewContent.getViewAdapter());
         initScrollListener(recyclerView);
+
+        this.searchFld = view.findViewById(R.id.textInputEditText_keyword);
+        view.findViewById(R.id.imageButton_search).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String keyword = searchFld.getText().toString();
+                billsViewContent.searchBillsByKeyword(keyword);
+            }
+        });
 
         return view;
     }
@@ -87,7 +97,6 @@ public class BillsFragment extends Fragment {
                 billsViewContent.loadMore();
                 billsViewContent.getViewAdapter().notifyDataSetChanged();
                 isLoading = false;
-
             }
         }, 2000);
     }
