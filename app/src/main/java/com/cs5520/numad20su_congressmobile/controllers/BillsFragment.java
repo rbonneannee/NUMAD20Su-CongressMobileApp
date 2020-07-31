@@ -2,6 +2,7 @@ package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,16 @@ public class BillsFragment extends Fragment {
                     if (linearLayoutManager != null
                             && (linearLayoutManager.findLastCompletelyVisibleItemPosition()
                             == billsViewContent.getResultList().size() - 1)) {
-                        billsViewContent.loadMore();
+
+                        // Launch data load in a new thread
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                billsViewContent.loadMore();
+                                isLoading = false;
+                            }
+                        }, 5);
                     }
                 }
             }
