@@ -38,20 +38,18 @@ public class BillsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bills, container, false);
+        View view = inflater.inflate(R.layout.f_bills, container, false);
 
         billsViewContent = new BillsViewContent(this.getContext());
         billsViewContent.getBills();
         // billsViewContent.searchBillsByKeyword("meat");
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(billsViewContent.getViewAdapter());
-            initScrollListener(recyclerView);
-        }
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        Context context = recyclerView.getContext();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(billsViewContent.getViewAdapter());
+        initScrollListener(recyclerView);
 
         return view;
     }
