@@ -85,4 +85,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     }
 
 
+    public List<Bill> getResultList() {
+        return this.resultList;
+    }
 }
