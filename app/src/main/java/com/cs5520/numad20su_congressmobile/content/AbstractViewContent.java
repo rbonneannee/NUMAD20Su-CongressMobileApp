@@ -12,7 +12,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.cs5520.numad20su_congressmobile.BuildConfig;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,18 +20,18 @@ import java.util.Map;
 
 abstract class AbstractViewContent<T> implements Response.Listener<String>,
         Response.ErrorListener {
+
     private static final String TAG = "AbstractViewContent";
-    VolleySingleton volleySingleton;
-    RequestQueue requestQueue;
-    List<T> resultList;
-    Gson gson;
-    RecyclerView.Adapter<? extends RecyclerView.ViewHolder> viewAdapter;
+
+    private RequestQueue requestQueue;
+
+    protected RecyclerView.Adapter<? extends RecyclerView.ViewHolder> viewAdapter;
+    protected List<T> resultList;
 
     public AbstractViewContent(Context context) {
-        this.volleySingleton = VolleySingleton.getInstance(context);
+        VolleySingleton volleySingleton = VolleySingleton.getInstance(context);
         this.requestQueue = volleySingleton.getRequestQueue();
         this.resultList = new ArrayList<>();
-        this.gson = new Gson();
     }
 
     static class ProPublicaRequest extends StringRequest {

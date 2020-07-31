@@ -153,6 +153,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             activityMainBinding.layoutMain.setVisibility(View.GONE);
         }
     }
-
-
 }
