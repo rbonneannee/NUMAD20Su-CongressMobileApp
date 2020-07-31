@@ -79,7 +79,6 @@ public class BillsFragment extends Fragment {
 
                 if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == billsViewContent.getResultList().size() - 1) {
-                        Log.d("hello", "hi");
                         loadMore();
                     }
                 }
