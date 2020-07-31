@@ -23,7 +23,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
     private int OFFSET_INCREMENT = 20;
 
-    private static String requestType = "";
+    private String requestType = "";
     private String query = "";
     private static int offset = 0;
 
@@ -35,19 +35,19 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
     // TODO Create filter methods to be called from a filter view
     public void getBills() {
-        requestType = REQUEST_RECENT;
+        resetLoad(REQUEST_RECENT);
         this.submitRequest(ENDPOINT + "?offset=" + offset);
         incrementOffset();
     }
 
     public void searchBillsBySubject(String subject) {
-        requestType = REQUEST_SUBJECT_SEARCH;
+        resetLoad(REQUEST_SUBJECT_SEARCH);
         this.query = subject;
         this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json");
     }
 
     public void searchBillsByKeyword(String keyword) {
-        requestType = REQUEST_KEYWORD_SEARCH;
+        resetLoad(REQUEST_KEYWORD_SEARCH);
         this.query = keyword;
         this.submitRequest(ENDPOINT_KEYWORD_SEARCH + keyword);
     }
@@ -71,14 +71,24 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
         offset += OFFSET_INCREMENT;
     }
 
+    private void resetLoad(String requestType) {
+        if (!this.requestType.equals(requestType)) {
+            this.requestType = requestType;
+            offset = 0;
+        }
+    }
+
     public void loadMore(){
         switch (requestType) {
             case "RECENT":
                 getBills();
+                break;
             case "KEYWORD SEARCH":
                 searchBillsByKeyword(this.query);
+                break;
             case "SUBJECT SEARCH":
                 searchBillsBySubject(this.query);
+                break;
             case "FILTER":
                 // TODO
         }

@@ -86,7 +86,7 @@ public class BillsFragment extends Fragment {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                billsViewContent.getBills();
+                billsViewContent.loadMore();
                 billsViewContent.getViewAdapter().notifyDataSetChanged();
                 isLoading = false;
 
