@@ -39,8 +39,8 @@ public class BillsFragment extends Fragment {
         initScrollListener(recyclerView);
 
         this.searchFld = view.findViewById(R.id.textInputEditText_keyword);
-        view.findViewById(R.id.imageButton_search).
-                setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.imageButton_search)
+                .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String query = searchFld.getText().toString();
