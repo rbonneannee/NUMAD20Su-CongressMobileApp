@@ -9,8 +9,13 @@ import java.util.List;
 
 public class CommitteesViewContent extends AbstractViewContent<Committee> {
 
-    // TODO List all committees, house, senate and joint
+    // Lists all committees, house, senate and joint
     private static final String ENDPOINT = "https://api.propublica.org/congress/v1/115/senate/committees.json";
+
+    enum RequestEnum {ALL, TEXT_SEARCH, FILTER}
+    private RequestEnum lastRequestType;
+    private String query;
+
 
     public CommitteesViewContent(Context context) {
         super(context);
@@ -18,12 +23,21 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
     }
 
     // TODO Create filter methods to be called from a filter view
-    public void getBills() {
+    public void getCommittees() {
+        this.lastRequestType = RequestEnum.ALL;
         this.submitRequest(ENDPOINT);
     }
 
     @Override
     List<Committee> getListFromJsonText(String jsonText) {
         return CommitteesJsonTextHandler.extract(jsonText);
+    }
+
+    public void loadMore() {
+        switch (this.lastRequestType) {
+            case FILTER:
+                // TODO
+                break;
+        }
     }
 }
