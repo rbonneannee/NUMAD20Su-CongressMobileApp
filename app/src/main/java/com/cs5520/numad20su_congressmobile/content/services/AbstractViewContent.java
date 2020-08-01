@@ -45,7 +45,7 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
 
 
     /**
-     * Constructs a Response.Listener object and initializes its "requestQueue" field to the
+     * Constructs a Volley Response object and initializes this object's "requestQueue" field to the
      * requestQueue of a VolleySingleton and its "resultList" to a new ArrayList object.
      *
      * @param context the context a view is running in
