@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.controllers.MembersViewContent;
+import com.cs5520.numad20su_congressmobile.content.services.MembersViewContent;
 
 /**
  * A fragment representing a list of Items.

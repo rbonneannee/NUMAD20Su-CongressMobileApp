@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.content.controllers;
+package com.cs5520.numad20su_congressmobile.content.services;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+
+ */
 abstract class AbstractViewContent<T> implements Response.Listener<String>,
         Response.ErrorListener {
 

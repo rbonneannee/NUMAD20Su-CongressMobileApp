@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.content.controllers.jsonHandlers;
+package com.cs5520.numad20su_congressmobile.content.services.jsonHandlers;
 
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.google.gson.Gson;
