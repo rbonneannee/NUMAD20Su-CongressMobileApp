@@ -4,7 +4,7 @@ package com.cs5520.numad20su_congressmobile.content;
 import android.content.Context;
 
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
-import com.cs5520.numad20su_congressmobile.controllers.BillsRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layout_adapters.BillsRecyclerViewAdapter;
 
 import java.util.List;
 

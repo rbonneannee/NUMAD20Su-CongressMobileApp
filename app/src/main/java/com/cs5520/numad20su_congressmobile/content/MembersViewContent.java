@@ -4,7 +4,7 @@ package com.cs5520.numad20su_congressmobile.content;
 import android.content.Context;
 
 import com.cs5520.numad20su_congressmobile.content.models.Member;
-import com.cs5520.numad20su_congressmobile.controllers.MembersRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layout_adapters.MembersRecyclerViewAdapter;
 
 import java.util.List;
 

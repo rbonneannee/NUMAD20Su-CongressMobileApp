@@ -3,7 +3,7 @@ package com.cs5520.numad20su_congressmobile.content;
 import android.content.Context;
 
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
-import com.cs5520.numad20su_congressmobile.controllers.CommitteesRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layout_adapters.CommitteesRecyclerViewAdapter;
 
 import java.util.List;
 

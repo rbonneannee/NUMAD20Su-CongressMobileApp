@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.controllers;
+package com.cs5520.numad20su_congressmobile.layout_adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,21 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.models.Committee;
+import com.cs5520.numad20su_congressmobile.content.models.Member;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Committee}.
+ * {@link RecyclerView.Adapter} that can display a {@link Member}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<CommitteesRecyclerViewAdapter.ViewHolder> {
+public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Committee> mValues;
+    private final List<Member> mValues;
     private int lastPosition = -1;
     private Context context;
 
-    public CommitteesRecyclerViewAdapter(List<Committee> items) {
+    public MembersRecyclerViewAdapter(List<Member> items) {
         mValues = items;
     }
 
@@ -42,9 +42,11 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).name);
+        Member member = mValues.get(position);
+        holder.mItem = member;
+        holder.mIdView.setText(member.id);
+        String text = member.short_title + " " + member.first_name + " " + member.last_name;
+        holder.mContentView.setText(text);
         holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
 
         Animation animation = AnimationUtils.loadAnimation(this.context,
@@ -62,7 +64,7 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public Committee mItem;
+        public Member mItem;
         public ImageView followIcon;
 
         public ViewHolder(View view) {
@@ -81,7 +83,7 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull CommitteesRecyclerViewAdapter.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull MembersRecyclerViewAdapter.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.itemView.clearAnimation();
     }

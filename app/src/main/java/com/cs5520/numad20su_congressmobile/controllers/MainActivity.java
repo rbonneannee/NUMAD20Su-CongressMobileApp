@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.databinding.ActivityMainBinding;
+import com.cs5520.numad20su_congressmobile.layout_adapters.MainFragmentPagerAdapter;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
