@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.BillsViewContent;
+import com.cs5520.numad20su_congressmobile.content.controllers.BillsViewContent;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class BillsFragment extends Fragment {

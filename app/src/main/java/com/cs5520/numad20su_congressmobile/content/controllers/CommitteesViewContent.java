@@ -1,9 +1,10 @@
-package com.cs5520.numad20su_congressmobile.content;
+package com.cs5520.numad20su_congressmobile.content.controllers;
 
 import android.content.Context;
 
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
-import com.cs5520.numad20su_congressmobile.layout_adapters.CommitteesRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.content.controllers.jsonHandlers.CommitteesJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.layout_adapters;
+package com.cs5520.numad20su_congressmobile.layoutAdapters;
 
 import android.content.Context;
 

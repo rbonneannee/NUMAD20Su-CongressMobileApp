@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.DummyContent;
-import com.cs5520.numad20su_congressmobile.layout_adapters.MyFeedRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.MyFeedRecyclerViewAdapter;
 
 // TODO Put logic to populate 'My Feed' here
 

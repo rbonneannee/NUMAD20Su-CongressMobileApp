@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.layout_adapters;
+package com.cs5520.numad20su_congressmobile.layoutAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,21 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.models.DummyItem;
+import com.cs5520.numad20su_congressmobile.content.models.Committee;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link Committee}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecyclerViewAdapter.ViewHolder> {
+public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<CommitteesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Committee> mValues;
     private int lastPosition = -1;
     private Context context;
 
-    public MyFeedRecyclerViewAdapter(List<DummyItem> items) {
+    public CommitteesRecyclerViewAdapter(List<Committee> items) {
         mValues = items;
     }
 
@@ -41,13 +41,11 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
     }
 
     @Override
-    // TODO On click unfollow this topic, bill, committee, or member
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mContentView.setText(mValues.get(position).name);
         holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
-        holder.followIcon.setOnClickListener(null);
 
         Animation animation = AnimationUtils.loadAnimation(this.context,
                 (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
@@ -64,7 +62,7 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public Committee mItem;
         public ImageView followIcon;
 
         public ViewHolder(View view) {
@@ -83,7 +81,7 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
     }
 
     @Override
-    public void onViewDetachedFromWindow(@NonNull MyFeedRecyclerViewAdapter.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull CommitteesRecyclerViewAdapter.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.itemView.clearAnimation();
     }

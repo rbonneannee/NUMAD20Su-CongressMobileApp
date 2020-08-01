@@ -1,10 +1,12 @@
-package com.cs5520.numad20su_congressmobile.content;
+package com.cs5520.numad20su_congressmobile.content.controllers;
 
 
 import android.content.Context;
 
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
-import com.cs5520.numad20su_congressmobile.layout_adapters.BillsRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.content.controllers.jsonHandlers.BillsJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.content.controllers.jsonHandlers.BillsSubjectSearchJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.BillsRecyclerViewAdapter;
 
 import java.util.List;
 
