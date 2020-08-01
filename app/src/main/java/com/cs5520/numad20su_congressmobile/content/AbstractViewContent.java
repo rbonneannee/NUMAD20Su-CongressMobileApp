@@ -75,4 +75,8 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
 
     abstract List<T> getListFromJsonText(String rawResponse);
 
+    public List<T> getResultList() {
+        return this.resultList;
+    }
+
 }

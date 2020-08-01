@@ -12,7 +12,7 @@ import java.util.List;
 // TODO Create filter methods to be called from a filter view
 public class BillsViewContent extends AbstractViewContent<Bill> {
 
-    enum RequestEnum {RECENT, SUBJECT, SEARCH;}
+    enum RequestEnum {RECENT, SUBJECT, KEYWORD;}
 
     private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/both/bills/active.json";
     private static final String ENDPOINT_SUBJECT_SEARCH = "https://api.propublica.org/congress/v1/bills/subjects/";
@@ -34,7 +34,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
         conditionalReset("", "", RequestEnum.RECENT, lastRequestType);
         this.lastRequestType = RequestEnum.RECENT;
         this.submitRequest(ENDPOINT + "?offset=" + offset);
-        incrementOffset(RequestEnum.RECENT);
+        incrementOffset();
     }
 
     public void getRecentBillsBySubject(String subject) {
@@ -42,22 +42,22 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
         conditionalReset(subject, this.subjectQuery, RequestEnum.SUBJECT, lastRequestType);
         this.subjectQuery = subject;
         this.submitRequest(ENDPOINT_SUBJECT_SEARCH + subject + ".json" + "?offset=" + offset);
-        incrementOffset(RequestEnum.SUBJECT);
+        incrementOffset();
     }
 
     public void searchBills(String query) {
-        this.lastRequestType = RequestEnum.SEARCH;
-        conditionalReset(query, this.searchQuery, RequestEnum.SEARCH, lastRequestType);
+        this.lastRequestType = RequestEnum.KEYWORD;
+        conditionalReset(query, this.searchQuery, RequestEnum.KEYWORD, lastRequestType);
         this.searchQuery = query;
         this.submitRequest(ENDPOINT_KEYWORD_SEARCH + query + "&offset=" + offset);
-        incrementOffset(RequestEnum.SEARCH);
+        incrementOffset();
     }
 
     @Override
     List<Bill> getListFromJsonText(String jsonText) {
         switch (this.lastRequestType) {
             case RECENT:
-            case SEARCH:
+            case KEYWORD:
                 return BillsJsonTextHandler.extract(jsonText);
             case SUBJECT:
                 return BillsSubjectSearchJsonTextHandler.extract(jsonText);
@@ -66,7 +66,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
         }
     }
 
-    private void incrementOffset(RequestEnum requestType) {
+    private void incrementOffset() {
         offset += OFFSET_INCREMENT;
     }
 
@@ -88,16 +88,12 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
             case RECENT:
                 getRecentBills();
                 break;
-            case SEARCH:
+            case KEYWORD:
                 searchBills(this.searchQuery);
                 break;
             case SUBJECT:
                 getRecentBillsBySubject(this.subjectQuery);
                 break;
         }
-    }
-
-    public List<Bill> getResultList() {
-        return this.resultList;
     }
 }
