@@ -24,8 +24,9 @@ import java.util.Map;
  * callback interface for delivering parsed responses, and Response.ErrorListener, a callback
  * interface for delivering error responses. The class represents the data and operations common to
  * all developed services sub-classed by it. Common fields include 1) a list of objects received
- * from the ProPublica server and translated from JSON and 2) an adapter that controls how the
- * details of those objects will be displayed in the application.
+ * from the ProPublica server and translated from JSON, 2) an adapter that controls how the
+ * details of those objects will be displayed in the application, 3) the offset and offset
+ * factor used for request pagination, and 4) a default query.
  */
 abstract class AbstractViewContent<T> implements Response.Listener<String>,
         Response.ErrorListener {
@@ -38,6 +39,10 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
     // Common fields
     protected RecyclerView.Adapter<? extends RecyclerView.ViewHolder> viewAdapter;
     protected List<T> resultList;
+    protected int offset;
+    protected int OFFSET_INCREMENT = 20;
+    protected String DEFAULT_QUERY = "";
+
 
     /**
      * Constructs a Response.Listener object and initializes its "requestQueue" field to the
@@ -49,6 +54,7 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
         VolleySingleton volleySingleton = VolleySingleton.getInstance(context);
         this.requestQueue = volleySingleton.getRequestQueue();
         this.resultList = new ArrayList<>();
+        this.offset = 0;
     }
 
     /**
@@ -138,6 +144,13 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
      */
     public List<T> getResultList() {
         return this.resultList;
+    }
+
+    /**
+     * Increments offset by the offsetIncrement factor.
+     */
+    protected void incrementOffset() {
+        this.offset += this.OFFSET_INCREMENT;
     }
 
     /**

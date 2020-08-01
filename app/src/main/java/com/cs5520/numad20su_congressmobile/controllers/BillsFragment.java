@@ -44,7 +44,7 @@ public class BillsFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         String query = searchFld.getText().toString();
-                        billsViewContent.searchBills(query);
+                        billsViewContent.getBillsWithKeyword(query);
 
                     }
                 });
