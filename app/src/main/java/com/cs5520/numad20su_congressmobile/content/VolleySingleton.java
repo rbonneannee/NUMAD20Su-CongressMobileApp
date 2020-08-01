@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.content.services;
+package com.cs5520.numad20su_congressmobile.content;
 
 import android.content.Context;
 
