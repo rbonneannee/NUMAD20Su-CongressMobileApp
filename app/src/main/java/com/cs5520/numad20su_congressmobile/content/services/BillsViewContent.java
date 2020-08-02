@@ -48,7 +48,8 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
         // Endpoint URLs
         this.endpointAllItems =
-                "https://api.propublica.org/congress/v1/116/both/bills/introduced.json?offset=";
+                "https://api.propublica.org/congress/v1/" + this.currentSession
+                        + "/both/bills/introduced.json?offset=";
         this.endpointBillsSubjectSearch =
                 "https://api.propublica.org/congress/v1/bills/subjects/";
         this.endpointBillsKeywordSearch =

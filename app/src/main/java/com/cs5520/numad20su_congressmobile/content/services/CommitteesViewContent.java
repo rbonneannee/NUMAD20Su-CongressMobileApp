@@ -19,24 +19,26 @@ import java.util.List;
  */
 public class CommitteesViewContent extends AbstractViewContent<Committee> {
 
-    // Lists all committees, house, senate and joint
-    private static final String ENDPOINT = "https://api.propublica.org/congress/v1/115/senate/committees.json";
-
-    enum RequestEnum {ALL, TEXT_SEARCH, FILTER}
-    private RequestEnum lastRequestType;
-    private String query;
+    private GetRequestType prevGetRequestType;
+    private String selectedChamber;
 
 
     public CommitteesViewContent(Context context) {
         super(context);
         this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList);
+
+        // Lists all committees, house, senate and joint
+        this.selectedChamber = "senate";
+        this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession
+                + "/";
+;
     }
 
     // TODO Create filter methods to be called from a filter view
     @Override
     public void getAllItems() {
-        this.lastRequestType = RequestEnum.ALL;
-        this.submitRequest(ENDPOINT);
+        this.prevGetRequestType = GetRequestType.ALL;
+        this.submitRequest(endpointAllItems + this.selectedChamber + "/committees.json");
     }
 
     @Override
@@ -45,7 +47,7 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
     }
 
     public void loadMore() {
-        switch (this.lastRequestType) {
+        switch (this.prevGetRequestType) {
             case FILTER:
                 // TODO
                 break;
