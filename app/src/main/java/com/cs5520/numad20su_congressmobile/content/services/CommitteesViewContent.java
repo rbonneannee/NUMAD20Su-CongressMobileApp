@@ -13,7 +13,7 @@ import java.util.List;
  * the ProPublica Congress database to the application. CommitteeViewContent objects have endpoints
  * to which they can make GET requests, and an enumerated type and a string query for keeping track
  * of the committee information previously requested from the ProPublica server.
- * CommitteeViewContent objects can convert a JSON String response to a list of all Committee objects
+ * CommitteeViewContent objects can convert a JSON String response to a list of Committee objects
  * for all and keyword searched committees and can request the next page of results if desired by
  * the user.
  */

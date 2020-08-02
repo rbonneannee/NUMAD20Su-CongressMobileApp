@@ -22,8 +22,7 @@ import java.util.List;
 public class BillsViewContent extends AbstractViewContent<Bill> {
 
     // Classifies and holds type of information requested from server
-    enum RequestEnum {RECENT, SUBJECT, KEYWORD;}
-    private RequestEnum prevRequestEnum;
+    private GetRequestType prevGetRequestType;
     private String prevKeywordQuery;
     // TODO determine if application will support search by subject
     private String prevSubjectQuery;
@@ -44,7 +43,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     public BillsViewContent(Context context) {
         super(context);
         this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList);
-        this.prevRequestEnum = RequestEnum.RECENT;
+        this.prevGetRequestType = GetRequestType.ALL;
         this.prevKeywordQuery  = this.DEFAULT_QUERY;
         this.prevSubjectQuery = this.DEFAULT_QUERY;
 
@@ -59,12 +58,13 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
     /**
      * Checks if the requested information is the same as the previously requested information. If
-     * so, submits a request for the next page of recent bills; if not, submits a request for the
-     * first page of recent bills.
+     * so, submits a request for the next page of bills; if not, submits a request for the
+     * first page of bills. Results are organized from most recently updated to least recently
+     * updated.
      */
     @Override
     public void getAllItems() {
-        if (!conditionalReset(RequestEnum.RECENT, this.DEFAULT_QUERY, this.DEFAULT_QUERY)){
+        if (!conditionalReset(GetRequestType.ALL, this.DEFAULT_QUERY, this.DEFAULT_QUERY)){
             incrementOffset();
         }
         this.submitRequest(this.endpointBillsRecent + this.offset);
@@ -78,7 +78,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      * @param keyword a String to search for in the title and full text of legislation
      */
     public void getBillsWithKeyword(String keyword) {
-        if (conditionalReset(RequestEnum.KEYWORD, keyword, this.prevKeywordQuery)) {
+        if (conditionalReset(GetRequestType.TEXT_SEARCH, keyword, this.prevKeywordQuery)) {
             this.prevKeywordQuery = keyword;
         } else {
             incrementOffset();
@@ -97,7 +97,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      * @param subject a legislative subject
      */
     public void getBillsWithSubject(String subject) {
-        if (conditionalReset(RequestEnum.SUBJECT, subject, this.prevSubjectQuery)) {
+        if (conditionalReset(GetRequestType.SUBJECT_SEARCH, subject, this.prevSubjectQuery)) {
             this.prevSubjectQuery = subject;
         } else {
             incrementOffset();
@@ -115,12 +115,14 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      */
     @Override
     List<Bill> getListFromJsonText(String jsonText) {
-        switch (this.prevRequestEnum) {
-            case RECENT:
-            case KEYWORD:
+        switch (this.prevGetRequestType) {
+            case ALL:
+            case TEXT_SEARCH:
                 return BillsJsonTextHandler.extract(jsonText);
-            case SUBJECT:
+            case SUBJECT_SEARCH:
                 return BillsSubjectSearchJsonTextHandler.extract(jsonText);
+            case FILTER:
+                // TODO
             default:
                 return null;
         }
@@ -132,18 +134,18 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      * and query. If the requests are different, resets the page, clears the list of results, and
      * updates the previous requestEnum to the current requestEnum.
      *
-     * @param currentRequestEnum the category of information requested
+     * @param currentGetRequestType the category of information requested
      * @param currentQuery the query the request will filter its results on
      * @param prevQuery the query the request previously filtered its results on
      * @return true if the request is different from the previous request; otherwise, false
      */
-    private boolean conditionalReset(RequestEnum currentRequestEnum, String currentQuery,
+    private boolean conditionalReset(GetRequestType currentGetRequestType, String currentQuery,
                                      String prevQuery) {
         boolean isReset = false;
-        if ((!currentQuery.equals(prevQuery)) || (currentRequestEnum != this.prevRequestEnum)) {
+        if ((!currentQuery.equals(prevQuery)) || (currentGetRequestType != this.prevGetRequestType)) {
             this.offset = 0;
             this.resultList.clear();
-            this.prevRequestEnum = currentRequestEnum;
+            this.prevGetRequestType = currentGetRequestType;
             isReset = true;
         }
         return isReset;
@@ -153,16 +155,18 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      * Delegates loading of next page of results to the appropriate method.
      */
     public void loadMore() {
-        switch (this.prevRequestEnum) {
-            case RECENT:
+        switch (this.prevGetRequestType) {
+            case ALL:
                 getAllItems();
                 break;
-            case KEYWORD:
+            case TEXT_SEARCH:
                 getBillsWithKeyword(this.prevKeywordQuery);
                 break;
-            case SUBJECT:
+            case SUBJECT_SEARCH:
                 // TODO determine if application will support search by subject
                 getBillsWithSubject(this.prevSubjectQuery);
+                break;
+            case FILTER:
                 break;
         }
     }
