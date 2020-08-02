@@ -32,7 +32,7 @@ public class MembersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_members, container, false);
 
         MembersViewContent membersViewContent = new MembersViewContent(this.getContext());
-        membersViewContent.getContent();
+        membersViewContent.getAllItems();
 
         // Set the adapter
         if (view instanceof RecyclerView) {

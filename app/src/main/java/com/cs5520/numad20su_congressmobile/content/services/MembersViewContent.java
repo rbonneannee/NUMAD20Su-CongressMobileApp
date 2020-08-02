@@ -20,7 +20,8 @@ public class MembersViewContent extends AbstractViewContent<Member> {
     }
 
     // TODO Create filter methods to be called from a filter view
-    public void getContent() {
+    @Override
+    public void getAllItems() {
         this.submitRequest(ENDPOINT);
     }
 

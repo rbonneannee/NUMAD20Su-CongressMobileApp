@@ -29,7 +29,7 @@ public class BillsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bills, container, false);
 
         billsViewContent = new BillsViewContent(this.getContext());
-        billsViewContent.getRecentBills();
+        billsViewContent.getAllItems();
 
         // Set the adapter
         RecyclerView recyclerView = view.findViewById(R.id.list);

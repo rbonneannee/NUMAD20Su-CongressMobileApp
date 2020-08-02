@@ -161,4 +161,11 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
      * @return a list of objects of type T
      */
     abstract List<T> getListFromJsonText(String rawResponse);
+
+    /**
+     * Checks if the requested information is the same as the previously requested information. If
+     * so, submits a request for the next page of results; if not, submits a request for the
+     * first page of recent results.
+     */
+    abstract void getAllItems();
 }

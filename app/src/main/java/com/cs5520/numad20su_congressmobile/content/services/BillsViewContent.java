@@ -12,7 +12,7 @@ import java.util.List;
 
 // TODO Create filter methods to be called from a filter view
 /**
- * This class extends AbstractViewContent and and is a service that provides bill information from
+ * This class extends AbstractViewContent and is a service that provides bill information from
  * the ProPublica Congress database to the application. BillViewContent objects have endpoints to
  * which they can make GET requests, and an enumerated type and a string query for keeping track of
  * the bill information previously requested from the ProPublica server. BillViewContent objects
@@ -62,7 +62,8 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      * so, submits a request for the next page of recent bills; if not, submits a request for the
      * first page of recent bills.
      */
-    public void getRecentBills() {
+    @Override
+    public void getAllItems() {
         if (!conditionalReset(RequestEnum.RECENT, this.DEFAULT_QUERY, this.DEFAULT_QUERY)){
             incrementOffset();
         }
@@ -154,7 +155,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     public void loadMore() {
         switch (this.prevRequestEnum) {
             case RECENT:
-                getRecentBills();
+                getAllItems();
                 break;
             case KEYWORD:
                 getBillsWithKeyword(this.prevKeywordQuery);

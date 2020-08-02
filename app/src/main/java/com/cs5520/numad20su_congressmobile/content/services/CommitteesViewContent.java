@@ -8,6 +8,15 @@ import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerView
 
 import java.util.List;
 
+/**
+ * This class extends AbstractViewContent and is a service that provides committee information from
+ * the ProPublica Congress database to the application. CommitteeViewContent objects have endpoints
+ * to which they can make GET requests, and an enumerated type and a string query for keeping track
+ * of the committee information previously requested from the ProPublica server.
+ * CommitteeViewContent objects can convert a JSON String response to a list of all Committee objects
+ * for all and keyword searched committees and can request the next page of results if desired by
+ * the user.
+ */
 public class CommitteesViewContent extends AbstractViewContent<Committee> {
 
     // Lists all committees, house, senate and joint
@@ -24,7 +33,8 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
     }
 
     // TODO Create filter methods to be called from a filter view
-    public void getCommittees() {
+    @Override
+    public void getAllItems() {
         this.lastRequestType = RequestEnum.ALL;
         this.submitRequest(ENDPOINT);
     }

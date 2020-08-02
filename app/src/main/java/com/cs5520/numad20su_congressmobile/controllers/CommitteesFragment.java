@@ -39,7 +39,7 @@ public class CommitteesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_committees, container, false);
 
         this.committeesViewContent = new CommitteesViewContent(this.getContext());
-        this.committeesViewContent.getCommittees();
+        this.committeesViewContent.getAllItems();
 
         // Set the adapter
         RecyclerView recyclerView = view.findViewById(R.id.list_committees);
