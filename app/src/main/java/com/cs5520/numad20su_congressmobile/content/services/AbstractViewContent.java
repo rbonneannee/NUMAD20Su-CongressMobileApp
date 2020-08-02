@@ -41,6 +41,7 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
     private RequestQueue requestQueue;
 
     // Common fields
+    protected String endpointAllItems;
     protected RecyclerView.Adapter<? extends RecyclerView.ViewHolder> viewAdapter;
     protected List<T> resultList;
     protected int offset;
