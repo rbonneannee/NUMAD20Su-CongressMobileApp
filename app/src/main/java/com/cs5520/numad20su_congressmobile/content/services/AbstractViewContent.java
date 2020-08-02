@@ -22,11 +22,15 @@ import java.util.Map;
 /**
  * This class is the outer class of a nested class structure. It inherits from Response.Listener, a
  * callback interface for delivering parsed responses, and Response.ErrorListener, a callback
- * interface for delivering error responses. The class represents the data and operations common to
- * all developed services sub-classed by it. Common fields include 1) a list of objects received
- * from the ProPublica server and translated from JSON, 2) an adapter that controls how the
- * details of those objects will be displayed in the application, 3) the offset and offset
- * factor used for request pagination, and 4) a default query.
+ * interface for delivering error responses.
+ *
+ * The class represents the data and operations common to all developed services sub-classed by it.
+ * Common fields include 1) a list of objects received from the ProPublica server and translated
+ * from JSON, 2) an adapter that controls how the details of those objects will be displayed in the
+ * application, 3) the offset and offset factor used for request pagination, and 4) a default query.
+ * Common methods include 1) requesting a JSON array in String format from the server, 2) converting
+ * that String into a list of objects, 3) returning the list of objects, 4) returning the adapter,
+ * and 5) incrementing the value of offset so as to get the next page of results.
  */
 abstract class AbstractViewContent<T> implements Response.Listener<String>,
         Response.ErrorListener {
