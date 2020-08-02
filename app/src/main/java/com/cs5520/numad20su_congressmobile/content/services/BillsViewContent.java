@@ -34,7 +34,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     /**
      * Constructs a BillViewContent object and sets its context to the given context, its
      * viewAdapter to a newly instantiated BillRecyclerViewAdapter object, its previously
-     * requested information to recent bills, and its endpoints to the server endpoints
+     * requested information to all bills, and its endpoints to the server endpoints
      * supported by the application.
      *
      * @param context the context a view is running in
@@ -48,7 +48,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
         // Endpoint URLs
         this.endpointAllItems =
-                "https://api.propublica.org/congress/v1/" + this.currentSession
+                "https://api.propublica.org/congress/v1/" + this.currentCongressMeeting
                         + "/both/bills/introduced.json?offset=";
         this.endpointBillsSubjectSearch =
                 "https://api.propublica.org/congress/v1/bills/subjects/";

@@ -29,8 +29,8 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
 
         // Lists all committees, house, senate and joint
         this.selectedChamber = "senate";
-        this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession
-                + "/";
+        this.endpointAllItems = "https://api.propublica.org/congress/v1/"
+                + this.currentCongressMeeting + "/";
 ;
     }
 

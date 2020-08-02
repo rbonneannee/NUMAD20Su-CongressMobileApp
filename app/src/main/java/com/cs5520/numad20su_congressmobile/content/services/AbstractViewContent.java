@@ -48,7 +48,7 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
     protected int offset;
     protected int OFFSET_INCREMENT = 20;
     protected String DEFAULT_QUERY = "";
-    protected int currentSession = 116;
+    protected int currentCongressMeeting = 116;
 
 
     /**
