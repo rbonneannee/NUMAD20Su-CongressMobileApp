@@ -17,7 +17,8 @@ import java.util.List;
  * which they can make GET requests, and an enumerated type and a string query for keeping track of
  * the bill information previously requested from the ProPublica server. BillViewContent objects
  * can convert a JSON String response to a list of Bill objects for recent and keyword searched
- * bills and request the next page of results if desired by the user.
+ * bills from the current meeting of Congress and can request the next page of results if desired by
+ * the user.
  */
 public class BillsViewContent extends AbstractViewContent<Bill> {
 
