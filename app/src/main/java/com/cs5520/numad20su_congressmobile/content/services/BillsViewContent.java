@@ -59,7 +59,8 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     /**
      * Checks if the requested information is the same as the previously requested information. If
      * so, submits a request for the next page of bills; if not, submits a request for the
-     * first page of bills. Results are organized in descending order by introduction date.
+     * first page of bills. Results are from the current meeting of Congress and are organized in
+     * descending order by introduction date.
      */
     @Override
     public void getAllItems() {
