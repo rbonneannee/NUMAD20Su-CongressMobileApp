@@ -28,7 +28,6 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     private String prevSubjectQuery;
 
     // Supported server endpoints
-    private final String endpointBillsRecent;
     private final String endpointBillsSubjectSearch;
     private final String endpointBillsKeywordSearch;
 
@@ -48,8 +47,8 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
         this.prevSubjectQuery = this.DEFAULT_QUERY;
 
         // Endpoint URLs
-        this.endpointBillsRecent =
-                "https://api.propublica.org/congress/v1/116/both/bills/active.json?offset=";
+        this.endpointAllItems =
+                "https://api.propublica.org/congress/v1/116/both/bills/introduced.json?offset=";
         this.endpointBillsSubjectSearch =
                 "https://api.propublica.org/congress/v1/bills/subjects/";
         this.endpointBillsKeywordSearch =
@@ -59,15 +58,14 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     /**
      * Checks if the requested information is the same as the previously requested information. If
      * so, submits a request for the next page of bills; if not, submits a request for the
-     * first page of bills. Results are organized from most recently updated to least recently
-     * updated.
+     * first page of bills. Results are organized in descending order by introduction date.
      */
     @Override
     public void getAllItems() {
         if (!conditionalReset(GetRequestType.ALL, this.DEFAULT_QUERY, this.DEFAULT_QUERY)){
             incrementOffset();
         }
-        this.submitRequest(this.endpointBillsRecent + this.offset);
+        this.submitRequest(this.endpointAllItems + this.offset);
     }
 
     /**
