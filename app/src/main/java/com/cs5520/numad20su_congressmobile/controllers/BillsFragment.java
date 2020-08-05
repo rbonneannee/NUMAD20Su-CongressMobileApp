@@ -82,23 +82,4 @@ public class BillsFragment extends Fragment {
             }
         });
     }
-//<<<<<<< HEAD
-//
-//    private void loadMore() {
-//        final List<Bill> itemsList = billsViewContent.getResultList();
-//
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                billsViewContent.loadMore();
-//                billsViewContent.getViewAdapter().notifyDataSetChanged();
-//                isLoading = false;
-//            }
-//        }, 2000);
-//    }
-//
-//
-//=======
-//>>>>>>> 8045c59ca6e0df5bd0412c153f8cdc43e925f6a8
 }
