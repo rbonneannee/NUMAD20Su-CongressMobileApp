@@ -1,9 +1,8 @@
-package com.cs5520.numad20su_congressmobile.content;
+package com.cs5520.numad20su_congressmobile.content.services.jsonHandlers;
 
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BillsSubjectSearchJsonTextHandler {

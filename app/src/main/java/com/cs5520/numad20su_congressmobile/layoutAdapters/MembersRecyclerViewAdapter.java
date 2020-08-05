@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.controllers;
+package com.cs5520.numad20su_congressmobile.layoutAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

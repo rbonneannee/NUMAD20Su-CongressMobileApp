@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.controllers;
+package com.cs5520.numad20su_congressmobile.layoutAdapters;
 
 import android.content.Context;
 
@@ -8,6 +8,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.cs5520.numad20su_congressmobile.R;
+import com.cs5520.numad20su_congressmobile.controllers.BillsFragment;
+import com.cs5520.numad20su_congressmobile.controllers.CommitteesFragment;
+import com.cs5520.numad20su_congressmobile.controllers.MembersFragment;
+import com.cs5520.numad20su_congressmobile.controllers.MyFeedFragment;
 
 public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 

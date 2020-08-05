@@ -1,10 +1,11 @@
-package com.cs5520.numad20su_congressmobile.content;
+package com.cs5520.numad20su_congressmobile.content.services;
 
 
 import android.content.Context;
 
 import com.cs5520.numad20su_congressmobile.content.models.Member;
-import com.cs5520.numad20su_congressmobile.controllers.MembersRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.MembersJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.MembersRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -19,7 +20,8 @@ public class MembersViewContent extends AbstractViewContent<Member> {
     }
 
     // TODO Create filter methods to be called from a filter view
-    public void getContent() {
+    @Override
+    public void getAllItems() {
         this.submitRequest(ENDPOINT);
     }
 

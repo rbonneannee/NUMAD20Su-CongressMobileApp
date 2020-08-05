@@ -1,4 +1,4 @@
-package com.cs5520.numad20su_congressmobile.controllers;
+package com.cs5520.numad20su_congressmobile.layoutAdapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,9 +18,6 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import java.util.List;
 
 public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
-
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
 
     private List<Bill> items;
     private int lastPosition = -1;
@@ -53,18 +50,10 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         holder.itemView.startAnimation(animation);
         lastPosition = position;
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent openDetailsIntent = new Intent(this, BillDetailActivity.class);
-//
-//                Toast.makeText(context, "Biff!", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
         if (lastPosition == items.size()) {
 
         }
+
     }
 
     @Override
@@ -114,5 +103,4 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
     public interface OnBillListener {
         void onBillClick(Bill bill);
     }
-
 }

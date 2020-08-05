@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
+import com.cs5520.numad20su_congressmobile.content.services.AbstractViewContent;
+import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsSubjectSearchJsonTextHandler;
 import com.cs5520.numad20su_congressmobile.controllers.BillDetailsActivity;
-import com.cs5520.numad20su_congressmobile.controllers.BillsRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.BillsRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,7 @@ import java.util.logging.LogRecord;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
-public class BillsViewContent extends AbstractViewContent<Bill>  implements BillsRecyclerViewAdapter.OnBillListener {
+public class BillsViewContent extends AbstractViewContent<Bill> implements BillsRecyclerViewAdapter.OnBillListener {
 
     private String REQUEST_RECENT = "RECENT";
     private String REQUEST_SUBJECT_SEARCH = "SUBJECT SEARCH";
@@ -70,7 +73,7 @@ public class BillsViewContent extends AbstractViewContent<Bill>  implements Bill
     }
 
     @Override
-    List<Bill> getListFromJsonText(String jsonText) {
+    public List<Bill> getListFromJsonText(String jsonText) {
         switch (requestType) {
             case "RECENT":
             case "KEYWORD SEARCH":
@@ -84,7 +87,12 @@ public class BillsViewContent extends AbstractViewContent<Bill>  implements Bill
         }
     }
 
-    private void incrementOffset() {
+    @Override
+    public void getAllItems() {
+
+    }
+
+    protected void incrementOffset() {
         offset += OFFSET_INCREMENT;
     }
 

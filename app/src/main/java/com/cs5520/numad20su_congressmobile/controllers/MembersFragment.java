@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
-import com.cs5520.numad20su_congressmobile.content.MembersViewContent;
+import com.cs5520.numad20su_congressmobile.content.services.MembersViewContent;
 
 /**
  * A fragment representing a list of Items.
@@ -32,7 +32,7 @@ public class MembersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_members, container, false);
 
         MembersViewContent membersViewContent = new MembersViewContent(this.getContext());
-        membersViewContent.getContent();
+        membersViewContent.getAllItems();
 
         // Set the adapter
         if (view instanceof RecyclerView) {
