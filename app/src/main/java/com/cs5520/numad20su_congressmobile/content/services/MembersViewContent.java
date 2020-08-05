@@ -26,7 +26,7 @@ public class MembersViewContent extends AbstractViewContent<Member> {
     }
 
     @Override
-    List<Member> getListFromJsonText(String jsonText) {
+    public List<Member> getListFromJsonText(String jsonText) {
         return MembersJsonTextHandler.extract(jsonText);
     }
 

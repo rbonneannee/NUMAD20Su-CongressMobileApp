@@ -13,7 +13,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.cs5520.numad20su_congressmobile.BuildConfig;
 import com.cs5520.numad20su_congressmobile.content.VolleySingleton;
-import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,8 +160,14 @@ public abstract class AbstractViewContent<T> implements Response.Listener<String
         this.offset += this.OFFSET_INCREMENT;
     }
 
-
-    public abstract List<Bill> getListFromJsonText(String jsonText);
+    /**
+     * Returns a list of objects of type T by delegating the conversion of a String response to an
+     * object to the appropriate JSON Handler.
+     *
+     * @param rawResponse a GET request's response as a String
+     * @return a list of objects of type T
+     */
+    public abstract List<T> getListFromJsonText(String rawResponse);
 
     /**
      * Checks if the requested information is the same as the previously requested information. If

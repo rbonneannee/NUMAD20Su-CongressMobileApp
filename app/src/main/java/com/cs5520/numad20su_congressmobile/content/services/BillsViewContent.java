@@ -1,14 +1,25 @@
 package com.cs5520.numad20su_congressmobile.content.services;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
+import com.cs5520.numad20su_congressmobile.content.services.AbstractViewContent;
+import com.cs5520.numad20su_congressmobile.content.services.GetRequestType;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsJsonTextHandler;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsSubjectSearchJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.controllers.BillDetailsActivity;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.BillsRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
+import static androidx.core.content.ContextCompat.startActivity;
 
 // TODO Create filter methods to be called from a filter view
 /**
@@ -19,13 +30,16 @@ import java.util.List;
  * can convert a JSON String response to a list of Bill objects for recent and keyword searched
  * bills and request the next page of results if desired by the user.
  */
-public class BillsViewContent extends AbstractViewContent<Bill> {
+
+public class BillsViewContent extends AbstractViewContent<Bill> implements BillsRecyclerViewAdapter.OnBillListener {
 
     // Classifies and holds type of information requested from server
     private GetRequestType prevGetRequestType;
     private String prevKeywordQuery;
     // TODO determine if application will support search by subject
     private String prevSubjectQuery;
+    private Context mContext;
+    private Activity activity;
 
     // Supported server endpoints
     private final String endpointBillsSubjectSearch;
@@ -39,12 +53,14 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      *
      * @param context the context a view is running in
      */
-    public BillsViewContent(Context context) {
+    public BillsViewContent(Context context, Activity activity) {
         super(context);
-        this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList);
+        this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList, this);
         this.prevGetRequestType = GetRequestType.ALL;
         this.prevKeywordQuery  = this.DEFAULT_QUERY;
         this.prevSubjectQuery = this.DEFAULT_QUERY;
+        this.mContext = context;
+        this.activity = activity;
 
         // Endpoint URLs
         this.endpointAllItems =
@@ -61,6 +77,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      * so, submits a request for the next page of bills; if not, submits a request for the
      * first page of bills. Results are organized in descending order by introduction date.
      */
+
     @Override
     public void getAllItems() {
         if (!conditionalReset(GetRequestType.ALL, this.DEFAULT_QUERY, this.DEFAULT_QUERY)){
@@ -113,7 +130,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      * @return a list of Bill objects corresponding to the server's response.
      */
     @Override
-    List<Bill> getListFromJsonText(String jsonText) {
+    public List<Bill> getListFromJsonText(String jsonText) {
         switch (this.prevGetRequestType) {
             case ALL:
             case TEXT_SEARCH:
@@ -168,5 +185,14 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
             case FILTER:
                 break;
         }
+    }
+
+
+    @Override
+    public void onBillClick(Bill bill) {
+        Intent openDetailsIntent = new Intent(activity, BillDetailsActivity.class);
+        openDetailsIntent.putExtra("bill", bill);
+        mContext.startActivity(openDetailsIntent);
+        //Toast.makeText(, "Biff!", Toast.LENGTH_LONG).show();
     }
 }

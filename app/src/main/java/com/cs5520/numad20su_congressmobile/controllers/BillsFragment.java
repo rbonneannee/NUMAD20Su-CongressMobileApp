@@ -28,13 +28,8 @@ public class BillsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bills, container, false);
 
-//<<<<<<< HEAD
-//        billsViewContent = new BillsViewContent(this.getContext(), getActivity());
-//        billsViewContent.getBills();
-//=======
-        billsViewContent = new BillsViewContent(this.getContext());
+        billsViewContent = new BillsViewContent(this.getContext(), getActivity());
         billsViewContent.getAllItems();
-//>>>>>>> 8045c59ca6e0df5bd0412c153f8cdc43e925f6a8
 
         // Set the adapter
         RecyclerView recyclerView = view.findViewById(R.id.list);

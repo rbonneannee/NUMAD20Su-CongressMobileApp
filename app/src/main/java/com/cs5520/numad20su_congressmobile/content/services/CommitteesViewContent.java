@@ -42,7 +42,7 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
     }
 
     @Override
-    List<Committee> getListFromJsonText(String jsonText) {
+    public List<Committee> getListFromJsonText(String jsonText) {
         return CommitteesJsonTextHandler.extract(jsonText);
     }
 
