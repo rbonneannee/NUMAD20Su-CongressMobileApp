@@ -25,9 +25,11 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
     private List<Bill> items;
     private int lastPosition = -1;
     private Context context;
+    private OnBillListener mOnBillListener;
 
-    public BillsRecyclerViewAdapter(List<Bill> items) {
+    public BillsRecyclerViewAdapter(List<Bill> items, OnBillListener onBillListener) {
         this.items = items;
+        this.mOnBillListener = onBillListener;
     }
 
     @NonNull
@@ -36,7 +38,7 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         this.context = parent.getContext();
         View view = LayoutInflater.from(this.context)
                 .inflate(R.layout.card_layout, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnBillListener);
     }
 
     @Override
@@ -51,6 +53,15 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         holder.itemView.startAnimation(animation);
         lastPosition = position;
 
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent openDetailsIntent = new Intent(this, BillDetailActivity.class);
+//
+//                Toast.makeText(context, "Biff!", Toast.LENGTH_LONG).show();
+//            }
+//        });
+
         if (lastPosition == items.size()) {
 
         }
@@ -61,19 +72,23 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public final View view;
         public final TextView idView;
         public final TextView contentView;
         public Bill bill;
         public ImageView followIcon;
+        OnBillListener onBillListener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnBillListener onBillListener) {
             super(view);
             this.view = view;
             idView = view.findViewById(R.id.item_number);
             contentView = view.findViewById(R.id.content);
             followIcon = view.findViewById(R.id.follow_icon);
+            this.onBillListener = onBillListener;
+
+            itemView.setOnClickListener(this);
         }
 
         @NonNull
@@ -81,12 +96,23 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         public String toString() {
             return super.toString() + " '" + contentView.getText() + "'";
         }
+
+        @Override
+        public void onClick(View view) {
+            onBillListener.onBillClick(bill);
+        }
     }
+
+
 
     @Override
     public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.itemView.clearAnimation();
+    }
+
+    public interface OnBillListener {
+        void onBillClick(Bill bill);
     }
 
 }

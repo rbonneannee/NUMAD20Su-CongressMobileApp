@@ -47,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void openSettings() {
+        Intent openSettingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(openSettingsIntent);
+    }
+
     public void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -110,7 +115,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i = view.getId();
         switch (view.getId()) {
             case R.id.profile_picture:
-                getImage();
+                //getImage();
+                openSettings();
                 break;
             case R.id.buttonSignIn:
                 startSignIn();

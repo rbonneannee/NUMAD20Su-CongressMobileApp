@@ -3,8 +3,6 @@ package com.cs5520.numad20su_congressmobile.controllers;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +40,7 @@ public class BillsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.f_bills, container, false);
 
-        billsViewContent = new BillsViewContent(this.getContext());
+        billsViewContent = new BillsViewContent(this.getContext(), getActivity());
         billsViewContent.getBills();
 
         // Set the adapter
@@ -99,4 +97,6 @@ public class BillsFragment extends Fragment {
             }
         }, 2000);
     }
+
+
 }

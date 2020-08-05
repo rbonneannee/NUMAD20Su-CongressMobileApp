@@ -1,9 +1,13 @@
 package com.cs5520.numad20su_congressmobile.content;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
+import com.cs5520.numad20su_congressmobile.controllers.BillDetailsActivity;
 import com.cs5520.numad20su_congressmobile.controllers.BillsRecyclerViewAdapter;
 
 import java.util.ArrayList;
@@ -11,7 +15,9 @@ import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-public class BillsViewContent extends AbstractViewContent<Bill> {
+import static androidx.core.content.ContextCompat.startActivity;
+
+public class BillsViewContent extends AbstractViewContent<Bill>  implements BillsRecyclerViewAdapter.OnBillListener {
 
     private String REQUEST_RECENT = "RECENT";
     private String REQUEST_SUBJECT_SEARCH = "SUBJECT SEARCH";
@@ -27,11 +33,15 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
     private String requestType = REQUEST_RECENT;
     private String query = "";
     private static int offset = 0;
+    private Context mContext;
+    private Activity activity;
 
 
-    public BillsViewContent(Context context) {
+    public BillsViewContent(Context context, Activity activity) {
         super(context);
-        this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList);
+        this.mContext = context;
+        this.activity = activity;
+        this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList, this);
     }
 
     // TODO Create filter methods to be called from a filter view
@@ -107,5 +117,13 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
 
     public void resetResultList() {
         this.resultList.clear();
+    }
+
+    @Override
+    public void onBillClick(Bill bill) {
+        Intent openDetailsIntent = new Intent(activity, BillDetailsActivity.class);
+        openDetailsIntent.putExtra("bill", bill);
+        mContext.startActivity(openDetailsIntent);
+        //Toast.makeText(, "Biff!", Toast.LENGTH_LONG).show();
     }
 }
