@@ -46,7 +46,7 @@ public class MyFeedRecyclerViewAdapter extends RecyclerView.Adapter<MyFeedRecycl
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
-        holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+        holder.followIcon.setImageResource(R.drawable.heart_open);
         holder.followIcon.setOnClickListener(null);
 
         Animation animation = AnimationUtils.loadAnimation(this.context,

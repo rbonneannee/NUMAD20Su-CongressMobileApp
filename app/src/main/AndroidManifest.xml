@@ -16,8 +16,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".controllers.BillDetailsActivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".controllers.BillDetailsActivity" />
 
         <meta-data
             android:name="com.google.android.wearable.standalone"
