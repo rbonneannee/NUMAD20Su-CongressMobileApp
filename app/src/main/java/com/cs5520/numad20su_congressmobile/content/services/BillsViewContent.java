@@ -29,6 +29,9 @@ import static androidx.core.content.ContextCompat.startActivity;
  * the bill information previously requested from the ProPublica server. BillViewContent objects
  * can convert a JSON String response to a list of Bill objects for recent and keyword searched
  * bills and request the next page of results if desired by the user.
+ *
+ *
+ * implements is needed
  */
 
 public class BillsViewContent extends AbstractViewContent<Bill> implements BillsRecyclerViewAdapter.OnBillListener {
@@ -188,11 +191,16 @@ public class BillsViewContent extends AbstractViewContent<Bill> implements Bills
     }
 
 
+    /**
+     * Runs when you click a bill. See BillsRecyclerViewAdapter for more details
+     * @param bill The bill that is being clicked
+     */
     @Override
     public void onBillClick(Bill bill) {
+        Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
         Intent openDetailsIntent = new Intent(activity, BillDetailsActivity.class);
         openDetailsIntent.putExtra("bill", bill);
         mContext.startActivity(openDetailsIntent);
-        //Toast.makeText(, "Biff!", Toast.LENGTH_LONG).show();
+
     }
 }

@@ -38,7 +38,7 @@ public class CommitteesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_committees, container, false);
 
-        this.committeesViewContent = new CommitteesViewContent(this.getContext());
+        this.committeesViewContent = new CommitteesViewContent(this.getContext(), getActivity());
         this.committeesViewContent.getAllItems();
 
         // Set the adapter

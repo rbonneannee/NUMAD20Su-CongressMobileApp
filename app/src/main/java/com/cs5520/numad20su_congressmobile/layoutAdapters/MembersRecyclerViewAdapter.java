@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
+import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.content.models.Member;
 
 import java.util.List;
@@ -26,9 +27,11 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
     private final List<Member> mValues;
     private int lastPosition = -1;
     private Context context;
+    private OnMemberListener mOnMemberListener;
 
-    public MembersRecyclerViewAdapter(List<Member> items) {
+    public MembersRecyclerViewAdapter(List<Member> items, OnMemberListener onMemberListener) {
         mValues = items;
+        this.mOnMemberListener = onMemberListener;
     }
 
     @NonNull
@@ -37,7 +40,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         this.context = parent.getContext();
         View view = LayoutInflater.from(this.context)
                 .inflate(R.layout.card_layout, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnMemberListener);
     }
 
     @Override
@@ -60,19 +63,23 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         return mValues.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public Member mItem;
         public ImageView followIcon;
+        private OnMemberListener onMemberListener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnMemberListener onMemberListener) {
             super(view);
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
             followIcon = view.findViewById(R.id.follow_icon);
+            this.onMemberListener = onMemberListener;
+
+            itemView.setOnClickListener(this);
         }
 
         @NonNull
@@ -80,11 +87,23 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+
+        @Override
+        public void onClick(View view) {
+            onMemberListener.onMemberClick(mItem);
+        }
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull MembersRecyclerViewAdapter.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.itemView.clearAnimation();
+    }
+
+    /**
+     * Interface for clicking on Members
+     */
+    public interface OnMemberListener {
+        void onMemberClick(Member member);
     }
 }

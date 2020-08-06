@@ -31,7 +31,7 @@ public class MembersFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_members, container, false);
 
-        MembersViewContent membersViewContent = new MembersViewContent(this.getContext());
+        MembersViewContent membersViewContent = new MembersViewContent(this.getContext(), getActivity());
         membersViewContent.getAllItems();
 
         // Set the adapter

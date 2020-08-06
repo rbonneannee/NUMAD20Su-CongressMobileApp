@@ -10,8 +10,32 @@
         android:id="@+id/bill_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="billTitle"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.213" />
+
+    <TextView
+        android:id="@+id/bill_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bill_id"
+        app:layout_constraintBottom_toTopOf="@+id/bill_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bill_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bill_summary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bill_title"
+        app:layout_constraintVertical_bias="0.147" />
 </androidx.constraintlayout.widget.ConstraintLayout>

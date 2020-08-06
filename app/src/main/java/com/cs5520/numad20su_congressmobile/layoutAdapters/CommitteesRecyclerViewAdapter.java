@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cs5520.numad20su_congressmobile.R;
+import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 
 import java.util.List;
@@ -26,9 +27,11 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
     private final List<Committee> mValues;
     private int lastPosition = -1;
     private Context context;
+    private OnCommitteeListener mOnCommitteeListener;
 
-    public CommitteesRecyclerViewAdapter(List<Committee> items) {
+    public CommitteesRecyclerViewAdapter(List<Committee> items, OnCommitteeListener onCommitteeListener) {
         mValues = items;
+        this.mOnCommitteeListener = onCommitteeListener;
     }
 
     @NonNull
@@ -37,7 +40,7 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         this.context = parent.getContext();
         View view = LayoutInflater.from(this.context)
                 .inflate(R.layout.card_layout, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnCommitteeListener);
     }
 
     @Override
@@ -58,19 +61,23 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         return mValues.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public Committee mItem;
         public ImageView followIcon;
+        OnCommitteeListener onCommitteeListener;
 
-        public ViewHolder(View view) {
+        public ViewHolder(View view, OnCommitteeListener onCommitteeListener) {
             super(view);
             mView = view;
             mIdView = view.findViewById(R.id.item_number);
             mContentView = view.findViewById(R.id.content);
             followIcon = view.findViewById(R.id.follow_icon);
+            this.onCommitteeListener = onCommitteeListener;
+
+            itemView.setOnClickListener(this);
         }
 
         @NonNull
@@ -78,11 +85,23 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+
+        @Override
+        public void onClick(View view) {
+            onCommitteeListener.onCommitteeClick(mItem);
+        }
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull CommitteesRecyclerViewAdapter.ViewHolder holder) {
         super.onViewDetachedFromWindow(holder);
         holder.itemView.clearAnimation();
+    }
+
+    /**
+     * Interface for clicking on Committees
+     */
+    public interface OnCommitteeListener {
+        void onCommitteeClick(Committee committee);
     }
 }

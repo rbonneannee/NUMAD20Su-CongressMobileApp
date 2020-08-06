@@ -99,6 +99,9 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         holder.itemView.clearAnimation();
     }
 
+    /**
+     * Interface for clicking on Bills
+     */
     public interface OnBillListener {
         void onBillClick(Bill bill);
     }
