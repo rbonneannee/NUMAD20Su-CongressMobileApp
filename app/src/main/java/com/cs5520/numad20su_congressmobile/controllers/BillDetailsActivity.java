@@ -14,7 +14,6 @@ public class BillDetailsActivity extends AppCompatActivity {
     private Bill bill;
     private TextView billTitle;
     private TextView billNumber;
-    private TextView billSummary;
     private TextView billIntroduced;
     private TextView billSponsor;
     private TextView billCommittees;
@@ -26,7 +25,6 @@ public class BillDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bill_details);
         billTitle = findViewById(R.id.bill_title);
         billNumber = findViewById(R.id.bill_number);
-        billSummary = findViewById(R.id.bill_summary);
         billIntroduced = findViewById(R.id.bill_introduced);
         billSponsor = findViewById(R.id.bill_sponsor);
         billCommittees = findViewById(R.id.bill_committees);
@@ -39,7 +37,6 @@ public class BillDetailsActivity extends AppCompatActivity {
         bill = openDetailsIntent.getParcelableExtra("bill");
         billNumber.setText(bill.getNumber());
         billTitle.setText(bill.getTitle());
-        billSummary.setText(bill.getSummary());
         billIntroduced.setText(bill.getIntroduced_date());
         //billSponsor.setText(bill.getSponsor_name());
         sponsorSetup();
