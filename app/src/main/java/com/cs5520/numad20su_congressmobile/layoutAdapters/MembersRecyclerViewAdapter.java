@@ -47,7 +47,7 @@ public class MembersRecyclerViewAdapter extends RecyclerView.Adapter<MembersRecy
         holder.mIdView.setText(member.id);
         String text = member.short_title + " " + member.first_name + " " + member.last_name;
         holder.mContentView.setText(text);
-        holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+        holder.followIcon.setImageResource(R.drawable.heart_open);
 
         Animation animation = AnimationUtils.loadAnimation(this.context,
                 (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);

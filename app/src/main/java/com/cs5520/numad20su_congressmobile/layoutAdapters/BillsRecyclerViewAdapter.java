@@ -43,7 +43,7 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         holder.bill = items.get(position);
         holder.idView.setText(items.get(position).bill_id);
         holder.contentView.setText(items.get(position).title);
-        holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+        holder.followIcon.setImageResource(R.drawable.heart_open);
 
         Animation animation = AnimationUtils.loadAnimation(this.context,
                 (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
@@ -61,7 +61,7 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View view;
         public final TextView idView;
         public final TextView contentView;
@@ -91,7 +91,6 @@ public class BillsRecyclerViewAdapter extends RecyclerView.Adapter<BillsRecycler
             onBillListener.onBillClick(bill);
         }
     }
-
 
 
     @Override

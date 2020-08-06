@@ -45,7 +45,7 @@ public class CommitteesRecyclerViewAdapter extends RecyclerView.Adapter<Committe
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).name);
-        holder.followIcon.setImageResource(R.drawable.icons8_heart_50);
+        holder.followIcon.setImageResource(R.drawable.heart_open);
 
         Animation animation = AnimationUtils.loadAnimation(this.context,
                 (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
