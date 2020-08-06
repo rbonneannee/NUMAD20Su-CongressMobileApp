@@ -42,7 +42,7 @@ public class MembersViewContent extends AbstractViewContent<Member> implements M
 
     @Override
     public void onMemberClick(Member member) {
-        Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
         Intent openDetailsIntent = new Intent(activity, MemberDetailsActivity.class);
         openDetailsIntent.putExtra("member", member);
         mContext.startActivity(openDetailsIntent);

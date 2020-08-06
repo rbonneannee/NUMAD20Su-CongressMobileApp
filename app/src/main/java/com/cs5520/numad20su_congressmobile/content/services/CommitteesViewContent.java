@@ -65,7 +65,7 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> implem
 
     @Override
     public void onCommitteeClick(Committee committee) {
-        Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
         Intent openDetailsIntent = new Intent(activity, CommitteeDetailsActivity.class);
         openDetailsIntent.putExtra("committee", committee);
         mContext.startActivity(openDetailsIntent);

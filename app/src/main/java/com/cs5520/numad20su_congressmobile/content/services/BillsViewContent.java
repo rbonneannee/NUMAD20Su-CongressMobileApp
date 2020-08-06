@@ -197,7 +197,7 @@ public class BillsViewContent extends AbstractViewContent<Bill> implements Bills
      */
     @Override
     public void onBillClick(Bill bill) {
-        Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
         Intent openDetailsIntent = new Intent(activity, BillDetailsActivity.class);
         openDetailsIntent.putExtra("bill", bill);
         mContext.startActivity(openDetailsIntent);

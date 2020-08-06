@@ -8,34 +8,105 @@
 
     <TextView
         android:id="@+id/bill_title"
-        android:layout_width="wrap_content"
+        android:layout_width="294dp"
         android:layout_height="wrap_content"
         android:text="billTitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.213" />
+        app:layout_constraintTop_toBottomOf="@+id/bill_number"
+        app:layout_constraintVertical_bias="0.055" />
 
     <TextView
-        android:id="@+id/bill_id"
+        android:id="@+id/bill_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="bill_id"
-        app:layout_constraintBottom_toTopOf="@+id/bill_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/bill_summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="bill_summary"
+        android:text="bill_number"
+        android:textSize="28sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <TextView
+        android:id="@+id/bill_summary"
+        android:layout_width="66dp"
+        android:layout_height="44dp"
+        android:text="bill_summary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.877"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/bill_title"
-        app:layout_constraintVertical_bias="0.147" />
+        app:layout_constraintVertical_bias="0.932" />
+
+    <TextView
+        android:id="@+id/bill_introduced"
+        android:layout_width="165dp"
+        android:layout_height="35dp"
+        android:text="bill_introduced"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/bill_title"
+        app:layout_constraintVertical_bias="0.283" />
+
+    <TextView
+        android:id="@+id/bill_sponsor"
+        android:layout_width="166dp"
+        android:layout_height="52dp"
+        android:text="bill_sponsor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/bill_introduced"
+        app:layout_constraintVertical_bias="0.125" />
+
+    <TextView
+        android:id="@+id/bill_committees"
+        android:layout_width="169dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="44dp"
+        android:text="bill_committees"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/bill_sponsor"
+        app:layout_constraintVertical_bias="0.149" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="29dp" />
+
+    <TextView
+        android:id="@+id/sponsor_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sponsor"
+        app:layout_constraintBottom_toTopOf="@+id/bill_sponsor"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/sponsor_text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Committee"
+        app:layout_constraintBottom_toTopOf="@+id/bill_committees"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <TextView
+        android:id="@+id/sponsor_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Introduced"
+        app:layout_constraintBottom_toTopOf="@+id/bill_introduced"
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
 </androidx.constraintlayout.widget.ConstraintLayout>
