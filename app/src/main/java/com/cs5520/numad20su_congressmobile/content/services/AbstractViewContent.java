@@ -5,8 +5,6 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,8 +31,8 @@ import java.util.Map;
  * list of objects, 4) returning the adapter, and 5) incrementing the value of offset so as to get
  * the next page of results.
  */
-abstract class AbstractViewContent<T> implements Response.Listener<String>,
-        Response.ErrorListener {
+public abstract class AbstractViewContent<T> implements Response.Listener<String>,
+    Response.ErrorListener {
 
     private static final String TAG = "AbstractViewContent";
 
@@ -48,7 +46,7 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
     protected int offset;
     protected int OFFSET_INCREMENT = 20;
     protected String DEFAULT_QUERY = "";
-    protected int currentCongressMeeting = 116;
+    protected int currentSession = 116;
 
 
     /**
@@ -85,19 +83,18 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
             super(url, listener, errorListener);
         }
 
-        /**
-         * Sets X-API-Key as a custom header in the request.
-         *
-         * @return a map of headers to be added to the request
-         * @throws AuthFailureError if authentication is required to access header values
-         */
-        @Override
-        public Map<String, String> getHeaders() throws AuthFailureError {
-            Map<String, String> result = new HashMap<>();
-            result.put("X-API-Key", BuildConfig.API_KEY);
-            return result;
-        }
+    /**
+     * Sets X-API-Key as a custom header in the request.
+     *
+     * @return a map of headers to be added to the request
+     */
+    @Override
+    public Map<String, String> getHeaders() {
+      Map<String, String> result = new HashMap<>();
+      result.put("X-API-Key", BuildConfig.API_KEY);
+      return result;
     }
+  }
 
     /**
      * Adds a newly-instantiated ProPublicaRequest object to this service's request queue.
@@ -160,19 +157,19 @@ abstract class AbstractViewContent<T> implements Response.Listener<String>,
         this.offset += this.OFFSET_INCREMENT;
     }
 
-    /**
-     * Returns a list of objects of type T by delegating the conversion of a String response to an
-     * object to the appropriate JSON Handler.
-     *
-     * @param rawResponse a GET request's response as a String
-     * @return a list of objects of type T
-     */
-    abstract List<T> getListFromJsonText(String rawResponse);
+  /**
+   * Returns a list of objects of type T by delegating the conversion of a String response to an
+   * object to the appropriate JSON Handler.
+   *
+   * @param rawResponse a GET request's response as a String
+   * @return a list of objects of type T
+   */
+  public abstract List<T> getListFromJsonText(String rawResponse);
 
-    /**
-     * Checks if the requested information is the same as the previously requested information. If
-     * so, submits a request for the next page of results; if not, submits a request for the
-     * first page of recent results.
-     */
-    abstract void getAllItems();
+  /**
+   * Checks if the requested information is the same as the previously requested information. If so,
+   * submits a request for the next page of results; if not, submits a request for the first page of
+   * recent results.
+   */
+  public abstract void getAllItems();
 }

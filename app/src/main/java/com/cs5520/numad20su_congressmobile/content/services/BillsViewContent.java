@@ -6,6 +6,7 @@ import android.content.Context;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsJsonTextHandler;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsSubjectSearchJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.BillsRecyclerViewAdapter;
 
 import java.util.List;
@@ -40,16 +41,16 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
      *
      * @param context the context a view is running in
      */
-    public BillsViewContent(Context context) {
+    public BillsViewContent(Context context, FollowInterface followInterface) {
         super(context);
-        this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList);
+        this.viewAdapter = new BillsRecyclerViewAdapter(this.resultList, followInterface);
         this.prevGetRequestType = GetRequestType.ALL;
-        this.prevKeywordQuery  = this.DEFAULT_QUERY;
+        this.prevKeywordQuery = this.DEFAULT_QUERY;
         this.prevSubjectQuery = this.DEFAULT_QUERY;
 
         // Endpoint URLs
         this.endpointAllItems =
-                "https://api.propublica.org/congress/v1/" + this.currentCongressMeeting
+                "https://api.propublica.org/congress/v1/" + this.currentSession
                         + "/both/bills/introduced.json?offset=";
         this.endpointBillsSubjectSearch =
                 "https://api.propublica.org/congress/v1/bills/subjects/";
@@ -107,27 +108,27 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
                 + offset);
     }
 
-    /**
-     * Returns a list of Bill objects by delegating the conversion of a String response to a Bill
-     * object to the appropriate JSON Handler.
-     *
-     * @param jsonText a GET request's response as a String
-     * @return a list of Bill objects corresponding to the server's response.
-     */
-    @Override
-    List<Bill> getListFromJsonText(String jsonText) {
-        switch (this.prevGetRequestType) {
-            case ALL:
-            case TEXT_SEARCH:
-                return BillsJsonTextHandler.extract(jsonText);
-            case SUBJECT_SEARCH:
-                return BillsSubjectSearchJsonTextHandler.extract(jsonText);
-            case FILTER:
-                // TODO
-            default:
-                return null;
-        }
+  /**
+   * Returns a list of Bill objects by delegating the conversion of a String response to a Bill
+   * object to the appropriate JSON Handler.
+   *
+   * @param jsonText a GET request's response as a String
+   * @return a list of Bill objects corresponding to the server's response.
+   */
+  @Override
+  public List<Bill> getListFromJsonText(String jsonText) {
+    switch (this.prevGetRequestType) {
+      case ALL:
+      case TEXT_SEARCH:
+        return BillsJsonTextHandler.extract(jsonText);
+      case SUBJECT_SEARCH:
+        return BillsSubjectSearchJsonTextHandler.extract(jsonText);
+      case FILTER:
+        // TODO
+      default:
+        return null;
     }
+  }
 
     /**
      * Checks if the requested information is the same as the previously requested information.

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/NUMAD20Su-CongressMobile.iml" filepath="$PROJECT_DIR$/.idea/modules/NUMAD20Su-CongressMobile.iml" group="NUMAD20Su-CongressMobile" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/NUMAD20Su-CongressMobile-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/NUMAD20Su-CongressMobile-app.iml" group="NUMAD20Su-CongressMobile/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="NUMAD20Su-CongressMobile/app" />
     </modules>
   </component>

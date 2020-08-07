@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.CommitteesJsonTextHandler;
+import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
 
 import java.util.List;
@@ -23,14 +24,14 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
     private String selectedChamber;
 
 
-    public CommitteesViewContent(Context context) {
+    public CommitteesViewContent(Context context, FollowInterface followInterface) {
         super(context);
-        this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList);
+        this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList, followInterface);
 
         // Lists all committees, house, senate and joint
         this.selectedChamber = "senate";
-        this.endpointAllItems = "https://api.propublica.org/congress/v1/"
-                + this.currentCongressMeeting + "/";
+        this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession
+                + "/";
 ;
     }
 
@@ -41,10 +42,10 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
         this.submitRequest(endpointAllItems + this.selectedChamber + "/committees.json");
     }
 
-    @Override
-    List<Committee> getListFromJsonText(String jsonText) {
-        return CommitteesJsonTextHandler.extract(jsonText);
-    }
+  @Override
+  public List<Committee> getListFromJsonText(String jsonText) {
+    return CommitteesJsonTextHandler.extract(jsonText);
+  }
 
     public void loadMore() {
         switch (this.prevGetRequestType) {
