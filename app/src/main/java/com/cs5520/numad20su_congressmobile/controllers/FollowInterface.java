@@ -1,6 +1,6 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * This interface is to respond to follow/unfollow actions on different items in the application.
@@ -37,5 +37,5 @@ public interface FollowInterface {
    * @param type specified type
    * @return items followed
    */
-  Set<String> following(TYPE type);
+  List<String> following(TYPE type);
 }
