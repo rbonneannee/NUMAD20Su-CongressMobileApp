@@ -125,7 +125,10 @@ public class MainActivity extends AppCompatActivity implements
           new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-              currentUser = snapshot.getValue(User.class);
+              User usr = snapshot.getValue(User.class);
+              if (usr != null) {
+                currentUser = usr;
+              }
             }
 
             @Override
