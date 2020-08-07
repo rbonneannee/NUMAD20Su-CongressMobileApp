@@ -3,6 +3,7 @@ package com.cs5520.numad20su_congressmobile.content.services;
 
 import android.content.Context;
 
+import com.cs5520.numad20su_congressmobile.content.enums.GetRequestType;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsJsonTextHandler;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsSubjectSearchJsonTextHandler;
