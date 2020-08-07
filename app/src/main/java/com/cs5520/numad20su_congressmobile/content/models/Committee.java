@@ -20,6 +20,20 @@ public class Committee implements Parcelable {
   public String chair_uri;
   public String ranking_member_id;
 
+  public Committee(Committee committee) {
+    this.id = committee.id;
+    this.name = committee.name;
+    this.chamber = committee.chamber;
+    this.url = committee.url;
+    this.api_uri = committee.api_uri;
+    this.chair = committee.chair;
+    this.chair_id = committee.chair_id;
+    this.chair_party = committee.chair_party;
+    this.chair_state = committee.chair_state;
+    this.chair_uri = committee.chair_uri;
+    this.ranking_member_id = committee.ranking_member_id;
+  }
+
   protected Committee(Parcel in) {
     id = in.readString();
     name = in.readString();

@@ -22,6 +22,7 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
   private boolean isLoading = false;
   private CommitteesViewContent committeesViewContent;
   private TextInputEditText searchFld;
+  private FollowInterface followInterface;
 
   public CommitteesFragment() {
   }
@@ -36,7 +37,7 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
       Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_committees, container, false);
 
-    this.committeesViewContent = new CommitteesViewContent(this.getContext(), getActivity());
+    this.committeesViewContent = new CommitteesViewContent(this.getContext(), followInterface);
     this.committeesViewContent.getAllItems();
 
     // Set the adapter
@@ -48,12 +49,9 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
 
     this.searchFld = view.findViewById(R.id.textInputEditText_committeeName);
     view.findViewById(R.id.imageButton_searchCommittee)
-        .setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            String committeeName = searchFld.getText().toString();
-            // TODO implement and call billsViewContent.searchCommittee(committeeName);
-          }
+        .setOnClickListener(view1 -> {
+          String committeeName = searchFld.getText().toString();
+          // TODO implement and call billsViewContent.searchCommittee(committeeName);
         });
 
     return view;
@@ -74,12 +72,9 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
 
             // Launch data load in a new thread
             Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-              @Override
-              public void run() {
-                committeesViewContent.loadMore();
-                isLoading = false;
-              }
+            handler.postDelayed(() -> {
+              committeesViewContent.loadMore();
+              isLoading = false;
             }, 5);
           }
         }
@@ -87,8 +82,9 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
     });
   }
 
+
   @Override
   public void registerListener(FollowInterface callback) {
-
+    this.followInterface = callback;
   }
 }

@@ -39,13 +39,9 @@ public class BillsFragment extends Fragment implements FollowTrigger {
 
     this.searchFld = view.findViewById(R.id.textInputEditText_keyword);
     view.findViewById(R.id.imageButton_search)
-        .setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            String query = searchFld.getText().toString();
-            billsViewContent.getBillsWithKeyword(query);
-
-          }
+        .setOnClickListener(view1 -> {
+          String query = searchFld.getText().toString();
+          billsViewContent.getBillsWithKeyword(query);
         });
     return view;
   }
@@ -70,12 +66,9 @@ public class BillsFragment extends Fragment implements FollowTrigger {
 
             // Launch data load in a new thread
             Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-              @Override
-              public void run() {
-                billsViewContent.loadMore();
-                isLoading = false;
-              }
+            handler.postDelayed(() -> {
+              billsViewContent.loadMore();
+              isLoading = false;
             }, 5);
           }
         }

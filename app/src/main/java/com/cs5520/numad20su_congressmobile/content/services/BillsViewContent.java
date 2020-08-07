@@ -1,7 +1,6 @@
 package com.cs5520.numad20su_congressmobile.content.services;
 
 
-import android.app.Activity;
 import android.content.Context;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.BillsJsonTextHandler;
@@ -31,8 +30,6 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
   private String prevKeywordQuery;
   // TODO determine if application will support search by subject
   private String prevSubjectQuery;
-  private Context mContext;
-  private Activity activity;
 
   // Supported server endpoints
   private final String endpointBillsSubjectSearch;

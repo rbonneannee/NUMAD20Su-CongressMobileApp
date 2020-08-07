@@ -18,9 +18,6 @@ public class MembersFragment extends Fragment implements FollowTrigger {
 
   private FollowInterface callback;
 
-  public MembersFragment() {
-  }
-
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -32,7 +29,7 @@ public class MembersFragment extends Fragment implements FollowTrigger {
     View view = inflater.inflate(R.layout.fragment_members, container, false);
 
     MembersViewContent membersViewContent = new MembersViewContent(this.getContext(),
-        getActivity());
+        callback);
     membersViewContent.getAllItems();
 
     // Set the adapter

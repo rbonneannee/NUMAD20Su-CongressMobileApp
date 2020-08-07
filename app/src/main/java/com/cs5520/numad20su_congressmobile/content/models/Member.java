@@ -104,6 +104,55 @@ public class Member implements Parcelable {
     votes_against_party_pct = in.readFloat();
   }
 
+  public Member(Member member) {
+    this.id = member.id;
+    this.title = member.title;
+    this.short_title = member.short_title;
+    this.api_uri = member.api_uri;
+    this.first_name = member.first_name;
+    this.middle_name = member.middle_name;
+    this.last_name = member.last_name;
+    this.suffix = member.suffix;
+    this.date_of_birth = member.date_of_birth;
+    this.gender = member.gender;
+    this.party = member.party;
+    this.leadership_role = member.leadership_role;
+    this.twitter_account = member.twitter_account;
+    this.facebook_account = member.facebook_account;
+    this.youtube_account = member.youtube_account;
+    this.govtrack_id = member.govtrack_id;
+    this.cspan_id = member.cspan_id;
+    this.votesmart_id = member.votesmart_id;
+    this.icpsr_id = member.icpsr_id;
+    this.crp_id = member.crp_id;
+    this.google_entity_id = member.google_entity_id;
+    this.fec_candidate_id = member.fec_candidate_id;
+    this.url = member.url;
+    this.rss_url = member.rss_url;
+    this.contact_form = member.contact_form;
+    this.in_office = member.in_office;
+    this.cook_pvi = member.cook_pvi;
+    this.dw_nominate = member.dw_nominate;
+    this.ideal_point = member.ideal_point;
+    this.seniority = member.seniority;
+    this.next_election = member.next_election;
+    this.total_votes = member.total_votes;
+    this.missed_votes = member.missed_votes;
+    this.total_present = member.total_present;
+    this.last_updated = member.last_updated;
+    this.ocd_id = member.ocd_id;
+    this.office = member.office;
+    this.phone = member.phone;
+    this.fax = member.fax;
+    this.state = member.state;
+    this.senate_class = member.senate_class;
+    this.state_rank = member.state_rank;
+    this.lis_id = member.lis_id;
+    this.missed_votes_pct = member.missed_votes_pct;
+    this.votes_with_party_pct = member.votes_with_party_pct;
+    this.votes_against_party_pct = member.votes_against_party_pct;
+  }
+
   public static final Creator<Member> CREATOR = new Creator<Member>() {
     @Override
     public Member createFromParcel(Parcel in) {

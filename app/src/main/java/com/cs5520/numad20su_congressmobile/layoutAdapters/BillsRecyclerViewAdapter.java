@@ -19,7 +19,6 @@ import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 import java.util.List;
 
 // TODO Get a list of followed bills so that the follow_icon for each can be drawn appropriately
-
 public class BillsRecyclerViewAdapter extends
     RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
@@ -76,10 +75,10 @@ public class BillsRecyclerViewAdapter extends
     public TextView contentView;
     public Bill bill;
     public Boolean isFollowing;
+    public ImageView followIcon;
 
     private Context context;
     private FollowInterface followInterface;
-    private final ImageView followIcon;
 
     public ViewHolder(View view,
         Context context,
@@ -121,6 +120,7 @@ public class BillsRecyclerViewAdapter extends
             followInterface.follow(FollowInterface.TYPE.Bill, bill.bill_id);
             followIcon.setImageResource(R.drawable.heart_closed);
           }
+          isFollowing = !isFollowing;
           break;
       }
     }
