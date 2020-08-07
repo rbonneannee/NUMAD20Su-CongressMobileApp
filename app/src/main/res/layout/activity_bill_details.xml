@@ -119,17 +119,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="29dp" />
 
-    <TextView
-        android:id="@+id/bill_status"
-        android:layout_width="106dp"
-        android:layout_height="95dp"
-        android:layout_marginEnd="216dp"
-        android:text="Status Diagram Placeholder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bill_title"
-        app:layout_constraintVertical_bias="0.019" />
-
     <Button
         android:id="@+id/follow_button"
         android:layout_width="wrap_content"
@@ -171,6 +160,7 @@
         android:layout_width="50dp"
         android:layout_height="49dp"
         android:text="passed house"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/bill_title"
@@ -181,6 +171,7 @@
         android:layout_width="50dp"
         android:layout_height="49dp"
         android:text="passed senate"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -189,6 +180,7 @@
         android:layout_width="50dp"
         android:layout_height="49dp"
         android:text="passed president"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -197,6 +189,19 @@
         android:layout_width="50dp"
         android:layout_height="49dp"
         android:text="became law"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/sample_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.299" />
 </androidx.constraintlayout.widget.ConstraintLayout>

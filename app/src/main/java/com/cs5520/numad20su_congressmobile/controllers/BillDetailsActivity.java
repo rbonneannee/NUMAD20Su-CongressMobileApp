@@ -3,6 +3,7 @@ package com.cs5520.numad20su_congressmobile.controllers;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -19,8 +20,14 @@ public class BillDetailsActivity extends AppCompatActivity {
     private TextView billIntroduced;
     private TextView billSponsor;
     private TextView billCommittees;
-    private TextView testText;
     private String urlText;
+
+    private TextView sampleText;
+
+    private TextView passedHouse;
+    private TextView passedSenate;
+    private TextView passedPresident;
+    private TextView passedLaw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,13 @@ public class BillDetailsActivity extends AppCompatActivity {
         billIntroduced = findViewById(R.id.bill_introduced);
         billSponsor = findViewById(R.id.bill_sponsor);
         billCommittees = findViewById(R.id.bill_committees);
-        testText = findViewById(R.id.bill_status);
+
+        passedHouse = findViewById(R.id.passed_house);
+        passedSenate = findViewById(R.id.passed_senate);
+        passedPresident = findViewById(R.id.passed_president);
+        passedLaw = findViewById(R.id.became_law);
+
+        sampleText = findViewById(R.id.sample_text);
 
         Intent openDetailsIntent = getIntent();
 
@@ -41,11 +54,12 @@ public class BillDetailsActivity extends AppCompatActivity {
         billNumber.setText(bill.getNumber());
         billTitle.setText(bill.getTitle());
         billIntroduced.setText(bill.getIntroduced_date());
-        //billSponsor.setText(bill.getSponsor_name());
         sponsorSetup();
         billCommittees.setText(bill.getCommittees());
         urlText = bill.getCongressdotgov_url() + "/text";
-        //testText.setText(bill.getCongressdotgov_url());
+
+        sampleText.setText("veto: " + bill.getVetoed());
+        setUpStatusDiagram();
     }
 
 
@@ -61,5 +75,25 @@ public class BillDetailsActivity extends AppCompatActivity {
         Uri uriUrl = Uri.parse(urlText);
         Intent launchFullText = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchFullText);
+    }
+
+    private void setUpStatusDiagram () {
+        if (bill.getHouse_passage() != null) {
+            passedHouse.setText(bill.getHouse_passage());
+            passedHouse.setBackgroundColor(Color.GREEN);
+        }
+        if (bill.getSenate_passage() != null) {
+            passedSenate.setText(bill.getSenate_passage());
+            passedSenate.setBackgroundColor(Color.GREEN);
+        }
+        //TODO account for veto passage
+        if (bill.getVetoed() != null) {
+            passedPresident.setText(bill.getVetoed());
+            passedPresident.setBackgroundColor(Color.RED);
+        }
+        if (bill.getEnacted() != null) {
+            passedLaw.setText(bill.getEnacted());
+            passedLaw.setBackgroundColor(Color.GREEN);
+        }
     }
 }
