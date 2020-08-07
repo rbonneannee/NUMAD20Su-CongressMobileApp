@@ -1,10 +1,12 @@
 package com.cs5520.numad20su_congressmobile.content.services;
 
 import android.content.Context;
+
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.CommitteesJsonTextHandler;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
+
 import java.util.List;
 
 /**
@@ -18,33 +20,38 @@ import java.util.List;
  */
 public class CommitteesViewContent extends AbstractViewContent<Committee> {
 
-  private GetRequestType prevGetRequestType;
+    private GetRequestType prevGetRequestType;
+    private String selectedChamber;
 
-  public CommitteesViewContent(Context context, FollowInterface followInterface) {
-    super(context);
-    this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList, followInterface);
-  }
 
-  @Override
-  public void getAllItems() {
-    // TODO Get all committees
-    this.prevGetRequestType = GetRequestType.ALL;
-    String selectedChamber = "senate";
-    this.endpointAllItems = "https://api.propublica.org/congress/v1/"
-        + this.currentSession + "/";
-    this.submitRequest(endpointAllItems + selectedChamber + "/committees.json");
-  }
+    public CommitteesViewContent(Context context, FollowInterface followInterface) {
+        super(context);
+        this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList, followInterface);
+
+        // Lists all committees, house, senate and joint
+        this.selectedChamber = "senate";
+        this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession
+                + "/";
+;
+    }
+
+    // TODO Create filter methods to be called from a filter view
+    @Override
+    public void getAllItems() {
+        this.prevGetRequestType = GetRequestType.ALL;
+        this.submitRequest(endpointAllItems + this.selectedChamber + "/committees.json");
+    }
 
   @Override
   public List<Committee> getListFromJsonText(String jsonText) {
     return CommitteesJsonTextHandler.extract(jsonText);
   }
 
-  public void loadMore() {
-    switch (this.prevGetRequestType) {
-      case FILTER:
-        // TODO
-        break;
+    public void loadMore() {
+        switch (this.prevGetRequestType) {
+            case FILTER:
+                // TODO
+                break;
+        }
     }
-  }
 }
