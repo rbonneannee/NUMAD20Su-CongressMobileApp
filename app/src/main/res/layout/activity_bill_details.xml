@@ -135,7 +135,9 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="27dp"
+        app:layout_constraintEnd_toEndOf="@+id/passed_house"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/passed_house"
         app:layout_constraintTop_toBottomOf="@+id/passed_house"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
@@ -143,7 +145,9 @@
         android:id="@+id/imageView2"
         android:layout_width="50dp"
         android:layout_height="27dp"
+        app:layout_constraintEnd_toEndOf="@+id/passed_senate"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/passed_senate"
         app:layout_constraintTop_toBottomOf="@+id/passed_senate"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
@@ -151,16 +155,19 @@
         android:id="@+id/imageView3"
         android:layout_width="50dp"
         android:layout_height="27dp"
+        app:layout_constraintEnd_toEndOf="@+id/passed_president"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/passed_president"
         app:layout_constraintTop_toBottomOf="@+id/passed_president"
         app:srcCompat="@android:drawable/arrow_down_float" />
 
     <TextView
         android:id="@+id/passed_house"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="49dp"
-        android:text="passed house"
         android:gravity="center"
+        android:text="passed house"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/bill_title"
@@ -168,28 +175,31 @@
 
     <TextView
         android:id="@+id/passed_senate"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="49dp"
-        android:text="passed senate"
         android:gravity="center"
+        android:text="passed senate"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/passed_president"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="49dp"
-        android:text="passed president"
         android:gravity="center"
+        android:text="passed president"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/became_law"
-        android:layout_width="50dp"
+        android:layout_width="70dp"
         android:layout_height="49dp"
-        android:text="became law"
         android:gravity="center"
+        android:text="became law"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 

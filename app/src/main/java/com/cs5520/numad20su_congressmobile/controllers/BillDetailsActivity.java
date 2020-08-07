@@ -1,14 +1,12 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
@@ -51,21 +49,21 @@ public class BillDetailsActivity extends AppCompatActivity {
 
 
         bill = openDetailsIntent.getParcelableExtra("bill");
-        billNumber.setText(bill.getNumber());
-        billTitle.setText(bill.getTitle());
-        billIntroduced.setText(bill.getIntroduced_date());
+        billNumber.setText(bill.number);
+        billTitle.setText(bill.title);
+        billIntroduced.setText(bill.introduced_date);
         sponsorSetup();
-        billCommittees.setText(bill.getCommittees());
-        urlText = bill.getCongressdotgov_url() + "/text";
+        billCommittees.setText(bill.committees);
+        urlText = bill.congressdotgov_url + "/text";
 
-        sampleText.setText("veto: " + bill.getVetoed());
+        //sampleText.setText("veto: " + bill.vetoed);
+        bill.vetoed = "yes";
         setUpStatusDiagram();
     }
 
-
     private void sponsorSetup() {
-        String sponsorText = bill.getSponsor_title() + " " + bill.getSponsor_name() + " (" +
-                bill.getSponsor_party() + ", " + bill.getSponsor_state() + ")";
+        String sponsorText = bill.sponsor_title + " " + bill.sponsor_name + " (" +
+                bill.sponsor_party + ", " + bill.sponsor_state + ")";
         billSponsor.setText(sponsorText);
 
     }
@@ -78,22 +76,30 @@ public class BillDetailsActivity extends AppCompatActivity {
     }
 
     private void setUpStatusDiagram () {
-        if (bill.getHouse_passage() != null) {
-            passedHouse.setText(bill.getHouse_passage());
+        if (bill.house_passage != null) {
+            passedHouse.append("\n" + bill.house_passage);
             passedHouse.setBackgroundColor(Color.GREEN);
         }
-        if (bill.getSenate_passage() != null) {
-            passedSenate.setText(bill.getSenate_passage());
+        if (bill.senate_passage != null) {
+            passedSenate.append("\n" + bill.senate_passage);
             passedSenate.setBackgroundColor(Color.GREEN);
         }
         //TODO account for veto passage
-        if (bill.getVetoed() != null) {
-            passedPresident.setText(bill.getVetoed());
-            passedPresident.setBackgroundColor(Color.RED);
+        if (bill.vetoed != null) {
+            if (bill.enacted != null) {
+                passedPresident.append("\n" + bill.vetoed);
+                passedPresident.setBackgroundColor(Color.YELLOW);
+            }
+            else {
+                passedPresident.append("\n" + bill.vetoed);
+                passedPresident.setBackgroundColor(Color.RED);
+            }
+
         }
-        if (bill.getEnacted() != null) {
-            passedLaw.setText(bill.getEnacted());
+        if (bill.enacted != null) {
+            passedLaw.append("\n" + bill.enacted);
             passedLaw.setBackgroundColor(Color.GREEN);
         }
     }
+
 }

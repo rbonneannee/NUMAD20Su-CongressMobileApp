@@ -1,16 +1,10 @@
 package com.cs5520.numad20su_congressmobile.content.services;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
-
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.CommitteesJsonTextHandler;
-import com.cs5520.numad20su_congressmobile.controllers.BillDetailsActivity;
-import com.cs5520.numad20su_congressmobile.controllers.CommitteeDetailsActivity;
+import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
-
 import java.util.List;
 
 /**
@@ -22,52 +16,35 @@ import java.util.List;
  * for all and keyword searched committees and can request the next page of results if desired by
  * the user.
  */
-public class CommitteesViewContent extends AbstractViewContent<Committee> implements CommitteesRecyclerViewAdapter.OnCommitteeListener {
+public class CommitteesViewContent extends AbstractViewContent<Committee> {
 
-    private GetRequestType prevGetRequestType;
-    private String selectedChamber;
-    private Context mContext;
-    private Activity activity;
+  private GetRequestType prevGetRequestType;
 
+  public CommitteesViewContent(Context context, FollowInterface followInterface) {
+    super(context);
+    this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList, followInterface);
+  }
 
-    public CommitteesViewContent(Context context, Activity activity) {
-        super(context);
-        this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList, this);
-        this.mContext = context;
-        this.activity = activity;
+  @Override
+  public void getAllItems() {
+    // TODO Get all committees
+    this.prevGetRequestType = GetRequestType.ALL;
+    String selectedChamber = "senate";
+    this.endpointAllItems = "https://api.propublica.org/congress/v1/"
+        + this.currentSession + "/";
+    this.submitRequest(endpointAllItems + selectedChamber + "/committees.json");
+  }
 
-        // Lists all committees, house, senate and joint
-        this.selectedChamber = "senate";
-        this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession
-                + "/";
-;
+  @Override
+  public List<Committee> getListFromJsonText(String jsonText) {
+    return CommitteesJsonTextHandler.extract(jsonText);
+  }
+
+  public void loadMore() {
+    switch (this.prevGetRequestType) {
+      case FILTER:
+        // TODO
+        break;
     }
-
-    // TODO Create filter methods to be called from a filter view
-    @Override
-    public void getAllItems() {
-        this.prevGetRequestType = GetRequestType.ALL;
-        this.submitRequest(endpointAllItems + this.selectedChamber + "/committees.json");
-    }
-
-    @Override
-    public List<Committee> getListFromJsonText(String jsonText) {
-        return CommitteesJsonTextHandler.extract(jsonText);
-    }
-
-    public void loadMore() {
-        switch (this.prevGetRequestType) {
-            case FILTER:
-                // TODO
-                break;
-        }
-    }
-
-    @Override
-    public void onCommitteeClick(Committee committee) {
-        //Toast.makeText(mContext, "Biff!", Toast.LENGTH_LONG).show();
-        Intent openDetailsIntent = new Intent(activity, CommitteeDetailsActivity.class);
-        openDetailsIntent.putExtra("committee", committee);
-        mContext.startActivity(openDetailsIntent);
-    }
+  }
 }
