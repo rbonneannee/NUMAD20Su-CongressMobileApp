@@ -1,6 +1,7 @@
 package com.cs5520.numad20su_congressmobile.content.services;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.cs5520.numad20su_congressmobile.content.enums.ChamberType;
 import com.cs5520.numad20su_congressmobile.content.enums.GetRequestType;
@@ -40,21 +41,32 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
     // TODO Create filter methods to be called from a filter view
     @Override
     public void getAllItems() {
-        this.prevGetRequestType = GetRequestType.ALL;
+        this.resultList.clear();
         this.submitRequest(endpointAllItems + this.chamberType.toString()
                 + "/committees.json");
+
+        // TODO may be able to delete this
+        this.prevGetRequestType = GetRequestType.ALL;
     }
 
   @Override
   public List<Committee> getListFromJsonText(String jsonText) {
     return CommitteesJsonTextHandler.extract(jsonText);
   }
+  
+  public void loadMore(){
+      switch (this.prevGetRequestType) {
+          case FILTER:
+              // TODO
+              break;
+      }
+  }
 
-    public void loadMore() {
-        switch (this.prevGetRequestType) {
-            case FILTER:
-                // TODO
-                break;
-        }
-    }
+  public void setChamberType(ChamberType chamberType) {
+        this.chamberType = chamberType;
+  }
+
+  public ChamberType getChamberType(){
+        return this.chamberType;
+  }
 }
