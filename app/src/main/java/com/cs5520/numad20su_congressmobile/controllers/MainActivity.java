@@ -24,9 +24,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 // TODO Put link to https://icons8.com/license in Settings or About
 // TODO Use Cloud Storage for Firebase to upload user photo
@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements
   }
 
   @Override
-  public Set<String> following(TYPE type) {
-    Set<String> result = new HashSet<>();
+  public List<String> following(TYPE type) {
+    List<String> result = new ArrayList<>();
     switch (type) {
       case Bill:
         result.addAll(currentUser.followedBillIds);
