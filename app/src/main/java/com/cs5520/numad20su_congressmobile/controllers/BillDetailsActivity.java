@@ -57,7 +57,7 @@ public class BillDetailsActivity extends AppCompatActivity {
         urlText = bill.congressdotgov_url + "/text";
 
         //sampleText.setText("veto: " + bill.vetoed);
-        bill.vetoed = "yes";
+        //bill.vetoed = "yes";
         setUpStatusDiagram();
     }
 
@@ -78,11 +78,11 @@ public class BillDetailsActivity extends AppCompatActivity {
     private void setUpStatusDiagram () {
         if (bill.house_passage != null) {
             passedHouse.append("\n" + bill.house_passage);
-            passedHouse.setBackgroundColor(Color.GREEN);
+            passedHouse.setBackgroundColor(Color.parseColor("#D3F1B1"));
         }
         if (bill.senate_passage != null) {
             passedSenate.append("\n" + bill.senate_passage);
-            passedSenate.setBackgroundColor(Color.GREEN);
+            passedSenate.setBackgroundColor(Color.parseColor("#D3F1B1"));
         }
         //TODO account for veto passage
         if (bill.vetoed != null) {
@@ -98,7 +98,7 @@ public class BillDetailsActivity extends AppCompatActivity {
         }
         if (bill.enacted != null) {
             passedLaw.append("\n" + bill.enacted);
-            passedLaw.setBackgroundColor(Color.GREEN);
+            passedLaw.setBackgroundColor(Color.parseColor("#D3F1B1"));
         }
     }
 

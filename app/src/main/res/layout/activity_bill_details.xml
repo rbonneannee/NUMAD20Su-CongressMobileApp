@@ -165,6 +165,7 @@
         android:id="@+id/passed_house"
         android:layout_width="70dp"
         android:layout_height="49dp"
+        android:background="#D3F1B1"
         android:gravity="center"
         android:text="passed house"
         android:textSize="12sp"
