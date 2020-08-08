@@ -70,19 +70,6 @@ public class MembersFragment extends Fragment implements FollowTrigger {
       }
     });
 
-    // SearchView close button listener
-    ImageView closeButton = (ImageView)searchView.findViewById(R.id.search_close_btn);
-    /*
-    closeButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        membersViewContent.getAllItems();
-      }
-    });
-    
-     */
-
-
     // Radio button listener
     this.radioGroupChamber = view.findViewById(R.id.radioGroup_member_chambers);
     this.radioGroupChamber.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
