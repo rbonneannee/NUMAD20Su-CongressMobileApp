@@ -2,14 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="com.cs5520.numad20su_congressmobile">
 
-  <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" /> -->
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-  <uses-feature
-    android:name="android.hardware.camera"
-    android:required="false" />
-
   <application
     android:allowBackup="false"
     android:icon="@mipmap/ic_launcher"
@@ -17,32 +9,48 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-    <activity android:name=".controllers.MemberDetailsActivity" />
-    <activity android:name=".controllers.CommitteeDetailsActivity" />
-    <activity android:name=".controllers.BillDetailsActivity" />
-
-    <meta-data
-      android:name="com.google.android.wearable.standalone"
-      android:value="true" />
+    <activity
+      android:name=".controllers.MemberDetailsActivity"
+      android:screenOrientation="portrait" />
+    <activity
+      android:name=".controllers.CommitteeDetailsActivity"
+      android:screenOrientation="portrait" />
+    <activity
+      android:name=".controllers.BillDetailsActivity"
+      android:screenOrientation="portrait" />
 
     <activity
-      android:name=".controllers.SettingsActivity"
       android:label="@string/title_activity_settings"
+      android:name=".controllers.SettingsActivity"
+      android:screenOrientation="portrait"
       android:theme="@style/NoActionBar" />
 
-    <meta-data
-      android:name="com.google.firebase.messaging.default_notification_color"
-      android:resource="@color/colorAccent" />
-
     <activity
+      android:label="@string/app_name"
       android:name=".controllers.MainActivity"
-      android:label="@string/app_name">
+      android:screenOrientation="portrait">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_color"
+      android:resource="@color/colorAccent" />
+
+    <meta-data
+      android:name="com.google.android.wearable.standalone"
+      android:value="true" />
   </application>
+  <uses-feature
+    android:name="android.hardware.camera"
+    android:required="false" /> <!-- <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" /> -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+  <uses-permission android:name="android.permission.INTERNET" />
+
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

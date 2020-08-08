@@ -15,7 +15,7 @@
       android:id="@+id/layoutSignin"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:visibility="visible">
+      tools:visibility="gone">
 
       <Button
         android:id="@+id/buttonSignIn"
@@ -46,7 +46,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical"
-      tools:visibility="gone">
+      tools:visibility="visible">
 
       <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -60,17 +60,23 @@
 
           <ImageView
             android:id="@+id/profile_picture"
-            android:layout_width="78dp"
-            android:layout_height="65dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginRight="0dp"
             android:contentDescription="@string/profile_picture"
-            app:srcCompat="@drawable/ic_launcher_background" />
+            android:background="?selectableItemBackgroundBorderless"
+            app:srcCompat="@drawable/placeholder_profile_pic" />
 
           <androidx.appcompat.widget.Toolbar
             android:id="@+id/my_toolbar"
-            android:layout_width="332dp"
-            android:layout_height="66dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:layout_margin="0dp"
             android:background="?attr/colorPrimary"
-            android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:layout_anchor="@+id/appbar"
             app:layout_anchorGravity="end|top"
