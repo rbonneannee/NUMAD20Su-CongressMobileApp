@@ -150,6 +150,10 @@ public abstract class AbstractViewContent<T> implements Response.Listener<String
         return this.resultList;
     }
 
+    public void setResultList(List<T> resultList) {
+        this.resultList = resultList;
+    }
+
     /**
      * Increments offset by the offsetIncrement factor.
      */

@@ -18,7 +18,7 @@ public class MembersViewContent extends AbstractViewContent<Member> {
 
   public MembersViewContent(Context context, FollowInterface followInterface) {
     super(context);
-    this.viewAdapter = new MembersRecyclerViewAdapter(this.resultList, followInterface);
+    this.viewAdapter = new MembersRecyclerViewAdapter(context, this.resultList, followInterface);
 
     this.chamberType = ChamberType.HOUSE;
     this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession + "/";

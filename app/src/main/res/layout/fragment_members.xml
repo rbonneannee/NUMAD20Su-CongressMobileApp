@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--
     <LinearLayout
         android:id="@+id/linearLayout_members"
         android:layout_width="393dp"
@@ -17,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout_member"
@@ -38,22 +40,24 @@
             android:layout_weight="1"
             app:srcCompat="@android:drawable/ic_menu_search" />
 
-    </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list_members"
-        android:name="com.cs5520.numad20su_congressmobile.controllers.MembersFragment"
-        android:layout_width="374dp"
-        android:layout_height="424dp"
-        app:layoutManager="LinearLayoutManager"
+
+    </LinearLayout>
+    -->
+
+    <SearchView
+        android:id="@+id/searchView_member"
+        android:layout_width="383dp"
+        android:layout_height="75dp"
+        android:orderInCategory="100"
+        android:queryHint="s"
+        android:title="Search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.567"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup_member_chambers"
-        app:layout_constraintVertical_bias="0.245"
-        tools:context=".controllers.MembersFragment"
-        tools:listitem="@layout/card_layout" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024"
+        app:showAsAction="always" />
 
     <RadioGroup
         android:id="@+id/radioGroup_member_chambers"
@@ -62,9 +66,9 @@
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.692"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout_members">
+        app:layout_constraintTop_toBottomOf="@+id/searchView_member">
 
         <RadioButton
             android:id="@+id/radioButton_member_house"
@@ -82,5 +86,22 @@
             android:text="@string/chamber_senate" />
 
     </RadioGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list_members"
+        android:name="com.cs5520.numad20su_congressmobile.controllers.MembersFragment"
+        android:layout_width="374dp"
+        android:layout_height="424dp"
+        app:layoutManager="LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.567"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup_member_chambers"
+        app:layout_constraintVertical_bias="0.245"
+        tools:context=".controllers.MembersFragment"
+        tools:listitem="@layout/card_layout" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
