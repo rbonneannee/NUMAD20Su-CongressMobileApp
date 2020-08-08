@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -16,20 +18,28 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.controllers.BillDetailsActivity;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
+
+import java.util.ArrayList;
 import java.util.List;
 
 // TODO Get a list of followed bills so that the follow_icon for each can be drawn appropriately
-public class BillsRecyclerViewAdapter extends
-    RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
+public class BillsRecyclerViewAdapter
+        extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder>
+        implements Filterable {
+
+  private List<Bill> items;
+  private List<Bill> billListFiltered;
+  private List<Bill> preFilteredList;
 
   private final FollowInterface followInterface;
-  private List<Bill> items;
   private int lastPosition = -1;
   private Context context;
 
   public BillsRecyclerViewAdapter(List<Bill> items,
       FollowInterface followInterface) {
     this.items = items;
+    this.billListFiltered = new ArrayList<>(this.items);
+    this.preFilteredList = new ArrayList<>(this.items);
     this.followInterface = followInterface;
   }
 
@@ -42,14 +52,13 @@ public class BillsRecyclerViewAdapter extends
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     this.context = parent.getContext();
-    View view = LayoutInflater.from(this.context)
-        .inflate(R.layout.card_layout, parent, false);
+    View view = LayoutInflater.from(this.context).inflate(R.layout.card_layout, parent, false);
     return new ViewHolder(view, this.context, this.followInterface);
   }
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
-    Bill bill = new Bill(items.get(position));
+    Bill bill = items.get(position);
     holder.bill = bill;
     holder.idView.setText(bill.bill_id);
     holder.contentView.setText(bill.title);
@@ -67,6 +76,11 @@ public class BillsRecyclerViewAdapter extends
   public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
     super.onViewDetachedFromWindow(holder);
     holder.itemView.clearAnimation();
+  }
+
+  @Override
+  public Filter getFilter() {
+    return null;
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

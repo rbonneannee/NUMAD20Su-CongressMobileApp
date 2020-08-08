@@ -39,34 +39,30 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
 ;
     }
 
-    // TODO Create filter methods to be called from a filter view
     @Override
     public void getAllItems() {
         this.resultList.clear();
         this.submitRequest(endpointAllItems + this.chamberType.toString()
                 + "/committees.json");
-
-        // TODO may be able to delete this
-        this.prevGetRequestType = GetRequestType.ALL;
     }
 
   @Override
   public List<Committee> getListFromJsonText(String jsonText) {
-    return CommitteesJsonTextHandler.extract(jsonText);
+    List<Committee> list = CommitteesJsonTextHandler.extract(jsonText);
+    CommitteesRecyclerViewAdapter adapter = (CommitteesRecyclerViewAdapter) this.viewAdapter;
+    adapter.setPreFilteredList(list);
+    return list;
   }
 
   public void loadMore(){
       switch (this.prevGetRequestType) {
           case FILTER:
-              // TODO
+              // TODO delete
               break;
       }
   }
 
   public void setChamberType(ChamberType chamberType) {
         this.chamberType = chamberType;
-  }
-
-  public void searchCommittee(String s) {
   }
 }

@@ -27,7 +27,6 @@ public class MembersFragment extends Fragment implements FollowTrigger {
 
   private FollowInterface followInterface;
   private MembersViewContent membersViewContent;
-  private TextInputEditText searchFld;
   private RadioGroup radioGroupChamber;
   private SearchView searchView;
 
@@ -52,7 +51,7 @@ public class MembersFragment extends Fragment implements FollowTrigger {
 
     // Search listener
     searchView = (SearchView) view.findViewById(R.id.searchView_member);
-    searchView.setQueryHint("Search by member name");
+    searchView.setQueryHint("Search list by name");
     searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
     searchView.onActionViewExpanded();
     searchView.clearFocus();

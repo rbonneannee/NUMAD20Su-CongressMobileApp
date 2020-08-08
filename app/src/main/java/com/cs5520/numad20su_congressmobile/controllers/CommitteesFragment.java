@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -27,9 +28,9 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
 
   private boolean isLoading = false;
   private CommitteesViewContent committeesViewContent;
-  private TextInputEditText searchFld;
   private FollowInterface followInterface;
   private RadioGroup radioGroupChamber;
+  private SearchView searchView;
 
   public CommitteesFragment() {
   }
@@ -55,13 +56,7 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
     initScrollListener(recyclerView);
 
     // Search listener
-    this.searchFld = view.findViewById(R.id.textInputEditText_committeeName);
-    view.findViewById(R.id.imageButton_searchCommittee)
-        .setOnClickListener(view1 -> {
-          String s = searchFld.getText().toString();
-          // TODO implement method to filter based on whether 's' is in the id/name
-          // committeesViewContent.searchCommittee(s);
-        });
+    // TODO
 
     // Radio button listener
     this.radioGroupChamber = view.findViewById(R.id.radioGroup_chambers);

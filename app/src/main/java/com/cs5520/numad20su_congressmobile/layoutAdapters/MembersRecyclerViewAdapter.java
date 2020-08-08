@@ -2,7 +2,6 @@ package com.cs5520.numad20su_congressmobile.layoutAdapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ public class MembersRecyclerViewAdapter
 
   private final List<Member> memberList;
   private List<Member> memberListFiltered;
-  private List<Member> fullList;
+  private List<Member> preFilteredList;
 
   private int lastPosition = -1;
   private Context context;
@@ -43,7 +42,7 @@ public class MembersRecyclerViewAdapter
     this.context = context;
     this.memberList = items;
     this.memberListFiltered = new ArrayList<>(this.memberList);
-    this.fullList = new ArrayList<>(this.memberList);
+    this.preFilteredList = new ArrayList<>(this.memberList);
     this.followInterface = followInterface;
   }
 
@@ -84,20 +83,18 @@ public class MembersRecyclerViewAdapter
 
   @Override
   public Filter getFilter() {
-    memberList.size();
     return memberFilter;
   }
 
   private Filter memberFilter = new Filter() {
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
-      memberList.size();
       List<Member> filteredList = new ArrayList<>();
       String filterPattern = constraint.toString().toLowerCase().trim();
 
       if (filterPattern.isEmpty()) {
         filteredList.clear();
-        filteredList.addAll(fullList);
+        filteredList.addAll(preFilteredList);
       } else {
         for (Member member : memberList) {
           if (isInFilter(member, filterPattern)) {
@@ -142,37 +139,14 @@ public class MembersRecyclerViewAdapter
     }
 
     return false;
-
-
-/*
-    boolean flag = false;
-    if (member.first_name != null) {
-      if (member.first_name.toLowerCase().contains(filterPattern)) {
-        flag = true;
-      }
-    } else if (member.middle_name != null) {
-      if (member.middle_name.toLowerCase().contains(filterPattern)) {
-        flag = true;
-      }
-    } else if (member.last_name != null) {
-      if (member.last_name.toLowerCase().contains(filterPattern)) {
-        flag = true;
-      }
-    }
-
-    return flag;
-
- */
-
-
   }
 
-  public List<Member> getFullList() {
-    return fullList;
+  public List<Member> getPreFilteredList() {
+    return preFilteredList;
   }
 
-  public void setFullList(List<Member> fullList) {
-    this.fullList = fullList;
+  public void setPreFilteredList(List<Member> preFilteredList) {
+    this.preFilteredList = preFilteredList;
   }
 
   public class MemberViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
