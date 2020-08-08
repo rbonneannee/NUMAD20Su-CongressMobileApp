@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">NUMAD20Su-CongressMobile</string>
+  <string name="app_name">Congress Pocket Browser</string>
   <string name="action_settings">Settings</string>
   <!-- Strings used for fragments for navigation -->
   <string name="first_fragment_label">First Fragment</string>
@@ -34,4 +34,5 @@
   <string name="profile_picture">Profile Picture</string>
   <string name="follow_icon">follow icon</string>
   <string name="signout_button">signout button</string>
+  <string name="search_button">search button</string>
 </resources>

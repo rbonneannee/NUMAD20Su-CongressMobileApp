@@ -37,8 +37,9 @@ public class BillsFragment extends Fragment implements FollowTrigger {
     recyclerView.setAdapter(billsViewContent.getViewAdapter());
     initScrollListener(recyclerView);
 
-    this.searchFld = view.findViewById(R.id.textInputEditText_keyword);
-    view.findViewById(R.id.imageButton_search)
+    this.searchFld = view.findViewById(R.id.textInputEditText);
+    this.searchFld.setHint("Keyword search");
+    view.findViewById(R.id.imageButtonSearch)
         .setOnClickListener(view1 -> {
           String query = searchFld.getText().toString();
           billsViewContent.getBillsWithKeyword(query);

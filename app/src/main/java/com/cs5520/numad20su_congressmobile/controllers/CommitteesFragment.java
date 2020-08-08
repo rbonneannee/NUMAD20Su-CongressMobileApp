@@ -41,20 +41,21 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
     this.committeesViewContent.getAllItems();
 
     // Set the adapter
-    RecyclerView recyclerView = view.findViewById(R.id.list_committees);
+    RecyclerView recyclerView = view.findViewById(R.id.list);
     Context context = recyclerView.getContext();
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
     recyclerView.setAdapter(committeesViewContent.getViewAdapter());
 
     // Search listener
-    this.searchFld = view.findViewById(R.id.textInputEditText_committeeName);
-    view.findViewById(R.id.imageButton_searchCommittee)
+    this.searchFld = view.findViewById(R.id.textInputEditText);
+    this.searchFld.setHint("Search list by committee name or id");
+    view.findViewById(R.id.imageButtonSearch)
         .setOnClickListener(view1 -> {
           String s = searchFld.getText().toString();
         });
 
     // Radio button listener
-    this.radioGroupChamber = view.findViewById(R.id.radioGroup_chambers);
+    this.radioGroupChamber = view.findViewById(R.id.radioGroup);
     this.radioGroupChamber.setOnCheckedChangeListener((radioGroup, checkedId) -> {
 
       switch (checkedId) {

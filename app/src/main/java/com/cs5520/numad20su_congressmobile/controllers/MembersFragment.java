@@ -38,26 +38,27 @@ public class MembersFragment extends Fragment implements FollowTrigger {
     this.membersViewContent.getAllItems();
 
     // Set the adapter
-    RecyclerView recyclerView = view.findViewById(R.id.list_members);
+    RecyclerView recyclerView = view.findViewById(R.id.list);
     Context context = recyclerView.getContext();
     recyclerView.setLayoutManager(new LinearLayoutManager(context));
     recyclerView.setAdapter(membersViewContent.getViewAdapter());
 
     // Search listener
-    this.searchFld = view.findViewById(R.id.textInputEditText_member);
-    view.findViewById(R.id.imageButton_searchMember).setOnClickListener(view1 -> {
+    this.searchFld = view.findViewById(R.id.textInputEditText);
+    this.searchFld.setHint("Search members by district number");
+    view.findViewById(R.id.imageButtonSearch).setOnClickListener(view1 -> {
       String s = searchFld.getText().toString();
     });
 
     // Radio button listener
-    this.radioGroupChamber = view.findViewById(R.id.radioGroup_member_chambers);
+    this.radioGroupChamber = view.findViewById(R.id.radioGroup);
     this.radioGroupChamber.setOnCheckedChangeListener((radioGroup, checkedId) -> {
 
       switch (checkedId) {
-        case R.id.radioButton_member_house:
+        case R.id.radioButton_house:
           membersViewContent.setChamberType(ChamberType.HOUSE);
           break;
-        case R.id.radioButton_member_senate:
+        case R.id.radioButton_senate:
           membersViewContent.setChamberType(ChamberType.SENATE);
           break;
       }
