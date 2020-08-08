@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
+//TODO improve bill passage aesthetics
 public class BillDetailsActivity extends AppCompatActivity {
 
   private Bill bill;
@@ -26,6 +27,7 @@ public class BillDetailsActivity extends AppCompatActivity {
   private TextView passedSenate;
   private TextView passedPresident;
   private TextView passedLaw;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
