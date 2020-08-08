@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
-//TODO improve bill passage aesthetics
+//TODO add bill follow functionality
 public class BillDetailsActivity extends AppCompatActivity {
 
     private Bill bill;
