@@ -19,31 +19,32 @@ import java.util.List;
  */
 public class CommitteesViewContent extends AbstractViewContent<Committee> {
 
-  private ChamberType chamberType;
+    private ChamberType chamberType;
 
 
-  public CommitteesViewContent(Context context, FollowInterface followInterface) {
-    super(context);
-    this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList, followInterface);
+    public CommitteesViewContent(Context context, FollowInterface followInterface) {
+        super(context);
+        this.viewAdapter = new CommitteesRecyclerViewAdapter(this.resultList, followInterface);
 
-    // Lists all committees, house, senate and joint
-    this.chamberType = ChamberType.JOINT;
-    this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession + "/";
-  }
+        // Lists all committees, house, senate and joint
+        this.chamberType = ChamberType.JOINT;
+        this.endpointAllItems =
+            "https://api.propublica.org/congress/v1/" + this.currentSession + "/";
+    }
 
-  public void getAllItems() {
-    this.resultList.clear();
-    this.submitRequest(endpointAllItems + this.chamberType.toString()
-        + "/committees.json");
-  }
+    public void getAllItems() {
+        this.resultList.clear();
+        this.submitRequest(endpointAllItems + this.chamberType.toString()
+            + "/committees.json");
+    }
 
-  @Override
-  public List<Committee> getListFromJsonText(String jsonText) {
-    return CommitteesJsonTextHandler.extract(jsonText);
-  }
+    @Override
+    public List<Committee> getListFromJsonText(String jsonText) {
+        return CommitteesJsonTextHandler.extract(jsonText);
+    }
 
-  public void setChamberType(ChamberType chamberType) {
-    this.chamberType = chamberType;
-  }
+    public void setChamberType(ChamberType chamberType) {
+        this.chamberType = chamberType;
+    }
 
 }

@@ -6,19 +6,19 @@ import java.util.List;
 
 public class BillsSubjectSearchJsonTextHandler {
 
-  static class ProPublicaResponse {
+    public static List<Bill> extract(String jsonText) {
+        Gson gson = new Gson();
+        ProPublicaResponse response = gson.fromJson(jsonText, ProPublicaResponse.class);
+        return response.results;
+    }
 
-    String status;
-    String copyright;
-    int num_results;
-    int offset;
-    String subject;
-    List<Bill> results;
-  }
+    static class ProPublicaResponse {
 
-  public static List<Bill> extract(String jsonText) {
-    Gson gson = new Gson();
-    ProPublicaResponse response = gson.fromJson(jsonText, ProPublicaResponse.class);
-    return response.results;
-  }
+        String status;
+        String copyright;
+        int num_results;
+        int offset;
+        String subject;
+        List<Bill> results;
+    }
 }

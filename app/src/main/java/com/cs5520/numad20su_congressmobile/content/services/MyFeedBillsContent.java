@@ -15,47 +15,47 @@ import java.util.List;
 
 public class MyFeedBillsContent implements Listener<String> {
 
-  private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/bills/";
-  private final List<String> billIds;
-  private final VolleySingleton volleySingleton;
-  private final List<Bill> bills;
-  private final BillsRecyclerViewAdapter viewAdapter;
+    private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/bills/";
+    private final List<String> billIds;
+    private final VolleySingleton volleySingleton;
+    private final List<Bill> bills;
+    private final BillsRecyclerViewAdapter viewAdapter;
 
-  public MyFeedBillsContent(List<String> billIds,
-      Context context,
-      FollowInterface followInterface) {
-    this.billIds = billIds;
-    this.volleySingleton = VolleySingleton.getInstance(context);
-    this.bills = new ArrayList<>();
-    this.viewAdapter = new BillsRecyclerViewAdapter(this.bills, followInterface);
-    requestBills();
-  }
-
-  private void requestBills() {
-    String str;
-    for (String id : billIds) {
-      str = id.replace("-116", "").trim();
-      this.volleySingleton.getRequestQueue()
-          .add(new ProPublicaRequest(ENDPOINT + str + ".json", this, null));
+    public MyFeedBillsContent(List<String> billIds,
+        Context context,
+        FollowInterface followInterface) {
+        this.billIds = billIds;
+        this.volleySingleton = VolleySingleton.getInstance(context);
+        this.bills = new ArrayList<>();
+        this.viewAdapter = new BillsRecyclerViewAdapter(this.bills, followInterface);
+        requestBills();
     }
-  }
 
-  @Override
-  public void onResponse(String jsonText) {
-    Gson gson = new Gson();
-    Response response = gson.fromJson(jsonText, Response.class);
-    bills.add(response.results.get(0));
-    this.viewAdapter.notifyItemInserted(this.bills.size() - 1);
-  }
+    private void requestBills() {
+        String str;
+        for (String id : billIds) {
+            str = id.replace("-116", "").trim();
+            this.volleySingleton.getRequestQueue()
+                .add(new ProPublicaRequest(ENDPOINT + str + ".json", this, null));
+        }
+    }
 
-  public BillsRecyclerViewAdapter getAdapter() {
-    return this.viewAdapter;
-  }
+    @Override
+    public void onResponse(String jsonText) {
+        Gson gson = new Gson();
+        Response response = gson.fromJson(jsonText, Response.class);
+        bills.add(response.results.get(0));
+        this.viewAdapter.notifyItemInserted(this.bills.size() - 1);
+    }
 
-  static class Response {
+    public BillsRecyclerViewAdapter getAdapter() {
+        return this.viewAdapter;
+    }
 
-    List<Bill> results;
-  }
+    static class Response {
+
+        List<Bill> results;
+    }
 }
 
 

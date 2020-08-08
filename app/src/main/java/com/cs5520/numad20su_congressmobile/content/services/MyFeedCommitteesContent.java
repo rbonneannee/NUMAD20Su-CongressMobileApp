@@ -15,59 +15,60 @@ import java.util.List;
 
 public class MyFeedCommitteesContent implements Listener<String> {
 
-  private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/";
+    private static final String ENDPOINT = "https://api.propublica.org/congress/v1/116/";
 
-  private final VolleySingleton volleySingleton;
-  private final List<Committee> committees;
-  private final CommitteesRecyclerViewAdapter viewAdapter;
+    private final VolleySingleton volleySingleton;
+    private final List<Committee> committees;
+    private final CommitteesRecyclerViewAdapter viewAdapter;
 
-  public MyFeedCommitteesContent(List<String> committeeIds,
-      Context context,
-      FollowInterface followInterface) {
-    this.volleySingleton = VolleySingleton.getInstance(context);
-    this.committees = new ArrayList<>();
-    this.viewAdapter = new CommitteesRecyclerViewAdapter(this.committees, followInterface);
-    requestCommittees(committeeIds);
-  }
-
-  private void requestCommittees(List<String> committeeIds) {
-    String str;
-    String chamber = "";
-    for (String id : committeeIds) {
-      switch (id.substring(0, 1)) {
-        case "H":
-          chamber = "house";
-          break;
-        case "J":
-          chamber = "joint";
-          break;
-        case "S":
-          chamber = "senate";
-          break;
-      }
-      this.volleySingleton.getRequestQueue()
-          .add(
-              new ProPublicaRequest(String.format("%s%s/committees/%s.json", ENDPOINT, chamber, id),
-                  this, null));
+    public MyFeedCommitteesContent(List<String> committeeIds,
+        Context context,
+        FollowInterface followInterface) {
+        this.volleySingleton = VolleySingleton.getInstance(context);
+        this.committees = new ArrayList<>();
+        this.viewAdapter = new CommitteesRecyclerViewAdapter(this.committees, followInterface);
+        requestCommittees(committeeIds);
     }
-  }
 
-  @Override
-  public void onResponse(String jsonText) {
-    Gson gson = new Gson();
-    Response response = gson.fromJson(jsonText, Response.class);
-    committees.add(response.results.get(0));
-    this.viewAdapter.notifyItemInserted(this.committees.size() - 1);
-  }
+    private void requestCommittees(List<String> committeeIds) {
+        String str;
+        String chamber = "";
+        for (String id : committeeIds) {
+            switch (id.substring(0, 1)) {
+                case "H":
+                    chamber = "house";
+                    break;
+                case "J":
+                    chamber = "joint";
+                    break;
+                case "S":
+                    chamber = "senate";
+                    break;
+            }
+            this.volleySingleton.getRequestQueue()
+                .add(
+                    new ProPublicaRequest(
+                        String.format("%s%s/committees/%s.json", ENDPOINT, chamber, id),
+                        this, null));
+        }
+    }
 
-  public CommitteesRecyclerViewAdapter getAdapter() {
-    return this.viewAdapter;
-  }
+    @Override
+    public void onResponse(String jsonText) {
+        Gson gson = new Gson();
+        Response response = gson.fromJson(jsonText, Response.class);
+        committees.add(response.results.get(0));
+        this.viewAdapter.notifyItemInserted(this.committees.size() - 1);
+    }
 
-  static class Response {
+    public CommitteesRecyclerViewAdapter getAdapter() {
+        return this.viewAdapter;
+    }
 
-    List<Committee> results;
-  }
+    static class Response {
+
+        List<Committee> results;
+    }
 }
 
 

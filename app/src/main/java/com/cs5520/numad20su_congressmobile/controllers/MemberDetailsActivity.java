@@ -26,7 +26,6 @@ public class MemberDetailsActivity extends AppCompatActivity {
         partyState = findViewById(R.id.member_party_state);
         website = findViewById(R.id.member_link);
 
-
         Intent openDetailsIntent = getIntent();
 
         member = openDetailsIntent.getParcelableExtra("member");
@@ -39,19 +38,19 @@ public class MemberDetailsActivity extends AppCompatActivity {
         String nameString = member.short_title + " " + member.first_name + " " + member.last_name;
         name.setText(nameString);
     }
+
     private void createPartyState() {
         String partyStateString = member.party + ", " + member.state;
         partyState.setText(partyStateString);
     }
 
-    public void goToWebsite (View v) {
+    public void goToWebsite(View v) {
         try {
             Uri urlObj = Uri.parse(member.url);
             Intent goToLink = new Intent(Intent.ACTION_VIEW, urlObj);
             this.startActivity(goToLink);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast.makeText(this, "Invalid Link.", Toast.LENGTH_LONG).show();
         }
-  }
+    }
 }

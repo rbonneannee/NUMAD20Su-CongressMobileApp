@@ -32,135 +32,134 @@ import java.util.Map;
 public abstract class AbstractViewContent<T> implements Response.Listener<String>,
     Response.ErrorListener {
 
-  private static final String TAG = "AbstractViewContent";
+    private static final String TAG = "AbstractViewContent";
+    protected final List<T> resultList;
+    protected final int OFFSET_INCREMENT = 20;
+    protected final String DEFAULT_QUERY = "";
+    protected final int currentSession = 116;
+    // Manages worker threads for running network operations
+    private final RequestQueue requestQueue;
+    // Common fields
+    protected String endpointAllItems;
+    protected RecyclerView.Adapter<? extends RecyclerView.ViewHolder> viewAdapter;
+    protected int offset;
 
-  // Manages worker threads for running network operations
-  private final RequestQueue requestQueue;
-
-  // Common fields
-  protected String endpointAllItems;
-  protected RecyclerView.Adapter<? extends RecyclerView.ViewHolder> viewAdapter;
-  protected final List<T> resultList;
-  protected int offset;
-  protected final int OFFSET_INCREMENT = 20;
-  protected final String DEFAULT_QUERY = "";
-  protected final int currentSession = 116;
-
-
-  /**
-   * Constructs a Volley Response object and initializes this object's "requestQueue" field to the
-   * requestQueue of a VolleySingleton and its "resultList" to a new ArrayList object.
-   *
-   * @param context the context a view is running in
-   */
-  public AbstractViewContent(Context context) {
-    VolleySingleton volleySingleton = VolleySingleton.getInstance(context);
-    this.requestQueue = volleySingleton.getRequestQueue();
-    this.resultList = new ArrayList<>();
-    this.offset = 0;
-  }
-
-  /**
-   * This class is the inner class of a nested class structure. A ProPublicaRequest object is a
-   * canned request for retrieving the response body at a given URL as a String using a customized
-   * header. As a static class, it can access only the static members of its outer class.
-   */
-  static class ProPublicaRequest extends StringRequest {
 
     /**
-     * Calls the constructor of StringRequest, creating a new GET request to the given URL.
+     * Constructs a Volley Response object and initializes this object's "requestQueue" field to the
+     * requestQueue of a VolleySingleton and its "resultList" to a new ArrayList object.
      *
-     * @param url           a String from which to fetch the String response
-     * @param listener      a listener to receive the String response
-     * @param errorListener a listener to receive errors; can be null if errors are to be ignored
+     * @param context the context a view is running in
      */
-    public ProPublicaRequest(String url,
-        Response.Listener<String> listener,
-        @Nullable Response.ErrorListener errorListener) {
-      super(url, listener, errorListener);
+    public AbstractViewContent(Context context) {
+        VolleySingleton volleySingleton = VolleySingleton.getInstance(context);
+        this.requestQueue = volleySingleton.getRequestQueue();
+        this.resultList = new ArrayList<>();
+        this.offset = 0;
     }
 
     /**
-     * Sets X-API-Key as a custom header in the request.
+     * Adds a newly-instantiated ProPublicaRequest object to this service's request queue.
      *
-     * @return a map of headers to be added to the request
+     * @param endpoint a URL as a String
+     */
+    protected void submitRequest(String endpoint) {
+        this.requestQueue.add(
+            new ProPublicaRequest(
+                endpoint, this, this));
+    }
+
+    /**
+     * Inherited from the Response.Listener interface. Called when a response is received.
+     *
+     * @param jsonText a JSON object in String format
      */
     @Override
-    public Map<String, String> getHeaders() {
-      Map<String, String> result = new HashMap<>();
-      result.put("X-API-Key", BuildConfig.API_KEY);
-      return result;
+    public void onResponse(String jsonText) {
+        Log.d(TAG, "onResponse:");
+        this.resultList.addAll(getListFromJsonText(jsonText));
+        this.viewAdapter.notifyDataSetChanged();
     }
-  }
 
-  /**
-   * Adds a newly-instantiated ProPublicaRequest object to this service's request queue.
-   *
-   * @param endpoint a URL as a String
-   */
-  protected void submitRequest(String endpoint) {
-    this.requestQueue.add(
-        new ProPublicaRequest(
-            endpoint, this, this));
-  }
+    /**
+     * Inherited from the Response.ErrorListener interface. A callback that an error has occurred.
+     * Logs the provided error code.
+     *
+     * @param error an exception encapsulated as a VolleyError object
+     */
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Log.e(TAG, error.toString());
+    }
 
-  /**
-   * Inherited from the Response.Listener interface. Called when a response is received.
-   *
-   * @param jsonText a JSON object in String format
-   */
-  @Override
-  public void onResponse(String jsonText) {
-    Log.d(TAG, "onResponse:");
-    this.resultList.addAll(getListFromJsonText(jsonText));
-    this.viewAdapter.notifyDataSetChanged();
-  }
+    /**
+     * Returns the recyclerView adapter that manages how items held in the resultList visibly appear
+     * in the application.
+     *
+     * @return the adapter to a view's recyclerView
+     */
+    public RecyclerView.Adapter<? extends RecyclerView.ViewHolder> getViewAdapter() {
+        return this.viewAdapter;
+    }
 
-  /**
-   * Inherited from the Response.ErrorListener interface. A callback that an error has occurred.
-   * Logs the provided error code.
-   *
-   * @param error an exception encapsulated as a VolleyError object
-   */
-  @Override
-  public void onErrorResponse(VolleyError error) {
-    Log.e(TAG, error.toString());
-  }
+    /**
+     * Returns an ArrayList containing object representations of what this service gave in response
+     * to a GET request.
+     *
+     * @return an ArrayList of objects
+     */
+    public List<T> getResultList() {
+        return this.resultList;
+    }
 
-  /**
-   * Returns the recyclerView adapter that manages how items held in the resultList visibly appear
-   * in the application.
-   *
-   * @return the adapter to a view's recyclerView
-   */
-  public RecyclerView.Adapter<? extends RecyclerView.ViewHolder> getViewAdapter() {
-    return this.viewAdapter;
-  }
+    /**
+     * Increments offset by the offsetIncrement factor.
+     */
+    protected void incrementOffset() {
+        this.offset += this.OFFSET_INCREMENT;
+    }
 
-  /**
-   * Returns an ArrayList containing object representations of what this service gave in response to
-   * a GET request.
-   *
-   * @return an ArrayList of objects
-   */
-  public List<T> getResultList() {
-    return this.resultList;
-  }
+    /**
+     * Returns a list of objects of type T by delegating the conversion of a String response to an
+     * object to the appropriate JSON Handler.
+     *
+     * @param rawResponse a GET request's response as a String
+     * @return a list of objects of type T
+     */
+    abstract List<T> getListFromJsonText(String rawResponse);
 
-  /**
-   * Increments offset by the offsetIncrement factor.
-   */
-  protected void incrementOffset() {
-    this.offset += this.OFFSET_INCREMENT;
-  }
+    /**
+     * This class is the inner class of a nested class structure. A ProPublicaRequest object is a
+     * canned request for retrieving the response body at a given URL as a String using a customized
+     * header. As a static class, it can access only the static members of its outer class.
+     */
+    static class ProPublicaRequest extends StringRequest {
 
-  /**
-   * Returns a list of objects of type T by delegating the conversion of a String response to an
-   * object to the appropriate JSON Handler.
-   *
-   * @param rawResponse a GET request's response as a String
-   * @return a list of objects of type T
-   */
-  abstract List<T> getListFromJsonText(String rawResponse);
+        /**
+         * Calls the constructor of StringRequest, creating a new GET request to the given URL.
+         *
+         * @param url           a String from which to fetch the String response
+         * @param listener      a listener to receive the String response
+         * @param errorListener a listener to receive errors; can be null if errors are to be
+         *                      ignored
+         */
+        public ProPublicaRequest(String url,
+            Response.Listener<String> listener,
+            @Nullable Response.ErrorListener errorListener) {
+            super(url, listener, errorListener);
+        }
+
+        /**
+         * Sets X-API-Key as a custom header in the request.
+         *
+         * @return a map of headers to be added to the request
+         */
+        @Override
+        public Map<String, String> getHeaders() {
+            Map<String, String> result = new HashMap<>();
+            result.put("X-API-Key", BuildConfig.API_KEY);
+            return result;
+        }
+    }
 
 }

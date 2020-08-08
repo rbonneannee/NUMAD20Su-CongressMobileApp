@@ -15,50 +15,50 @@ import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 
 public class MyFeedFragment extends Fragment implements FollowTrigger {
 
-  private FollowInterface followInterface;
+    private FollowInterface followInterface;
 
-  public MyFeedFragment() {
-  }
+    public MyFeedFragment() {
+    }
 
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-      Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_my_feed, container, false);
-    RecyclerView billsView = view.findViewById(R.id.my_feed_bills_list);
-    RecyclerView committeesView = view.findViewById(R.id.my_feed_committees_list);
-    RecyclerView membersView = view.findViewById(R.id.my_feed_members_list);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_my_feed, container, false);
+        RecyclerView billsView = view.findViewById(R.id.my_feed_bills_list);
+        RecyclerView committeesView = view.findViewById(R.id.my_feed_committees_list);
+        RecyclerView membersView = view.findViewById(R.id.my_feed_members_list);
 
-    // Set the layout managers
-    billsView.setLayoutManager(new LinearLayoutManager(billsView.getContext()));
-    committeesView.setLayoutManager(new LinearLayoutManager(committeesView.getContext()));
-    membersView.setLayoutManager(new LinearLayoutManager(membersView.getContext()));
+        // Set the layout managers
+        billsView.setLayoutManager(new LinearLayoutManager(billsView.getContext()));
+        committeesView.setLayoutManager(new LinearLayoutManager(committeesView.getContext()));
+        membersView.setLayoutManager(new LinearLayoutManager(membersView.getContext()));
 
-    // Create the content providers
-    MyFeedBillsContent myFeedBillsContent =
-        new MyFeedBillsContent(
-            followInterface.following(TYPE.Bill), this.getContext(), followInterface);
-    MyFeedCommitteesContent myFeedCommitteesContent =
-        new MyFeedCommitteesContent(
-            followInterface.following(TYPE.Committee), this.getContext(), followInterface);
-    MyFeedMembersContent myFeedMembersContent =
-        new MyFeedMembersContent(
-            followInterface.following(TYPE.Member), this.getContext(), followInterface);
+        // Create the content providers
+        MyFeedBillsContent myFeedBillsContent =
+            new MyFeedBillsContent(
+                followInterface.following(TYPE.Bill), this.getContext(), followInterface);
+        MyFeedCommitteesContent myFeedCommitteesContent =
+            new MyFeedCommitteesContent(
+                followInterface.following(TYPE.Committee), this.getContext(), followInterface);
+        MyFeedMembersContent myFeedMembersContent =
+            new MyFeedMembersContent(
+                followInterface.following(TYPE.Member), this.getContext(), followInterface);
 
-    // Set the adapters
-    billsView.setAdapter(myFeedBillsContent.getAdapter());
-    committeesView.setAdapter(myFeedCommitteesContent.getAdapter());
-    membersView.setAdapter(myFeedMembersContent.getAdapter());
+        // Set the adapters
+        billsView.setAdapter(myFeedBillsContent.getAdapter());
+        committeesView.setAdapter(myFeedCommitteesContent.getAdapter());
+        membersView.setAdapter(myFeedMembersContent.getAdapter());
 
-    return view;
-  }
+        return view;
+    }
 
-  @Override
-  public void registerListener(FollowInterface callback) {
-    this.followInterface = callback;
-  }
+    @Override
+    public void registerListener(FollowInterface callback) {
+        this.followInterface = callback;
+    }
 }

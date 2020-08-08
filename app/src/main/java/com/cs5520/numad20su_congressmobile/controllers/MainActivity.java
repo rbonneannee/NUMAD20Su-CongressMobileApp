@@ -39,211 +39,211 @@ public class MainActivity extends AppCompatActivity implements
     FirebaseAuth.AuthStateListener,
     FollowInterface {
 
-  private static final int RC_GET_IMAGE = 101;
-  private static final int RC_SIGN_IN = 102;
-  private ActivityMainBinding activityMainBinding;
-  private AuthUI authUiInstance;
-  private DatabaseReference databaseReference;
-  private FirebaseAuth firebaseAuthInstance;
-  private User currentUser;
+    private static final int RC_GET_IMAGE = 101;
+    private static final int RC_SIGN_IN = 102;
+    private ActivityMainBinding activityMainBinding;
+    private AuthUI authUiInstance;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuthInstance;
+    private User currentUser;
 
-  @Override
-  public void follow(TYPE type, String id) {
-    switch (type) {
-      case Bill:
-        this.currentUser.followedBillIds.add(id);
-        break;
-      case Committee:
-        this.currentUser.followedCommitteeIds.add(id);
-        break;
-      case Member:
-        this.currentUser.followedMemberIds.add(id);
-        break;
-      case Topic:
-        this.currentUser.followedTopicIds.add(id);
-        break;
+    @Override
+    public void follow(TYPE type, String id) {
+        switch (type) {
+            case Bill:
+                this.currentUser.followedBillIds.add(id);
+                break;
+            case Committee:
+                this.currentUser.followedCommitteeIds.add(id);
+                break;
+            case Member:
+                this.currentUser.followedMemberIds.add(id);
+                break;
+            case Topic:
+                this.currentUser.followedTopicIds.add(id);
+                break;
+        }
+        databaseReference.child("users").child(this.currentUser.uid).setValue(this.currentUser);
+        new User(this.currentUser);
     }
-    databaseReference.child("users").child(this.currentUser.uid).setValue(this.currentUser);
-    new User(this.currentUser);
-  }
 
-  @Override
-  public List<String> following(TYPE type) {
-    List<String> result = new ArrayList<>();
-    switch (type) {
-      case Bill:
-        if (currentUser != null) {
-          result.addAll(currentUser.followedBillIds);
+    @Override
+    public List<String> following(TYPE type) {
+        List<String> result = new ArrayList<>();
+        switch (type) {
+            case Bill:
+                if (currentUser != null) {
+                    result.addAll(currentUser.followedBillIds);
+                }
+
+                break;
+            case Committee:
+                result.addAll(currentUser.followedCommitteeIds);
+                break;
+            case Member:
+                result.addAll(currentUser.followedMemberIds);
+                break;
+        }
+        return result;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case RC_GET_IMAGE:
+                if (resultCode == RESULT_OK) {
+                    Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                    (activityMainBinding.profilePicture).setImageBitmap(bitmap);
+                }
+                break;
+            case RC_SIGN_IN:
+                if (resultCode != RESULT_OK) { // Sign in failed
+                    Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        if ((fragment instanceof BillsFragment) || (fragment instanceof CommitteesFragment) ||
+            (fragment instanceof MembersFragment) || (fragment instanceof MyFeedFragment)) {
+            FollowTrigger triggerFragment = (FollowTrigger) fragment;
+            triggerFragment.registerListener(this);
+        }
+    }
+
+    @Override
+    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        this.firebaseAuthInstance = firebaseAuth;
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        this.currentUser = new User();
+
+        if (firebaseUser != null) {
+            currentUser.uid = firebaseUser.getUid();
+            databaseReference.child("users").child(currentUser.uid).addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User usr = snapshot.getValue(User.class);
+                        if (usr != null) {
+                            currentUser = usr;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.w("onAuthStateChanged", "onCancelled", error.toException());
+                    }
+                });
+
         }
 
-        break;
-      case Committee:
-        result.addAll(currentUser.followedCommitteeIds);
-        break;
-      case Member:
-        result.addAll(currentUser.followedMemberIds);
-        break;
+        updateUI(firebaseUser);
     }
-    return result;
-  }
 
-  @Override
-  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    switch (requestCode) {
-      case RC_GET_IMAGE:
-        if (resultCode == RESULT_OK) {
-          Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-          (activityMainBinding.profilePicture).setImageBitmap(bitmap);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        // Get Firebase instances
+        authUiInstance = AuthUI.getInstance();
+        firebaseAuthInstance = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        // Set up view bindings
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityMainBinding.getRoot());
+        setSupportActionBar(activityMainBinding.myToolbar);
+
+        // Set up ViewPager
+        FragmentPagerAdapter adapter = new MainFragmentPagerAdapter(
+            this,
+            getSupportFragmentManager(),
+            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        activityMainBinding.container.setAdapter(adapter);
+        activityMainBinding.tabs.setupWithViewPager(activityMainBinding.container);
+
+        // Set listeners
+        activityMainBinding.profilePicture.setOnClickListener(this);
+        activityMainBinding.buttonSignIn.setOnClickListener(this);
+        firebaseAuthInstance.addAuthStateListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.profile_picture:
+                openSettings();
+                break;
+            case R.id.buttonSignIn:
+                startSignIn();
+                break;
         }
-        break;
-      case RC_SIGN_IN:
-        if (resultCode != RESULT_OK) { // Sign in failed
-          Toast.makeText(this, "Sign In Failed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.buttonSignOut) {
+            signOut();
+            return true;
         }
-        break;
-    }
-  }
-
-  @Override
-  public void onAttachFragment(@NonNull Fragment fragment) {
-    if ((fragment instanceof BillsFragment) || (fragment instanceof CommitteesFragment) ||
-        (fragment instanceof MembersFragment) || (fragment instanceof MyFeedFragment)) {
-      FollowTrigger triggerFragment = (FollowTrigger) fragment;
-      triggerFragment.registerListener(this);
-    }
-  }
-
-  @Override
-  public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-    this.firebaseAuthInstance = firebaseAuth;
-    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-    this.currentUser = new User();
-
-    if (firebaseUser != null) {
-      currentUser.uid = firebaseUser.getUid();
-      databaseReference.child("users").child(currentUser.uid).addValueEventListener(
-          new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-              User usr = snapshot.getValue(User.class);
-              if (usr != null) {
-                currentUser = usr;
-              }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-              Log.w("onAuthStateChanged", "onCancelled", error.toException());
-            }
-          });
-
+        return super.onOptionsItemSelected(item);
     }
 
-    updateUI(firebaseUser);
-  }
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    // Get Firebase instances
-    authUiInstance = AuthUI.getInstance();
-    firebaseAuthInstance = FirebaseAuth.getInstance();
-    databaseReference = FirebaseDatabase.getInstance().getReference();
-
-    // Set up view bindings
-    activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-    setContentView(activityMainBinding.getRoot());
-    setSupportActionBar(activityMainBinding.myToolbar);
-
-    // Set up ViewPager
-    FragmentPagerAdapter adapter = new MainFragmentPagerAdapter(
-        this,
-        getSupportFragmentManager(),
-        FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-    activityMainBinding.container.setAdapter(adapter);
-    activityMainBinding.tabs.setupWithViewPager(activityMainBinding.container);
-
-    // Set listeners
-    activityMainBinding.profilePicture.setOnClickListener(this);
-    activityMainBinding.buttonSignIn.setOnClickListener(this);
-    firebaseAuthInstance.addAuthStateListener(this);
-  }
-
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.menu_main, menu);
-    return true;
-  }
-
-  @Override
-  public void onClick(View view) {
-    switch (view.getId()) {
-      case R.id.profile_picture:
-        openSettings();
-        break;
-      case R.id.buttonSignIn:
-        startSignIn();
-        break;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateUI(firebaseAuthInstance.getCurrentUser());
     }
-  }
 
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.buttonSignOut) {
-      signOut();
-      return true;
+    public void openSettings() {
+        Intent openSettingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(openSettingsIntent);
     }
-    return super.onOptionsItemSelected(item);
-  }
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    updateUI(firebaseAuthInstance.getCurrentUser());
-  }
-
-  public void openSettings() {
-    Intent openSettingsIntent = new Intent(this, SettingsActivity.class);
-    startActivity(openSettingsIntent);
-  }
-
-  private void signOut() {
-    authUiInstance.signOut(this);
-  }
-
-  private void startSignIn() {
-    startActivityForResult(authUiInstance.createSignInIntentBuilder().build(), RC_SIGN_IN);
-  }
-
-  @Override
-  public void unfollow(TYPE type, String id) {
-    switch (type) {
-      case Bill:
-        this.currentUser.followedBillIds.remove(id);
-        break;
-      case Committee:
-        this.currentUser.followedCommitteeIds.remove(id);
-        break;
-      case Member:
-        this.currentUser.followedMemberIds.remove(id);
-        break;
-      case Topic:
-        this.currentUser.followedTopicIds.remove(id);
-        break;
+    private void signOut() {
+        authUiInstance.signOut(this);
     }
-    databaseReference.child("users").child(this.currentUser.uid).setValue(this.currentUser);
-    new User(this.currentUser);
-  }
 
-  private void updateUI(FirebaseUser user) {
-    if (user != null) {
-      activityMainBinding.layoutSignin.setVisibility(View.GONE);
-      activityMainBinding.layoutMain.setVisibility(View.VISIBLE);
-    } else {
-      activityMainBinding.layoutSignin.setVisibility(View.VISIBLE);
-      activityMainBinding.layoutMain.setVisibility(View.GONE);
+    private void startSignIn() {
+        startActivityForResult(authUiInstance.createSignInIntentBuilder().build(), RC_SIGN_IN);
     }
-  }
+
+    @Override
+    public void unfollow(TYPE type, String id) {
+        switch (type) {
+            case Bill:
+                this.currentUser.followedBillIds.remove(id);
+                break;
+            case Committee:
+                this.currentUser.followedCommitteeIds.remove(id);
+                break;
+            case Member:
+                this.currentUser.followedMemberIds.remove(id);
+                break;
+            case Topic:
+                this.currentUser.followedTopicIds.remove(id);
+                break;
+        }
+        databaseReference.child("users").child(this.currentUser.uid).setValue(this.currentUser);
+        new User(this.currentUser);
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            activityMainBinding.layoutSignin.setVisibility(View.GONE);
+            activityMainBinding.layoutMain.setVisibility(View.VISIBLE);
+        } else {
+            activityMainBinding.layoutSignin.setVisibility(View.VISIBLE);
+            activityMainBinding.layoutMain.setVisibility(View.GONE);
+        }
+    }
 }

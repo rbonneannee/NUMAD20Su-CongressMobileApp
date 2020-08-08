@@ -12,7 +12,7 @@ import com.cs5520.numad20su_congressmobile.content.models.Committee;
 
 public class CommitteeDetailsActivity extends AppCompatActivity {
 
-//<<<<<<< HEAD
+    //<<<<<<< HEAD
     private Committee committee;
     private TextView title;
     private TextView chamber;
@@ -44,28 +44,26 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
 
     //TODO onclick to look at person details, will need to make api request to do so
     private void chairSetup() {
-        if (committee.chair != null && committee.chair_party != null && committee.chair_state != null) {
+        if (committee.chair != null && committee.chair_party != null
+            && committee.chair_state != null) {
             String chairText = committee.chair + " (" +
-                    committee.chair_party + ", " + committee.chair_state + ")";
+                committee.chair_party + ", " + committee.chair_state + ")";
             chair.setText(chairText);
-        }
-        else {
+        } else {
             chair.setText("");
         }
 
     }
 
-    public void goToWebsite (View v) {
+    public void goToWebsite(View v) {
         try {
             Uri urlObj = Uri.parse(committee.url);
             Intent goToLink = new Intent(Intent.ACTION_VIEW, urlObj);
             this.startActivity(goToLink);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast.makeText(this, "Invalid Link.", Toast.LENGTH_LONG).show();
         }
     }
-
 
     //TODO recyclerview subcommittee? Would need to implement subcommittees in model
 }

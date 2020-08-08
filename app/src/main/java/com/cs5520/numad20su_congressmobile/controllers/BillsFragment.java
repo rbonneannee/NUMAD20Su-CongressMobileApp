@@ -16,66 +16,66 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class BillsFragment extends Fragment implements FollowTrigger {
 
-  private boolean isLoading = false;
-  private BillsViewContent billsViewContent = null;
-  private TextInputEditText searchFld;
-  private FollowInterface followInterface;
+    private boolean isLoading = false;
+    private BillsViewContent billsViewContent = null;
+    private TextInputEditText searchFld;
+    private FollowInterface followInterface;
 
-  @Override
-  public View onCreateView(LayoutInflater inflater,
-      ViewGroup container,
-      Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_bills, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+        ViewGroup container,
+        Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_bills, container, false);
 
-    billsViewContent = new BillsViewContent(this.getContext(), followInterface);
-    billsViewContent.getAllItems();
+        billsViewContent = new BillsViewContent(this.getContext(), followInterface);
+        billsViewContent.getAllItems();
 
-    // Set the adapter
-    RecyclerView recyclerView = view.findViewById(R.id.list);
-    Context context = recyclerView.getContext();
-    recyclerView.setLayoutManager(new LinearLayoutManager(context));
-    recyclerView.setAdapter(billsViewContent.getViewAdapter());
-    initScrollListener(recyclerView);
+        // Set the adapter
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        Context context = recyclerView.getContext();
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(billsViewContent.getViewAdapter());
+        initScrollListener(recyclerView);
 
-    this.searchFld = view.findViewById(R.id.textInputEditText);
-    this.searchFld.setHint("Keyword search");
-    view.findViewById(R.id.imageButtonSearch)
-        .setOnClickListener(view1 -> {
-          String query = searchFld.getText().toString();
-          billsViewContent.getBillsWithKeyword(query);
+        this.searchFld = view.findViewById(R.id.textInputEditText);
+        this.searchFld.setHint("Keyword search");
+        view.findViewById(R.id.imageButtonSearch)
+            .setOnClickListener(view1 -> {
+                String query = searchFld.getText().toString();
+                billsViewContent.getBillsWithKeyword(query);
+            });
+        return view;
+    }
+
+    private void initScrollListener(RecyclerView recyclerView) {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
+                    .getLayoutManager();
+
+                if (!isLoading) {
+                    if (linearLayoutManager != null
+                        && (linearLayoutManager.findLastCompletelyVisibleItemPosition()
+                        == billsViewContent.getResultList().size() - 1)) {
+
+                        // Launch data load in a new thread
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            billsViewContent.loadMore();
+                            isLoading = false;
+                        }, 5);
+                    }
+                }
+            }
         });
-    return view;
-  }
+    }
 
-  private void initScrollListener(RecyclerView recyclerView) {
-    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
-      @Override
-      public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-        super.onScrolled(recyclerView, dx, dy);
-
-        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
-            .getLayoutManager();
-
-        if (!isLoading) {
-          if (linearLayoutManager != null
-              && (linearLayoutManager.findLastCompletelyVisibleItemPosition()
-              == billsViewContent.getResultList().size() - 1)) {
-
-            // Launch data load in a new thread
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
-              billsViewContent.loadMore();
-              isLoading = false;
-            }, 5);
-          }
-        }
-      }
-    });
-  }
-
-  @Override
-  public void registerListener(FollowInterface callback) {
-    this.followInterface = callback;
-  }
+    @Override
+    public void registerListener(FollowInterface callback) {
+        this.followInterface = callback;
+    }
 }
