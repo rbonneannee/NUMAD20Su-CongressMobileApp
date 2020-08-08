@@ -45,28 +45,24 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
     }
 
     private void chairSetup() {
-        if (committee.chair != null && committee.chair_party != null && committee.chair_state != null) {
+        if (committee.chair != null && committee.chair_party != null
+                && committee.chair_state != null) {
             String chairText = committee.chair + " (" +
                     committee.chair_party + ", " + committee.chair_state + ")";
             chair.setText(chairText);
-        }
-        else {
+        } else {
             chairAddon.setText("");
-            chair.setText("");
         }
-
     }
 
-    public void goToWebsite (View v) {
+    public void goToWebsite(View v) {
         try {
             Uri urlObj = Uri.parse(committee.url);
             Intent goToLink = new Intent(Intent.ACTION_VIEW, urlObj);
             this.startActivity(goToLink);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast.makeText(this, "Invalid Link.", Toast.LENGTH_LONG).show();
         }
     }
-
 
 }

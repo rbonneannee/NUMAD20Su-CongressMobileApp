@@ -30,6 +30,7 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
+//<<<<<<< HEAD
   private static final int RC_GET_IMAGE = 101;
   private ActivitySettingsBinding activitySettingsBinding;
   private String currentPhotoPath;
@@ -64,29 +65,27 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    switch (requestCode) {
-      case RC_GET_IMAGE:
-        if (resultCode == RESULT_OK) {
-          Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
-          Log.e(TAG, currentPhotoPath);
-          //Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-          (activitySettingsBinding.selectProfile).setImageBitmap(bitmap);
+      super.onActivityResult(requestCode, resultCode, data);
+      switch (requestCode) {
+          case RC_GET_IMAGE:
+              if (resultCode == RESULT_OK) {
+                  Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+                  Log.e(TAG, currentPhotoPath);
+                  //Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                  (activitySettingsBinding.selectProfile).setImageBitmap(bitmap);
+              }
+      }
+  }
+    @Override
+    public void onClick(View view) {
+        int i = view.getId();
+        switch (view.getId()) {
+            case R.id.select_profile:
+                getImage();
+                //openSettings();
+                break;
         }
-        break;
     }
-  }
-
-  @Override
-  public void onClick(View view) {
-    int i = view.getId();
-    switch (view.getId()) {
-      case R.id.select_profile:
-        getImage();
-        //openSettings();
-        break;
-    }
-  }
 
   private void takePicture() {
 

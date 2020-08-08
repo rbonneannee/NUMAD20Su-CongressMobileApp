@@ -11,29 +11,33 @@ import java.util.List;
 
 public class MembersViewContent extends AbstractViewContent<Member> {
 
-  private ChamberType chamberType;
+    private ChamberType chamberType;
 
-  public MembersViewContent(Context context, FollowInterface followInterface) {
-    super(context);
-    this.viewAdapter = new MembersRecyclerViewAdapter(this.resultList, followInterface);
+    public MembersViewContent(Context context, FollowInterface followInterface) {
+        super(context);
+        this.viewAdapter = new MembersRecyclerViewAdapter(context, this.resultList,
+            followInterface);
 
-    this.chamberType = ChamberType.HOUSE;
-    this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession + "/";
-  }
+        this.chamberType = ChamberType.HOUSE;
+        this.endpointAllItems =
+            "https://api.propublica.org/congress/v1/" + this.currentSession + "/";
+    }
 
-  public void getAllItems() {
-    this.resultList.clear();
-    this.submitRequest(this.endpointAllItems + this.chamberType.toString()
-        + "/members.json");
-  }
+    public void getAllItems() {
+        this.resultList.clear();
+        this.submitRequest(this.endpointAllItems + this.chamberType.toString()
+            + "/members.json");
+    }
 
-  @Override
-  public List<Member> getListFromJsonText(String jsonText) {
-    return MembersJsonTextHandler.extract(jsonText);
-  }
+    @Override
+    public List<Member> getListFromJsonText(String jsonText) {
+        List<Member> list = MembersJsonTextHandler.extract(jsonText);
+        MembersRecyclerViewAdapter adapter = (MembersRecyclerViewAdapter) this.viewAdapter;
+        adapter.setFullList(list);
+        return list;
+    }
 
-  public void setChamberType(ChamberType chamberType) {
-    this.chamberType = chamberType;
-  }
-
+    public void setChamberType(ChamberType chamberType) {
+        this.chamberType = chamberType;
+    }
 }

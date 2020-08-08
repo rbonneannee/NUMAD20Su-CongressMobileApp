@@ -6,27 +6,27 @@ import java.util.List;
 
 public class BillsJsonTextHandler {
 
-  static class ProPublicaResponse {
+    public static List<Bill> extract(String jsonText) {
+        Gson gson = new Gson();
+        ProPublicaResponse response = gson.fromJson(jsonText, ProPublicaResponse.class);
+        return response.results.get(0).bills;
+    }
 
-    String status;
-    String copyright;
-    List<ResultObject> results;
-  }
+    static class ProPublicaResponse {
 
-  static class ResultObject {
+        String status;
+        String copyright;
+        List<ResultObject> results;
+    }
 
-    public String congress;
-    public String chamber;
-    public int num_results;
-    public int offset;
-    public List<Bill> bills;
-  }
+    static class ResultObject {
 
-  public static List<Bill> extract(String jsonText) {
-    Gson gson = new Gson();
-    ProPublicaResponse response = gson.fromJson(jsonText, ProPublicaResponse.class);
-    return response.results.get(0).bills;
-  }
+        public String congress;
+        public String chamber;
+        public int num_results;
+        public int offset;
+        public List<Bill> bills;
+    }
 }
 
 

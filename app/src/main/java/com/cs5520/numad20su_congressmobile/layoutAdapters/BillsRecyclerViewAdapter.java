@@ -21,107 +21,107 @@ import java.util.List;
 public class BillsRecyclerViewAdapter extends
     RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
-  private final FollowInterface followInterface;
-  private final List<Bill> items;
-  private int lastPosition = -1;
-  private Context context;
-
-  public BillsRecyclerViewAdapter(List<Bill> items,
-      FollowInterface followInterface) {
-    this.items = items;
-    this.followInterface = followInterface;
-  }
-
-  @Override
-  public int getItemCount() {
-    return items.size();
-  }
-
-  @NonNull
-  @Override
-  public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    this.context = parent.getContext();
-    View view = LayoutInflater.from(this.context)
-        .inflate(R.layout.card_layout, parent, false);
-    return new ViewHolder(view, this.context, this.followInterface);
-  }
-
-  @Override
-  public void onBindViewHolder(final ViewHolder holder, int position) {
-    Bill bill = new Bill(items.get(position));
-    holder.bill = bill;
-    holder.idView.setText(bill.bill_id);
-    holder.contentView.setText(bill.title);
-    holder.isFollowing = (this.followInterface.following(TYPE.Bill).contains(bill.bill_id));
-    holder.followIcon
-        .setImageResource((holder.isFollowing) ? R.drawable.heart_closed : R.drawable.heart_open);
-
-    Animation animation = AnimationUtils.loadAnimation(this.context,
-        (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
-    holder.itemView.startAnimation(animation);
-    lastPosition = position;
-  }
-
-  @Override
-  public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
-    super.onViewDetachedFromWindow(holder);
-    holder.itemView.clearAnimation();
-  }
-
-  public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-    public final TextView idView;
-    public final TextView contentView;
-    public Bill bill;
-    public Boolean isFollowing;
-    public final ImageView followIcon;
-
-    private final Context context;
     private final FollowInterface followInterface;
+    private final List<Bill> items;
+    private int lastPosition = -1;
+    private Context context;
 
-    public ViewHolder(View view,
-        Context context,
+    public BillsRecyclerViewAdapter(List<Bill> items,
         FollowInterface followInterface) {
+        this.items = items;
+        this.followInterface = followInterface;
+    }
 
-      super(view);
-      idView = view.findViewById(R.id.item_number);
-      contentView = view.findViewById(R.id.content);
-      followIcon = view.findViewById(R.id.follow_icon);
-
-      this.context = context;
-      this.followInterface = followInterface;
-
-      followIcon.setOnClickListener(this);
-      super.itemView.setOnClickListener(this);
+    @Override
+    public int getItemCount() {
+        return items.size();
     }
 
     @NonNull
     @Override
-    public String toString() {
-      return super.toString() + " '" + contentView.getText() + "'";
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        this.context = parent.getContext();
+        View view = LayoutInflater.from(this.context)
+            .inflate(R.layout.card_layout, parent, false);
+        return new ViewHolder(view, this.context, this.followInterface);
     }
 
-    //
     @Override
-    public void onClick(View view) {
-      switch (view.getId()) {
-        case R.id.card_view:
-          context.startActivity(
-              new Intent(
-                  context, BillDetailsActivity.class)
-                  .putExtra("bill", bill));
-          break;
-        case R.id.follow_icon:
-          if (isFollowing) {
-            followInterface.unfollow(FollowInterface.TYPE.Bill, bill.bill_id);
-            followIcon.setImageResource(R.drawable.heart_open);
-          } else {
-            followInterface.follow(FollowInterface.TYPE.Bill, bill.bill_id);
-            followIcon.setImageResource(R.drawable.heart_closed);
-          }
-          isFollowing = !isFollowing;
-          break;
-      }
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        Bill bill = new Bill(items.get(position));
+        holder.bill = bill;
+        holder.idView.setText(bill.bill_id);
+        holder.contentView.setText(bill.title);
+        holder.isFollowing = (this.followInterface.following(TYPE.Bill).contains(bill.bill_id));
+        holder.followIcon
+            .setImageResource(
+                (holder.isFollowing) ? R.drawable.heart_closed : R.drawable.heart_open);
+
+        Animation animation = AnimationUtils.loadAnimation(this.context,
+            (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
+        holder.itemView.startAnimation(animation);
+        lastPosition = position;
     }
-  }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        holder.itemView.clearAnimation();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public final TextView idView;
+        public final TextView contentView;
+        public final ImageView followIcon;
+        private final Context context;
+        private final FollowInterface followInterface;
+        public Bill bill;
+        public Boolean isFollowing;
+
+        public ViewHolder(View view,
+            Context context,
+            FollowInterface followInterface) {
+
+            super(view);
+            idView = view.findViewById(R.id.item_number);
+            contentView = view.findViewById(R.id.content);
+            followIcon = view.findViewById(R.id.follow_icon);
+
+            this.context = context;
+            this.followInterface = followInterface;
+
+            followIcon.setOnClickListener(this);
+            super.itemView.setOnClickListener(this);
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return super.toString() + " '" + contentView.getText() + "'";
+        }
+
+        //
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.card_view:
+                    context.startActivity(
+                        new Intent(
+                            context, BillDetailsActivity.class)
+                            .putExtra("bill", bill));
+                    break;
+                case R.id.follow_icon:
+                    if (isFollowing) {
+                        followInterface.unfollow(FollowInterface.TYPE.Bill, bill.bill_id);
+                        followIcon.setImageResource(R.drawable.heart_open);
+                    } else {
+                        followInterface.follow(FollowInterface.TYPE.Bill, bill.bill_id);
+                        followIcon.setImageResource(R.drawable.heart_closed);
+                    }
+                    isFollowing = !isFollowing;
+                    break;
+            }
+        }
+    }
 }
