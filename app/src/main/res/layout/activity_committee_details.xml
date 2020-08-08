@@ -10,38 +10,54 @@
         android:id="@+id/committee_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Committee Title"
         android:textSize="28sp"
-        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063" />
+        app:layout_constraintVertical_bias="0.16" />
 
     <TextView
         android:id="@+id/committee_chamber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Committee Chamber"
         android:gravity="center"
+        android:text="Committee Chamber"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/committee_title"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.034" />
 
     <TextView
         android:id="@+id/committee_chair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Committee Chair"
         android:gravity="center"
+        android:text="Committee Chair"
+        app:layout_constraintBottom_toTopOf="@+id/committee_url"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/committee_chamber"
+        app:layout_constraintVertical_bias="0.466" />
+
+    <TextView
+        android:id="@+id/committee_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:onClick="goToWebsite"
+        android:gravity="center"
+        android:text="Committee URL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/committee_chamber"
-        app:layout_constraintVertical_bias="0.043" />
+        app:layout_constraintVertical_bias="0.344" />
 </androidx.constraintlayout.widget.ConstraintLayout>

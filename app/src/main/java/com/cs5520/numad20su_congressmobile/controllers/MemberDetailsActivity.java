@@ -38,8 +38,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
     }
 
     private void createName() {
-        String nameString = member.short_title + " " + member.first_name + " " + member.middle_name
-                + " " + member.last_name;
+        String nameString = member.short_title + " " + member.first_name + " " + member.last_name;
         name.setText(nameString);
     }
     private void createPartyState() {
