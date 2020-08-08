@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
 
@@ -50,12 +51,9 @@ public class MembersFragment extends Fragment implements FollowTrigger {
     recyclerView.setAdapter(membersViewContent.getViewAdapter());
 
     // Search listener
-    //SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
     searchView = (SearchView) view.findViewById(R.id.searchView_member);
-    searchView.setQueryHint("Search by member name or id");
+    searchView.setQueryHint("Search by member name");
     searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
-    //searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-    //searchView.setMaxWidth(Integer.MAX_VALUE);
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override
@@ -71,6 +69,19 @@ public class MembersFragment extends Fragment implements FollowTrigger {
         return false;
       }
     });
+
+    // SearchView close button listener
+    ImageView closeButton = (ImageView)searchView.findViewById(R.id.search_close_btn);
+    /*
+    closeButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        membersViewContent.getAllItems();
+      }
+    });
+    
+     */
+
 
     // Radio button listener
     this.radioGroupChamber = view.findViewById(R.id.radioGroup_member_chambers);

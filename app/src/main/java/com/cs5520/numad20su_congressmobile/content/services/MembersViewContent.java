@@ -37,7 +37,10 @@ public class MembersViewContent extends AbstractViewContent<Member> {
 
   @Override
   public List<Member> getListFromJsonText(String jsonText) {
-    return MembersJsonTextHandler.extract(jsonText);
+    List<Member> list = MembersJsonTextHandler.extract(jsonText);
+    MembersRecyclerViewAdapter adapter = (MembersRecyclerViewAdapter) this.viewAdapter;
+    adapter.setFullList(list);
+    return list;
   }
 
   public void setChamberType(ChamberType chamberType) {

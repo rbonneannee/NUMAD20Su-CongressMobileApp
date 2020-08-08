@@ -33,6 +33,7 @@ public class MembersRecyclerViewAdapter
 
   private final List<Member> memberList;
   private List<Member> memberListFiltered;
+  private List<Member> fullList;
 
   private int lastPosition = -1;
   private Context context;
@@ -42,6 +43,7 @@ public class MembersRecyclerViewAdapter
     this.context = context;
     this.memberList = items;
     this.memberListFiltered = new ArrayList<>(this.memberList);
+    this.fullList = new ArrayList<>(this.memberList);
     this.followInterface = followInterface;
   }
 
@@ -96,7 +98,8 @@ public class MembersRecyclerViewAdapter
       String filterPattern = constraint.toString().toLowerCase().trim();
 
       if (filterPattern.isEmpty()) {
-        filteredList.addAll(memberList);
+        filteredList.clear();
+        filteredList.addAll(fullList);
       } else {
         for (Member member : memberList) {
           if (isInFilter(member, filterPattern)) {
@@ -117,7 +120,6 @@ public class MembersRecyclerViewAdapter
       memberListFiltered = (ArrayList<Member>) filterResults.values;
       memberList.addAll(memberListFiltered);
       notifyDataSetChanged();
-
     }
   };
 
@@ -140,6 +142,13 @@ public class MembersRecyclerViewAdapter
     return flag;
   }
 
+  public List<Member> getFullList() {
+    return fullList;
+  }
+
+  public void setFullList(List<Member> fullList) {
+    this.fullList = fullList;
+  }
 
   public class MemberViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
