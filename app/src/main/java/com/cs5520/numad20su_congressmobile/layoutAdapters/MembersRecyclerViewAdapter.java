@@ -57,8 +57,6 @@ public class MembersRecyclerViewAdapter
   @Override
   public void onBindViewHolder(@NonNull MemberViewHolder holder, int position) {
     Member member = memberList.get(position);
-
-
     holder.mItem = member;
     holder.mIdView.setText(member.id);
     holder.isFollowing = (this.followInterface.following(TYPE.Member).contains(member.id));
