@@ -58,8 +58,9 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
     this.searchFld = view.findViewById(R.id.textInputEditText_committeeName);
     view.findViewById(R.id.imageButton_searchCommittee)
         .setOnClickListener(view1 -> {
-          String committeeName = searchFld.getText().toString();
-          // TODO implement and call billsViewContent.searchCommittee(committeeName);
+          String s = searchFld.getText().toString();
+          // TODO implement method to filter based on whether 's' is in the id/name
+          // committeesViewContent.searchCommittee(s);
         });
 
     // Radio button listener
