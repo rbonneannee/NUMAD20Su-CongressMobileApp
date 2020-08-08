@@ -56,7 +56,7 @@ public class BillDetailsActivity extends AppCompatActivity {
         billCommittees.setText(bill.committees);
         urlText = bill.congressdotgov_url + "/text";
 
-        //sampleText.setText("veto: " + bill.vetoed);
+        sampleText.setText("veto: " + bill.vetoed + "\n enacted:" + bill.enacted);
         //bill.vetoed = "yes";
         setUpStatusDiagram();
     }
