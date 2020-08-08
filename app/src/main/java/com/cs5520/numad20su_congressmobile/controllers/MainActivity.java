@@ -28,13 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-// TODO Put link to https://icons8.com/license in Settings or About
 // TODO Use Cloud Storage for Firebase to upload user photo
-// TODO Follow/Unfollow bills/members/committees/subjects
-// TODO Present in MyFeed and allow updates through Settings
-// TODO Grab content for both House and Senate, for each tab
-// TODO Respond to clicks of actions in action bar
-// TODO Put in a working search bar
+// TODO Get all search bars working
+// TODO Make search bars so that enter from soft keyboard initiates search
+// TODO Put a loading icon on the MyFeed page or figure out how to pull data faster
+// TODO Determine if GetRequestType.FILTER is still needed
 
 public class MainActivity extends AppCompatActivity implements
     View.OnClickListener,
@@ -180,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements
   public void onClick(View view) {
     switch (view.getId()) {
       case R.id.profile_picture:
-        //getImage();
         openSettings();
         break;
       case R.id.buttonSignIn:
@@ -238,9 +235,6 @@ public class MainActivity extends AppCompatActivity implements
   }
 
   private void updateUI(FirebaseUser user) {
-    // TODO Update username and display it
-    // TODO Add error checking for (empty) username
-    // TODO Use identification token from IDP to store data in database
     if (user != null) {
       activityMainBinding.layoutSignin.setVisibility(View.GONE);
       activityMainBinding.layoutMain.setVisibility(View.VISIBLE);

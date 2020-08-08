@@ -1,14 +1,12 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Member;
 
@@ -55,5 +53,5 @@ public class MemberDetailsActivity extends AppCompatActivity {
         catch (Exception e) {
             Toast.makeText(this, "Invalid Link.", Toast.LENGTH_LONG).show();
         }
-    }
+  }
 }

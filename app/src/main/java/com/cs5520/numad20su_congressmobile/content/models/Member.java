@@ -55,6 +55,10 @@ public class Member implements Parcelable {
   public float votes_with_party_pct;
   public float votes_against_party_pct;
 
+  public Member() {
+    // Default constructor
+  }
+
   protected Member(Parcel in) {
     id = in.readString();
     title = in.readString();

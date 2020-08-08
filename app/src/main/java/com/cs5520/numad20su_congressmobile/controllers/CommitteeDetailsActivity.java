@@ -1,19 +1,18 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 
 public class CommitteeDetailsActivity extends AppCompatActivity {
 
+//<<<<<<< HEAD
     private Committee committee;
     private TextView title;
     private TextView chamber;
@@ -43,7 +42,7 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
         chairSetup();
     }
 
-    //TODO onclick to look at person details
+    //TODO onclick to look at person details, will need to make api request to do so
     private void chairSetup() {
         if (committee.chair != null && committee.chair_party != null && committee.chair_state != null) {
             String chairText = committee.chair + " (" +
@@ -68,5 +67,5 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
     }
 
 
-    //TODO recyclerview subcommittee? IDK maybe too ambitious
+    //TODO recyclerview subcommittee? Would need to implement subcommittees in model
 }

@@ -18,17 +18,13 @@ import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 import com.cs5520.numad20su_congressmobile.controllers.MemberDetailsActivity;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link Member}. TODO: Replace the implementation
- * with code for your data type.
- */
 public class MembersRecyclerViewAdapter extends
     RecyclerView.Adapter<MembersRecyclerViewAdapter.ViewHolder> {
 
   private final List<Member> mValues;
   private int lastPosition = -1;
   private Context context;
-  private FollowInterface followInterface;
+  private final FollowInterface followInterface;
 
   public MembersRecyclerViewAdapter(List<Member> items,
       FollowInterface followInterface) {
@@ -49,10 +45,10 @@ public class MembersRecyclerViewAdapter extends
   public void onBindViewHolder(final ViewHolder holder, int position) {
     Member member = mValues.get(position);
     holder.mItem = member;
-    holder.mIdView.setText(member.id);
+    holder.mContentView.setText(String.format("%s %s %s", member.id, member.state, member.party));
     holder.isFollowing = (this.followInterface.following(TYPE.Member).contains(member.id));
     String text = member.short_title + " " + member.first_name + " " + member.last_name;
-    holder.mContentView.setText(text);
+    holder.mIdView.setText(text);
     holder.followIcon
         .setImageResource((holder.isFollowing) ? R.drawable.heart_closed : R.drawable.heart_open);
 
@@ -78,11 +74,11 @@ public class MembersRecyclerViewAdapter extends
     public final TextView mIdView;
     public final TextView mContentView;
     public Member mItem;
-    public ImageView followIcon;
+    public final ImageView followIcon;
     public boolean isFollowing;
 
-    private Context context;
-    private FollowInterface followInterface;
+    private final Context context;
+    private final FollowInterface followInterface;
 
     public ViewHolder(View view,
         Context context,

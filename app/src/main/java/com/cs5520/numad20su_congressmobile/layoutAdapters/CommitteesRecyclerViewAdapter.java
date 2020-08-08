@@ -25,7 +25,7 @@ public class CommitteesRecyclerViewAdapter extends
   private final List<Committee> mValues;
   private int lastPosition = -1;
   private Context context;
-  private FollowInterface followInterface;
+  private final FollowInterface followInterface;
 
   public CommitteesRecyclerViewAdapter(List<Committee> items,
       FollowInterface followInterface) {
@@ -72,14 +72,14 @@ public class CommitteesRecyclerViewAdapter extends
 
   public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView mIdView;
-    public TextView mContentView;
+    public final TextView mIdView;
+    public final TextView mContentView;
     public Committee mItem;
-    public ImageView followIcon;
+    public final ImageView followIcon;
     public boolean isFollowing;
 
-    private FollowInterface followInterface;
-    private Context context;
+    private final FollowInterface followInterface;
+    private final Context context;
 
     public ViewHolder(View view,
         Context context,

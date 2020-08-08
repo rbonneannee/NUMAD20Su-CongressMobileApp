@@ -1,23 +1,25 @@
 package com.cs5520.numad20su_congressmobile.content.enums;
 
-public enum  ChamberType {
-    HOUSE ("house"),
-    SENATE ("senate"),
-    BOTH ("both"),
-    JOINT ("joint");
+import androidx.annotation.NonNull;
 
-    private final String chamberName;
+public enum ChamberType {
+  HOUSE("house"),
+  SENATE("senate"),
+  JOINT("joint");
 
-    private ChamberType(String chamberName) {
-        this.chamberName = chamberName;
-    }
+  private final String chamberName;
 
-    public boolean equalsName(String otherName) {
-        return chamberName.equals(otherName);
-    }
+  ChamberType(String chamberName) {
+    this.chamberName = chamberName;
+  }
 
-    public String toString() {
-        return this.chamberName;
-    }
+  public boolean equalsName(String otherName) {
+    return chamberName.equals(otherName);
+  }
+
+  @NonNull
+  public String toString() {
+    return this.chamberName;
+  }
 
 }

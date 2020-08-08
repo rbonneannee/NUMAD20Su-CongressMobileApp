@@ -43,8 +43,6 @@ public class Bill implements Parcelable {
     // Default constructor for Firebase
   }
 
-
-
   // Copy constructor
   public Bill(Bill bill) {
     this.bill_id = bill.bill_id;
