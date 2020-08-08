@@ -2,10 +2,17 @@ package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SearchView;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +26,9 @@ import com.google.android.material.textfield.TextInputEditText;
  */
 public class CommitteesFragment extends Fragment implements FollowTrigger {
 
-    private CommitteesViewContent committeesViewContent;
-    private TextInputEditText searchFld;
-    private FollowInterface followInterface;
-    private RadioGroup radioGroupChamber;
+  private CommitteesViewContent committeesViewContent;
+  private FollowInterface followInterface;
+  private RadioGroup radioGroupChamber;
 
     public CommitteesFragment() {
     }
@@ -46,13 +52,8 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(committeesViewContent.getViewAdapter());
 
-        // Search listener
-        this.searchFld = view.findViewById(R.id.textInputEditText);
-        this.searchFld.setHint("Search list by committee name or id");
-        view.findViewById(R.id.imageButtonSearch)
-            .setOnClickListener(view1 -> {
-                String s = searchFld.getText().toString();
-            });
+    // Search listener
+    // TODO
 
         // Radio button listener
         this.radioGroupChamber = view.findViewById(R.id.radioGroup);

@@ -1,11 +1,13 @@
 package com.cs5520.numad20su_congressmobile.content.services;
 
 import android.content.Context;
+
 import com.cs5520.numad20su_congressmobile.content.enums.ChamberType;
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.CommitteesJsonTextHandler;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
+
 import java.util.List;
 
 /**
@@ -35,16 +37,18 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
     public void getAllItems() {
         this.resultList.clear();
         this.submitRequest(endpointAllItems + this.chamberType.toString()
-            + "/committees.json");
+                + "/committees.json");
     }
 
-    @Override
-    public List<Committee> getListFromJsonText(String jsonText) {
-        return CommitteesJsonTextHandler.extract(jsonText);
-    }
+  @Override
+  public List<Committee> getListFromJsonText(String jsonText) {
+    List<Committee> list = CommitteesJsonTextHandler.extract(jsonText);
+    CommitteesRecyclerViewAdapter adapter = (CommitteesRecyclerViewAdapter) this.viewAdapter;
+    adapter.setPreFilteredList(list);
+    return list;
+  }
 
-    public void setChamberType(ChamberType chamberType) {
+  public void setChamberType(ChamberType chamberType) {
         this.chamberType = chamberType;
-    }
-
+  }
 }
