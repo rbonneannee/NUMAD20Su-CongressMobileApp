@@ -4,15 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="goToWebsite"
     tools:context=".controllers.MemberDetailsActivity">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/member_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Member Text"
+        android:gravity="center"
+        android:text="Member Name"
+        android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <TextView
+        android:id="@+id/member_party_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Party and State"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/member_name"
+        app:layout_constraintVertical_bias="0.06" />
+
+    <TextView
+        android:id="@+id/member_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:gravity="center"
+        android:linksClickable="false"
+        android:text="Website Link"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/member_name"
+        app:layout_constraintVertical_bias="0.157" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
