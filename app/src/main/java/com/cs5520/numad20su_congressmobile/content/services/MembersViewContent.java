@@ -2,7 +2,9 @@ package com.cs5520.numad20su_congressmobile.content.services;
 
 
 import android.content.Context;
+
 import com.cs5520.numad20su_congressmobile.content.enums.ChamberType;
+import com.cs5520.numad20su_congressmobile.content.enums.GetRequestType;
 import com.cs5520.numad20su_congressmobile.content.models.Member;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.MembersJsonTextHandler;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
@@ -15,25 +17,28 @@ public class MembersViewContent extends AbstractViewContent<Member> {
 
   public MembersViewContent(Context context, FollowInterface followInterface) {
     super(context);
-    this.viewAdapter = new MembersRecyclerViewAdapter(this.resultList, followInterface);
+    this.viewAdapter = new MembersRecyclerViewAdapter(context, this.resultList, followInterface);
 
     this.chamberType = ChamberType.HOUSE;
     this.endpointAllItems = "https://api.propublica.org/congress/v1/" + this.currentSession + "/";
   }
 
+  @Override
   public void getAllItems() {
     this.resultList.clear();
     this.submitRequest(this.endpointAllItems + this.chamberType.toString()
-        + "/members.json");
+            + "/members.json");
   }
 
   @Override
   public List<Member> getListFromJsonText(String jsonText) {
-    return MembersJsonTextHandler.extract(jsonText);
+    List<Member> list = MembersJsonTextHandler.extract(jsonText);
+    MembersRecyclerViewAdapter adapter = (MembersRecyclerViewAdapter) this.viewAdapter;
+    adapter.setFullList(list);
+    return list;
   }
 
   public void setChamberType(ChamberType chamberType) {
     this.chamberType = chamberType;
   }
-
 }

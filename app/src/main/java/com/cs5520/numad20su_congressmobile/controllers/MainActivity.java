@@ -72,7 +72,10 @@ public class MainActivity extends AppCompatActivity implements
     List<String> result = new ArrayList<>();
     switch (type) {
       case Bill:
-        result.addAll(currentUser.followedBillIds);
+        if (currentUser != null) {
+          result.addAll(currentUser.followedBillIds);
+        }
+
         break;
       case Committee:
         result.addAll(currentUser.followedCommitteeIds);
