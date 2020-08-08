@@ -33,12 +33,10 @@ public class MembersFragment extends Fragment implements FollowTrigger {
     membersViewContent.getAllItems();
 
     // Set the adapter
-    if (view instanceof RecyclerView) {
-      Context context = view.getContext();
-      RecyclerView recyclerView = (RecyclerView) view;
-      recyclerView.setLayoutManager(new LinearLayoutManager(context));
-      recyclerView.setAdapter(membersViewContent.getViewAdapter());
-    }
+    RecyclerView recyclerView = view.findViewById(R.id.list_members);
+    Context context = recyclerView.getContext();
+    recyclerView.setLayoutManager(new LinearLayoutManager(context));
+    recyclerView.setAdapter(membersViewContent.getViewAdapter());
     return view;
   }
 
