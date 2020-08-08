@@ -157,19 +157,19 @@ public abstract class AbstractViewContent<T> implements Response.Listener<String
         this.offset += this.OFFSET_INCREMENT;
     }
 
-  /**
-   * Returns a list of objects of type T by delegating the conversion of a String response to an
-   * object to the appropriate JSON Handler.
-   *
-   * @param rawResponse a GET request's response as a String
-   * @return a list of objects of type T
-   */
-  public abstract List<T> getListFromJsonText(String rawResponse);
+    /**
+     * Returns a list of objects of type T by delegating the conversion of a String response to an
+     * object to the appropriate JSON Handler.
+     *
+     * @param rawResponse a GET request's response as a String
+     * @return a list of objects of type T
+     */
+    abstract List<T> getListFromJsonText(String rawResponse);
 
-  /**
-   * Checks if the requested information is the same as the previously requested information. If so,
-   * submits a request for the next page of results; if not, submits a request for the first page of
-   * recent results.
-   */
-  public abstract void getAllItems();
+    /**
+     * Checks if the requested information is the same as the previously requested information. If
+     * so, submits a request for the next page of results; if not, submits a request for the
+     * first page of recent results.
+     */
+    abstract void getAllItems();
 }

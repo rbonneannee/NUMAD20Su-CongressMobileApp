@@ -10,6 +10,7 @@ import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.Committ
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,7 +54,7 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
   public List<Committee> getListFromJsonText(String jsonText) {
     return CommitteesJsonTextHandler.extract(jsonText);
   }
-  
+
   public void loadMore(){
       switch (this.prevGetRequestType) {
           case FILTER:
@@ -66,7 +67,6 @@ public class CommitteesViewContent extends AbstractViewContent<Committee> {
         this.chamberType = chamberType;
   }
 
-  public ChamberType getChamberType(){
-        return this.chamberType;
+  public void searchCommittee(String s) {
   }
 }
