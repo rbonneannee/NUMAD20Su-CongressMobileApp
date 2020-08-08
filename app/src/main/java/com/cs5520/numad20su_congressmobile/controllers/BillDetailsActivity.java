@@ -75,19 +75,22 @@ public class BillDetailsActivity extends AppCompatActivity {
 
   private void setUpStatusDiagram() {
     if (bill.house_passage != null) {
+        passedHouse.setText("Passed House");
       passedHouse.append("\n" + bill.house_passage);
       passedHouse.setBackgroundColor(Color.parseColor("#D3F1B1"));
     }
     if (bill.senate_passage != null) {
+        passedSenate.setText("Passed Senate");
       passedSenate.append("\n" + bill.senate_passage);
       passedSenate.setBackgroundColor(Color.parseColor("#D3F1B1"));
     }
-    // TODO Account for veto passage
     if (bill.vetoed != null) {
       if (bill.enacted != null) {
+          passedPresident.setText("Vetoed, Overridden");
         passedPresident.append("\n" + bill.vetoed);
         passedPresident.setBackgroundColor(Color.YELLOW);
       } else {
+          passedPresident.setText("Vetoed");
         passedPresident.append("\n" + bill.vetoed);
         passedPresident.setBackgroundColor(Color.RED);
       }
@@ -96,6 +99,11 @@ public class BillDetailsActivity extends AppCompatActivity {
     if (bill.enacted != null) {
       passedLaw.append("\n" + bill.enacted);
       passedLaw.setBackgroundColor(Color.parseColor("#D3F1B1"));
+      if (bill.vetoed == null) {
+          //Note that I can't find a way to date this with ProPublica
+          passedPresident.setText("Approved by President");
+          passedPresident.setBackgroundColor(Color.parseColor("#D3F1B1"));
+      }
     }
   }
 
