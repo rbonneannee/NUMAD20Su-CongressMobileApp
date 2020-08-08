@@ -54,6 +54,8 @@ public class MembersFragment extends Fragment implements FollowTrigger {
     searchView = (SearchView) view.findViewById(R.id.searchView_member);
     searchView.setQueryHint("Search by member name");
     searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+    searchView.onActionViewExpanded();
+    searchView.clearFocus();
 
     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override
