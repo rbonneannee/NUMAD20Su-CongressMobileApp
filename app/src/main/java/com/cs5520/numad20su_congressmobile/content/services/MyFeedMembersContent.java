@@ -5,9 +5,9 @@ import android.content.Context;
 import com.android.volley.Response.Listener;
 import com.cs5520.numad20su_congressmobile.content.VolleySingleton;
 import com.cs5520.numad20su_congressmobile.content.models.Member;
+import com.cs5520.numad20su_congressmobile.content.models.Role;
 import com.cs5520.numad20su_congressmobile.content.services.AbstractViewContent.ProPublicaRequest;
 import com.cs5520.numad20su_congressmobile.content.services.MyFeedMembersContent.Response.Result;
-import com.cs5520.numad20su_congressmobile.content.services.MyFeedMembersContent.Response.Result.Role;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.MembersRecyclerViewAdapter;
 import com.google.gson.Gson;
@@ -33,7 +33,6 @@ public class MyFeedMembersContent implements Listener<String> {
   }
 
   private void requestMembers(List<String> memberIds) {
-    String str;
     for (String id : memberIds) {
       this.volleySingleton.getRequestQueue()
           .add(new ProPublicaRequest(ENDPOINT + id + ".json", this, null));
@@ -64,13 +63,6 @@ public class MyFeedMembersContent implements Listener<String> {
   static class Response {
 
     static class Result {
-
-      static class Role {
-
-        String short_title;
-        String state;
-        String party;
-      }
 
       String id;
       String first_name;

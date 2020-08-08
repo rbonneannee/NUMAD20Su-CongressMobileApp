@@ -1,35 +1,37 @@
 <resources>
-    <string name="app_name">NUMAD20Su-CongressMobile</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+  <string name="app_name">NUMAD20Su-CongressMobile</string>
+  <string name="action_settings">Settings</string>
+  <!-- Strings used for fragments for navigation -->
+  <string name="first_fragment_label">First Fragment</string>
+  <string name="second_fragment_label">Second Fragment</string>
+  <string name="next">Next</string>
+  <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="heading_my_feed">My Feed</string>
-    <string name="heading_bills">Bills</string>
-    <string name="heading_committees">Committees</string>
-    <string name="heading_members">Members</string>
+  <string name="hello_first_fragment">Hello first fragment</string>
+  <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+  <string name="heading_my_feed">My Feed</string>
+  <string name="heading_bills">Bills</string>
+  <string name="heading_committees">Committees</string>
+  <string name="heading_members">Members</string>
 
-    <string name="sign_in_prompt">Sign In to begin</string>
-    <string name="sign_in">Sign In</string>
-    <string name="week_9_firebase_hw">Week 9: Firebase HW</string>
-    <string name="contributors">Contributors: R.Bonne-Annee, M.Denu, R.Newell</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="todo">TODO</string>
-    <string name="sign_out">Sign Out</string>
-    <string name="title_activity_bill_detail">BillDetailActivity</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
-    <string name="hello_world">Hello Square World!</string>
-    <string name="chamber_house">House</string>
-    <string name="chamber_senate">Senate</string>
-    <string name="committee_joint">Joint</string>
+  <string name="sign_in_prompt">Sign In to begin</string>
+  <string name="sign_in">Sign In</string>
+  <string name="week_9_firebase_hw">Week 9: Firebase HW</string>
+  <string name="contributors">Contributors: R.Bonne-Annee, M.Denu, R.Newell</string>
+
+  <string name="title_activity_settings">SettingsActivity</string>
+  <string name="todo">TODO</string>
+  <string name="sign_out">Sign Out</string>
+  <string name="title_activity_bill_detail">BillDetailActivity</string>
+  <!--
+  This string is used for square devices and overridden by hello_world in
+  values-round/strings.xml for round devices.
+  -->
+  <string name="hello_world">Hello Square World!</string>
+  <string name="chamber_house">House</string>
+  <string name="chamber_senate">Senate</string>
+  <string name="committee_joint">Joint</string>
+  <string name="profile_picture">Profile Picture</string>
+  <string name="follow_icon">follow icon</string>
+  <string name="signout_button">signout button</string>
 </resources>

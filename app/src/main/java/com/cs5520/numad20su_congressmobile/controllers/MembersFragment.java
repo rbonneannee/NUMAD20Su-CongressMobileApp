@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,31 +45,23 @@ public class MembersFragment extends Fragment implements FollowTrigger {
 
     // Search listener
     this.searchFld = view.findViewById(R.id.textInputEditText_member);
-    view.findViewById(R.id.imageButton_searchMember).setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        String s = searchFld.getText().toString();
-        // TODO implement method to filter based on whether 's' is ____
-      }
+    view.findViewById(R.id.imageButton_searchMember).setOnClickListener(view1 -> {
+      String s = searchFld.getText().toString();
     });
-
 
     // Radio button listener
     this.radioGroupChamber = view.findViewById(R.id.radioGroup_member_chambers);
-    this.radioGroupChamber.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-      @Override
-      public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+    this.radioGroupChamber.setOnCheckedChangeListener((radioGroup, checkedId) -> {
 
-        switch (checkedId) {
-          case R.id.radioButton_member_house:
-            membersViewContent.setChamberType(ChamberType.HOUSE);
-            break;
-          case R.id.radioButton_member_senate:
-            membersViewContent.setChamberType(ChamberType.SENATE);
-            break;
-        }
-        membersViewContent.getAllItems();
+      switch (checkedId) {
+        case R.id.radioButton_member_house:
+          membersViewContent.setChamberType(ChamberType.HOUSE);
+          break;
+        case R.id.radioButton_member_senate:
+          membersViewContent.setChamberType(ChamberType.SENATE);
+          break;
       }
+      membersViewContent.getAllItems();
     });
 
     return view;

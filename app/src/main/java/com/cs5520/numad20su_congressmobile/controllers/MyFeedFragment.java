@@ -13,8 +13,6 @@ import com.cs5520.numad20su_congressmobile.content.services.MyFeedCommitteesCont
 import com.cs5520.numad20su_congressmobile.content.services.MyFeedMembersContent;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 
-// TODO Put logic to populate 'My Feed' here
-
 public class MyFeedFragment extends Fragment implements FollowTrigger {
 
   private FollowInterface followInterface;

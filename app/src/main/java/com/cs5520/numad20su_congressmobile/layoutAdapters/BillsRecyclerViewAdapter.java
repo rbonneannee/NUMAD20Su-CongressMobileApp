@@ -18,12 +18,11 @@ import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 import java.util.List;
 
-// TODO Get a list of followed bills so that the follow_icon for each can be drawn appropriately
 public class BillsRecyclerViewAdapter extends
     RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
 
   private final FollowInterface followInterface;
-  private List<Bill> items;
+  private final List<Bill> items;
   private int lastPosition = -1;
   private Context context;
 
@@ -71,14 +70,14 @@ public class BillsRecyclerViewAdapter extends
 
   public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView idView;
-    public TextView contentView;
+    public final TextView idView;
+    public final TextView contentView;
     public Bill bill;
     public Boolean isFollowing;
-    public ImageView followIcon;
+    public final ImageView followIcon;
 
-    private Context context;
-    private FollowInterface followInterface;
+    private final Context context;
+    private final FollowInterface followInterface;
 
     public ViewHolder(View view,
         Context context,

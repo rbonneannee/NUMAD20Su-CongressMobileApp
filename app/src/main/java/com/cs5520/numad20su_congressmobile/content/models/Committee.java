@@ -20,6 +20,10 @@ public class Committee implements Parcelable {
   public String chair_uri;
   public String ranking_member_id;
 
+  public Committee() {
+    // Default constructor
+  }
+
   public Committee(Committee committee) {
     this.id = committee.id;
     this.name = committee.name;

@@ -46,9 +46,6 @@ public class BillsFragment extends Fragment implements FollowTrigger {
     return view;
   }
 
-  // TODO Make sure this doesn't break for fast scrolling (test on physical device)
-  // TODO Use loading animation for 'Executing' Volley phase from submitRequest()
-  // TODO Use DownloadManager and loading animation if payload too big for Volley
   private void initScrollListener(RecyclerView recyclerView) {
     recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
