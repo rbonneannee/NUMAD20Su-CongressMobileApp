@@ -3,4 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorBorder">#000000</color>
+    <color name="colorPassed">#D3F1B1</color>
+    <color name="colorVetoed">#FFACA6</color>
+    <color name="colorVetoedOver">#FFF6A4</color>
+
+
 </resources>
