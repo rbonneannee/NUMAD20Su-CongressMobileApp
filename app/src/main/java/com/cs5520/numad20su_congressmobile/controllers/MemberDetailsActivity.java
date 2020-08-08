@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Member;
 
-//TODO: add phone number, maybe add district?
+//TODO: maybe add district?
 public class MemberDetailsActivity extends AppCompatActivity {
 
     private Member member;
