@@ -10,13 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 
+//TODO: Click chair member for details? Add list of subcommittees?
 public class CommitteeDetailsActivity extends AppCompatActivity {
 
-    //<<<<<<< HEAD
     private Committee committee;
     private TextView title;
     private TextView chamber;
     private TextView chair;
+    private TextView chairAddon;
     private TextView website;
     //private TextView
     //private TextView
@@ -30,6 +31,7 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
         title = findViewById(R.id.committee_title);
         chamber = findViewById(R.id.committee_chamber);
         chair = findViewById(R.id.committee_chair);
+        chairAddon = findViewById(R.id.chair_text);
         website = findViewById(R.id.committee_url);
 
         Intent openDetailsIntent = getIntent();
@@ -42,17 +44,15 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
         chairSetup();
     }
 
-    //TODO onclick to look at person details, will need to make api request to do so
     private void chairSetup() {
         if (committee.chair != null && committee.chair_party != null
-            && committee.chair_state != null) {
+                && committee.chair_state != null) {
             String chairText = committee.chair + " (" +
-                committee.chair_party + ", " + committee.chair_state + ")";
+                    committee.chair_party + ", " + committee.chair_state + ")";
             chair.setText(chairText);
         } else {
-            chair.setText("");
+            chairAddon.setText("");
         }
-
     }
 
     public void goToWebsite(View v) {
@@ -65,5 +65,4 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
         }
     }
 
-    //TODO recyclerview subcommittee? Would need to implement subcommittees in model
 }

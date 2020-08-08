@@ -135,48 +135,52 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="27dp"
+        android:rotation="-90"
         app:layout_constraintEnd_toEndOf="@+id/passed_house"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/passed_house"
         app:layout_constraintTop_toBottomOf="@+id/passed_house"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="50dp"
         android:layout_height="27dp"
+        android:rotation="-90"
         app:layout_constraintEnd_toEndOf="@+id/passed_senate"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/passed_senate"
         app:layout_constraintTop_toBottomOf="@+id/passed_senate"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="50dp"
         android:layout_height="27dp"
+        android:rotation="-90"
         app:layout_constraintEnd_toEndOf="@+id/passed_president"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/passed_president"
         app:layout_constraintTop_toBottomOf="@+id/passed_president"
-        app:srcCompat="@android:drawable/arrow_down_float" />
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
     <TextView
         android:id="@+id/passed_house"
         android:layout_width="70dp"
         android:layout_height="49dp"
+        android:layout_marginTop="44dp"
+        android:background="@drawable/text_border_clear"
         android:gravity="center"
         android:text="Needs House Approval"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bill_title"
-        app:layout_constraintVertical_bias="0.064" />
+        app:layout_constraintTop_toBottomOf="@+id/bill_title" />
 
     <TextView
         android:id="@+id/passed_senate"
         android:layout_width="70dp"
         android:layout_height="49dp"
+        android:background="@drawable/text_border_clear"
         android:gravity="center"
         android:text="Needs Senate Approval"
         android:textSize="12sp"
@@ -187,6 +191,7 @@
         android:id="@+id/passed_president"
         android:layout_width="70dp"
         android:layout_height="49dp"
+        android:background="@drawable/text_border_clear"
         android:gravity="center"
         android:text="Needs Presidential Approval"
         android:textSize="12sp"
@@ -197,21 +202,13 @@
         android:id="@+id/became_law"
         android:layout_width="70dp"
         android:layout_height="49dp"
+        android:background="@drawable/text_border_clear"
         android:gravity="center"
         android:text="Enacted into law"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-    <TextView
-        android:id="@+id/sample_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.299" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

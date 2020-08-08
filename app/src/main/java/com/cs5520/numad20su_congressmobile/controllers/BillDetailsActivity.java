@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
+//TODO add bill follow functionality
 public class BillDetailsActivity extends AppCompatActivity {
 
     private Bill bill;
@@ -20,7 +21,7 @@ public class BillDetailsActivity extends AppCompatActivity {
     private TextView billCommittees;
     private String urlText;
 
-    private TextView sampleText;
+    //private TextView sampleText;
 
     private TextView passedHouse;
     private TextView passedSenate;
@@ -42,7 +43,7 @@ public class BillDetailsActivity extends AppCompatActivity {
         passedPresident = findViewById(R.id.passed_president);
         passedLaw = findViewById(R.id.became_law);
 
-        sampleText = findViewById(R.id.sample_text);
+        //sampleText = findViewById(R.id.sample_text);
 
         Intent openDetailsIntent = getIntent();
 
@@ -77,32 +78,33 @@ public class BillDetailsActivity extends AppCompatActivity {
         if (bill.house_passage != null) {
             passedHouse.setText("Passed House");
             passedHouse.append("\n" + bill.house_passage);
-            passedHouse.setBackgroundColor(Color.parseColor("#D3F1B1"));
+            //passedHouse.setBackgroundColor(Color.parseColor("#D3F1B1"));
+            passedHouse.setBackgroundResource(R.drawable.text_border_green);
         }
         if (bill.senate_passage != null) {
             passedSenate.setText("Passed Senate");
             passedSenate.append("\n" + bill.senate_passage);
-            passedSenate.setBackgroundColor(Color.parseColor("#D3F1B1"));
+            passedSenate.setBackgroundResource(R.drawable.text_border_green);
         }
         if (bill.vetoed != null) {
             if (bill.enacted != null) {
                 passedPresident.setText("Vetoed, Overridden");
                 passedPresident.append("\n" + bill.vetoed);
-                passedPresident.setBackgroundColor(Color.YELLOW);
+                passedPresident.setBackgroundResource(R.drawable.text_border_yellow);
             } else {
                 passedPresident.setText("Vetoed");
                 passedPresident.append("\n" + bill.vetoed);
-                passedPresident.setBackgroundColor(Color.RED);
+                passedPresident.setBackgroundResource(R.drawable.text_border_red);
             }
 
         }
         if (bill.enacted != null) {
             passedLaw.append("\n" + bill.enacted);
-            passedLaw.setBackgroundColor(Color.parseColor("#D3F1B1"));
+            passedLaw.setBackgroundResource(R.drawable.text_border_green);
             if (bill.vetoed == null) {
                 //Note that I can't find a way to date this with ProPublica
                 passedPresident.setText("Approved by President");
-                passedPresident.setBackgroundColor(Color.parseColor("#D3F1B1"));
+                passedPresident.setBackgroundResource(R.drawable.text_border_green);
             }
         }
     }
