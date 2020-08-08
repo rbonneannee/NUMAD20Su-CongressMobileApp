@@ -49,10 +49,10 @@ public class MembersRecyclerViewAdapter extends
   public void onBindViewHolder(final ViewHolder holder, int position) {
     Member member = mValues.get(position);
     holder.mItem = member;
-    holder.mIdView.setText(member.id);
+    holder.mContentView.setText(String.format("%s %s %s", member.id, member.state, member.party));
     holder.isFollowing = (this.followInterface.following(TYPE.Member).contains(member.id));
     String text = member.short_title + " " + member.first_name + " " + member.last_name;
-    holder.mContentView.setText(text);
+    holder.mIdView.setText(text);
     holder.followIcon
         .setImageResource((holder.isFollowing) ? R.drawable.heart_closed : R.drawable.heart_open);
 
