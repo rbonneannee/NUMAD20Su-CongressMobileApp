@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.services.MyFeedBillsContent;
+import com.cs5520.numad20su_congressmobile.content.services.MyFeedCommitteesContent;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 
 // TODO Put logic to populate 'My Feed' here
 
 public class MyFeedFragment extends Fragment implements FollowTrigger {
 
-  private FollowInterface callback;
+  private FollowInterface followInterface;
 
   public MyFeedFragment() {
   }
@@ -40,16 +41,21 @@ public class MyFeedFragment extends Fragment implements FollowTrigger {
 
     // Create the content providers
     MyFeedBillsContent myFeedBillsContent =
-        new MyFeedBillsContent(callback.following(TYPE.Bill), this.getContext(), callback);
+        new MyFeedBillsContent(
+            followInterface.following(TYPE.Bill), this.getContext(), followInterface);
+    MyFeedCommitteesContent myFeedCommitteesContent =
+        new MyFeedCommitteesContent(
+            followInterface.following(TYPE.Committee), this.getContext(), followInterface);
 
     // Set the adapters
     billsView.setAdapter(myFeedBillsContent.getAdapter());
+    committeesView.setAdapter(myFeedCommitteesContent.getAdapter());
 
     return view;
   }
 
   @Override
   public void registerListener(FollowInterface callback) {
-    this.callback = callback;
+    this.followInterface = callback;
   }
 }
