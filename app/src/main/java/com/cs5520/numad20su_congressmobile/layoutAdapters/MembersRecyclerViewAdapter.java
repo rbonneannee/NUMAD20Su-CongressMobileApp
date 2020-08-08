@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -22,17 +24,19 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link Member}. TODO: Replace the implementation
  * with code for your data type.
  */
-public class MembersRecyclerViewAdapter extends
-    RecyclerView.Adapter<MembersRecyclerViewAdapter.ViewHolder> {
+public class MembersRecyclerViewAdapter
+        extends RecyclerView.Adapter<MembersRecyclerViewAdapter.ViewHolder>
+        implements Filterable {
 
-  private final List<Member> mValues;
+  private final List<Member> memberList;
+  private List<Member> memberListFiltered;
   private int lastPosition = -1;
   private Context context;
   private FollowInterface followInterface;
 
   public MembersRecyclerViewAdapter(List<Member> items,
       FollowInterface followInterface) {
-    mValues = items;
+    memberList = items;
     this.followInterface = followInterface;
   }
 
@@ -47,7 +51,7 @@ public class MembersRecyclerViewAdapter extends
 
   @Override
   public void onBindViewHolder(final ViewHolder holder, int position) {
-    Member member = mValues.get(position);
+    Member member = memberList.get(position);
     holder.mItem = member;
     holder.mIdView.setText(member.id);
     holder.isFollowing = (this.followInterface.following(TYPE.Member).contains(member.id));
@@ -64,7 +68,7 @@ public class MembersRecyclerViewAdapter extends
 
   @Override
   public int getItemCount() {
-    return mValues.size();
+    return memberList.size();
   }
 
   @Override
@@ -72,6 +76,25 @@ public class MembersRecyclerViewAdapter extends
     super.onViewDetachedFromWindow(holder);
     holder.itemView.clearAnimation();
   }
+
+  @Override
+  public Filter getFilter() {
+    return new Filter() {
+      @Override
+      protected FilterResults performFiltering(CharSequence charSequence) {
+        String charString = charSequence.toString();
+        if (charString.isEmpty()) {
+          return null;
+        }
+      }
+
+      @Override
+      protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+      }
+    }
+  }
+
 
   public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
