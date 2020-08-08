@@ -11,7 +11,6 @@ public class User {
     public final List<String> followedMemberIds;
     public final List<String> followedTopicIds;
     public String uid;
-    public String profileAddress;
 
     // Default constructor required for calls to DataSnapshot.getValue(User.class)
     public User() {
@@ -19,7 +18,6 @@ public class User {
         followedCommitteeIds = new ArrayList<>();
         followedMemberIds = new ArrayList<>();
         followedTopicIds = new ArrayList<>();
-        profileAddress = "empty";
     }
 
     // Copy constructor to quickly return a copy of original
@@ -29,6 +27,5 @@ public class User {
         this.followedCommitteeIds = original.followedCommitteeIds;
         this.followedMemberIds = original.followedMemberIds;
         this.followedTopicIds = original.followedTopicIds;
-        this.profileAddress = original.profileAddress;
     }
 }
