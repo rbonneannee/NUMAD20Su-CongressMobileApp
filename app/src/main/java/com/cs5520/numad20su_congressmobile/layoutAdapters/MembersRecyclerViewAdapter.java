@@ -122,6 +122,29 @@ public class MembersRecyclerViewAdapter
   };
 
   private boolean isInFilter(Member member, String filterPattern) {
+
+    String fullname = "";
+
+    if (member.first_name != null) {
+      fullname = fullname + member.first_name.toLowerCase() + " ";
+    }
+
+    if (member.middle_name != null) {
+      fullname = fullname + member.middle_name.toLowerCase() + " ";
+    }
+
+    if (member.last_name != null) {
+      fullname = fullname + member.last_name.toLowerCase();
+    }
+
+    if (fullname.contains(filterPattern)) {
+      return true;
+    }
+
+    return false;
+
+
+/*
     boolean flag = false;
     if (member.first_name != null) {
       if (member.first_name.toLowerCase().contains(filterPattern)) {
@@ -138,6 +161,10 @@ public class MembersRecyclerViewAdapter
     }
 
     return flag;
+
+ */
+
+
   }
 
   public List<Member> getFullList() {
