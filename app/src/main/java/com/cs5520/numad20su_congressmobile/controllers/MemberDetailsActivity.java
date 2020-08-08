@@ -17,6 +17,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
     private TextView name;
     private TextView partyState;
     private TextView website;
+    private TextView phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         name = findViewById(R.id.member_name);
         partyState = findViewById(R.id.member_party_state);
         website = findViewById(R.id.member_link);
+        phone = findViewById(R.id.member_phone);
 
         Intent openDetailsIntent = getIntent();
 
@@ -33,6 +35,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         createName();
         createPartyState();
         website.setText(member.url);
+        phone.setText(member.phone);
     }
 
     private void createName() {
