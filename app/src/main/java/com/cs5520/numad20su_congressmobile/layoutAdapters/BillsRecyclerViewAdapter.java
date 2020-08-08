@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -16,21 +18,30 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.controllers.BillDetailsActivity;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class BillsRecyclerViewAdapter extends
-    RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder> {
+// TODO Get a list of followed bills so that the follow_icon for each can be drawn appropriately
+public class BillsRecyclerViewAdapter
+        extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder>
+        implements Filterable {
 
-    private final FollowInterface followInterface;
-    private final List<Bill> items;
-    private int lastPosition = -1;
-    private Context context;
+  private List<Bill> items;
+  private List<Bill> billListFiltered;
+  private List<Bill> preFilteredList;
 
-    public BillsRecyclerViewAdapter(List<Bill> items,
-        FollowInterface followInterface) {
-        this.items = items;
-        this.followInterface = followInterface;
-    }
+  private final FollowInterface followInterface;
+  private int lastPosition = -1;
+  private Context context;
+
+  public BillsRecyclerViewAdapter(List<Bill> items,
+      FollowInterface followInterface) {
+    this.items = items;
+    this.billListFiltered = new ArrayList<>(this.items);
+    this.preFilteredList = new ArrayList<>(this.items);
+    this.followInterface = followInterface;
+  }
 
     @Override
     public int getItemCount() {
@@ -69,7 +80,12 @@ public class BillsRecyclerViewAdapter extends
         holder.itemView.clearAnimation();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+  @Override
+  public Filter getFilter() {
+    return null;
+  }
+
+  public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final TextView idView;
         public final TextView contentView;

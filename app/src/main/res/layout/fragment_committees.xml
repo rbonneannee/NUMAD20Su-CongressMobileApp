@@ -1,71 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
   <RadioGroup
-    android:id="@+id/radioGroup"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_marginStart="12dp"
-    android:layout_marginEnd="12dp"
-    android:orientation="horizontal"
-    app:layout_constraintBottom_toTopOf="@id/list"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/searchBar"
-    app:layout_constraintVertical_weight="0.05">
+      android:id="@+id/radioGroup"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="12dp"
+      android:layout_marginEnd="12dp"
+      android:orientation="horizontal"
+      app:layout_constraintBottom_toTopOf="@id/list"
+      app:layout_constraintTop_toBottomOf="@id/searchView"
+      app:layout_constraintVertical_weight="0.05">
 
     <RadioButton
-      android:id="@+id/radioButton_joint"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="0.33"
-      android:checked="true"
-      android:text="@string/committee_joint" />
+        android:id="@+id/radioButton_joint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:checked="true"
+        android:text="@string/committee_joint" />
 
     <RadioButton
-      android:id="@+id/radioButton_house"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="0.33"
-      android:text="@string/chamber_house" />
+        android:id="@+id/radioButton_house"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/chamber_house" />
 
     <RadioButton
-      android:id="@+id/radioButton_senate"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_weight="0.33"
-      android:text="@string/chamber_senate" />
+        android:id="@+id/radioButton_senate"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/chamber_senate" />
+
   </RadioGroup>
 
-  <androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/list"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_margin="12dp"
-    android:name="com.cs5520.numad20su_congressmobile.controllers.BillsFragment"
-    app:layoutManager="LinearLayoutManager"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-    app:layout_constraintVertical_weight="0.7"
-    tools:context=".controllers.CommitteesFragment"
-    tools:listitem="@layout/card_layout" />
+  <SearchView
+      android:id="@+id/searchView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="12dp"
+      app:layout_constraintBottom_toTopOf="@id/radioGroup"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_weight="0.2"
+      app:showAsAction="always" />
 
-  <include
-    android:id="@+id/searchBar"
-    layout="@layout/search_bar"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    android:layout_margin="12dp"
-    app:layout_constraintBottom_toTopOf="@id/radioGroup"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_weight="0.2" />
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/list"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_margin="12dp"
+      android:name="com.cs5520.numad20su_congressmobile.controllers.CommitteesFragment"
+      app:layoutManager="LinearLayoutManager"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@id/radioGroup"
+      app:layout_constraintVertical_weight="0.75"
+      tools:context=".controllers.MembersFragment"
+      tools:listitem="@layout/card_layout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
