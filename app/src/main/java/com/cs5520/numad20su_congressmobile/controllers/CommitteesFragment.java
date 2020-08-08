@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.enums.ChamberType;
 import com.cs5520.numad20su_congressmobile.content.services.CommitteesViewContent;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.BillsRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
@@ -52,8 +55,27 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(committeesViewContent.getViewAdapter());
 
-    // Search listener
-    // TODO
+        // Search listener
+        SearchView searchView = (SearchView) view.findViewById(R.id.searchView);
+        searchView.setQueryHint("Search list by name");
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.onActionViewExpanded();
+        searchView.clearFocus();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                CommitteesRecyclerViewAdapter adapter =
+                        (CommitteesRecyclerViewAdapter) committeesViewContent.getViewAdapter();
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
 
         // Radio button listener
         this.radioGroupChamber = view.findViewById(R.id.radioGroup);
