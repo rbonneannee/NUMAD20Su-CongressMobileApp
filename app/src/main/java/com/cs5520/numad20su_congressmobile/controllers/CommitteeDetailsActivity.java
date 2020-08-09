@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
 
-//TODO: Click chair member for details? Add list of subcommittees?
 public class CommitteeDetailsActivity extends AppCompatActivity {
 
     private Committee committee;

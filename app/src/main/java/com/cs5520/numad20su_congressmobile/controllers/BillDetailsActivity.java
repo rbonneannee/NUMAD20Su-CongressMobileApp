@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Bill;
 
-//TODO add bill follow functionality
 public class BillDetailsActivity extends AppCompatActivity {
 
     private Bill bill;
@@ -21,16 +20,12 @@ public class BillDetailsActivity extends AppCompatActivity {
     private TextView billSponsor;
     private TextView billCommittees;
     private String urlText;
-    //private Button followButton;
-    //private Boolean isFollowing;
-
 
     private TextView passedHouse;
     private TextView passedSenate;
     private TextView passedPresident;
     private TextView passedLaw;
 
-    //private FollowInterface followInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +36,6 @@ public class BillDetailsActivity extends AppCompatActivity {
         billIntroduced = findViewById(R.id.bill_introduced);
         billSponsor = findViewById(R.id.bill_sponsor);
         billCommittees = findViewById(R.id.bill_committees);
-        //followButton = findViewById(R.id.follow_button);
 
         passedHouse = findViewById(R.id.passed_house);
         passedSenate = findViewById(R.id.passed_senate);
@@ -58,14 +52,6 @@ public class BillDetailsActivity extends AppCompatActivity {
         billCommittees.setText(bill.committees);
         urlText = bill.congressdotgov_url + "/text";
 
-//        isFollowing = openDetailsIntent.getBooleanExtra("isFollowing", false);
-//        if (isFollowing) {
-//            followButton.setText("Unfollow");
-//        }
-//        else {
-//            followButton.setText("Follow");
-//        }
-
         setUpStatusDiagram();
     }
 
@@ -81,17 +67,6 @@ public class BillDetailsActivity extends AppCompatActivity {
         Intent launchFullText = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchFullText);
     }
-//
-//    public void followUnfollow (View v) {
-//        if (isFollowing) {
-//            followInterface.unfollow(FollowInterface.TYPE.Bill, bill.bill_id);
-//            //followIcon.setImageResource(R.drawable.heart_open);
-//        } else {
-//            followInterface.follow(FollowInterface.TYPE.Bill, bill.bill_id);
-//            //followIcon.setImageResource(R.drawable.heart_closed);
-//        }
-//        isFollowing = !isFollowing;
-//    }
 
     private void setUpStatusDiagram() {
         if (bill.house_passage != null) {
