@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -130,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements
                     uploadTask.addOnFailureListener(
                         exception -> Toast.makeText(context, "Failure", Toast.LENGTH_LONG)
                             .show()).addOnSuccessListener(taskSnapshot -> {
+                        updateUI(firebaseAuthInstance.getCurrentUser());
                         Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
                     });
 
@@ -271,12 +274,33 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void updateUI(FirebaseUser user) {
+
         if (user != null) {
+
+            // Get a reference to where the user's profile pic would be stored
+            Drawable fallbackDrawable = getDrawable(R.drawable.placeholder_profile_pic);
+            StorageReference imgRef = FirebaseStorage.getInstance().getReference()
+                .child("photos/" + user.getUid());
+
+            // Download the profile pic, if the user has one, into the image view
+            final long ONE_MEGABYTE = 1024 * 1024;
+            imgRef.getBytes(5 * ONE_MEGABYTE).addOnSuccessListener(bytes -> {
+                // Data for "images/island.jpg" is returns, use this as needed
+                if (bytes.length > 0) {
+                    Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    activityMainBinding.profilePicture.setImageBitmap(image);
+                }
+            });
+
+            // Hide signin layout and show the app
             activityMainBinding.layoutSignin.setVisibility(View.GONE);
             activityMainBinding.layoutMain.setVisibility(View.VISIBLE);
+
         } else {
+
             activityMainBinding.layoutSignin.setVisibility(View.VISIBLE);
             activityMainBinding.layoutMain.setVisibility(View.GONE);
+
         }
     }
 }
