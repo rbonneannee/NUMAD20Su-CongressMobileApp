@@ -2,6 +2,7 @@ package com.cs5520.numad20su_congressmobile.content.services;
 
 
 import android.content.Context;
+
 import com.cs5520.numad20su_congressmobile.content.enums.ChamberType;
 import com.cs5520.numad20su_congressmobile.content.models.Member;
 import com.cs5520.numad20su_congressmobile.content.services.jsonHandlers.MembersJsonTextHandler;
@@ -29,13 +30,13 @@ public class MembersViewContent extends AbstractViewContent<Member> {
             + "/members.json");
     }
 
-    @Override
-    public List<Member> getListFromJsonText(String jsonText) {
-        List<Member> list = MembersJsonTextHandler.extract(jsonText);
-        MembersRecyclerViewAdapter adapter = (MembersRecyclerViewAdapter) this.viewAdapter;
-        adapter.setFullList(list);
-        return list;
-    }
+  @Override
+  public List<Member> getListFromJsonText(String jsonText) {
+    List<Member> list = MembersJsonTextHandler.extract(jsonText);
+    MembersRecyclerViewAdapter adapter = (MembersRecyclerViewAdapter) this.viewAdapter;
+    adapter.setPreFilteredList(list);
+    return list;
+  }
 
     public void setChamberType(ChamberType chamberType) {
         this.chamberType = chamberType;

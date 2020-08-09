@@ -18,6 +18,7 @@ import com.cs5520.numad20su_congressmobile.content.models.Member;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 import com.cs5520.numad20su_congressmobile.controllers.MemberDetailsActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,54 +30,72 @@ public class MembersRecyclerViewAdapter
     extends RecyclerView.Adapter<MembersRecyclerViewAdapter.MemberViewHolder>
     implements Filterable {
 
-    private final List<Member> memberList;
-    private final FollowInterface followInterface;
-    private List<Member> memberListFiltered;
-    private List<Member> fullList;
-    private int lastPosition = -1;
-    private Context context;
-    private Filter memberFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            memberList.size();
-            List<Member> filteredList = new ArrayList<>();
-            String filterPattern = constraint.toString().toLowerCase().trim();
+  private final List<Member> memberList;
+  private List<Member> memberListFiltered;
+  private List<Member> preFilteredList;
 
-            if (filterPattern.isEmpty()) {
-                filteredList.clear();
-                filteredList.addAll(fullList);
-            } else {
-                for (Member member : memberList) {
-                    if (isInFilter(member, filterPattern)) {
-                        filteredList.add(member);
+  private int lastPosition = -1;
+  private Context context;
+  private FollowInterface followInterface;
+
+  public MembersRecyclerViewAdapter(Context context, List<Member> items, FollowInterface followInterface) {
+    this.context = context;
+    this.memberList = items;
+    this.memberListFiltered = new ArrayList<>(this.memberList);
+    this.preFilteredList = new ArrayList<>(this.memberList);
+    this.followInterface = followInterface;
+  }
+
+    public static class MemberViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener {
+
+        public final TextView mIdView;
+        public final TextView mContentView;
+        public final ImageView followIcon;
+        private final Context context;
+        private final FollowInterface followInterface;
+        public Member mItem;
+        public boolean isFollowing;
+
+        public MemberViewHolder(View view, Context context, FollowInterface followInterface) {
+            super(view);
+
+            this.mIdView = view.findViewById(R.id.item_number);
+            this.mContentView = view.findViewById(R.id.content);
+            this.followIcon = view.findViewById(R.id.follow_icon);
+            this.context = context;
+            this.followInterface = followInterface;
+
+            this.followIcon.setOnClickListener(this);
+            super.itemView.setOnClickListener(this);
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            return super.toString() + " '" + mContentView.getText() + "'";
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.card_view:
+                    context.startActivity(
+                            new Intent(context, MemberDetailsActivity.class)
+                                    .putExtra("member", mItem));
+                    break;
+                case R.id.follow_icon:
+                    if (isFollowing) {
+                        followInterface.unfollow(TYPE.Member, mItem.id);
+                        followIcon.setImageResource(R.drawable.heart_open);
+                    } else {
+                        followInterface.follow(TYPE.Member, mItem.id);
+                        followIcon.setImageResource(R.drawable.heart_closed);
                     }
-                }
+                    isFollowing = !isFollowing;
+                    break;
             }
-
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
         }
-
-        ;
-
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            memberList.clear();
-            memberListFiltered = (ArrayList<Member>) filterResults.values;
-            memberList.addAll(memberListFiltered);
-            notifyDataSetChanged();
-        }
-    };
-
-    public MembersRecyclerViewAdapter(Context context, List<Member> items,
-        FollowInterface followInterface) {
-        this.context = context;
-        this.memberList = items;
-        this.memberListFiltered = new ArrayList<>(this.memberList);
-        this.fullList = new ArrayList<>(this.memberList);
-        this.followInterface = followInterface;
     }
 
     @NonNull
@@ -117,85 +136,71 @@ public class MembersRecyclerViewAdapter
         holder.itemView.clearAnimation();
     }
 
+  @Override
+  public Filter getFilter() {
+    return memberFilter;
+  }
+
+  private Filter memberFilter = new Filter() {
     @Override
-    public Filter getFilter() {
-        memberList.size();
-        return memberFilter;
+    protected FilterResults performFiltering(CharSequence constraint) {
+      List<Member> filteredList = new ArrayList<>();
+      String filterPattern = constraint.toString().toLowerCase().trim();
+
+      if (filterPattern.isEmpty()) {
+        filteredList.clear();
+        filteredList.addAll(preFilteredList);
+      } else {
+        for (Member member : memberList) {
+          if (isInFilter(member, filterPattern)) {
+            filteredList.add(member);
+          }
+        }
+      }
+
+      FilterResults results = new FilterResults();
+      results.values = filteredList;
+
+      return results;
+    };
+
+    @Override
+    protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+      memberList.clear();
+      memberListFiltered = (ArrayList<Member>) filterResults.values;
+      memberList.addAll(memberListFiltered);
+      notifyDataSetChanged();
+    }
+  };
+
+  private boolean isInFilter(Member member, String filterPattern) {
+
+      String fullname = "";
+
+      if (member.first_name != null) {
+          fullname = fullname + member.first_name.toLowerCase() + " ";
+      }
+
+      if (member.middle_name != null) {
+          fullname = fullname + member.middle_name.toLowerCase() + " ";
+      }
+
+      if (member.last_name != null) {
+          fullname = fullname + member.last_name.toLowerCase();
+      }
+
+      return fullname.contains(filterPattern);
+
+  }
+
+    public List<Member> getPreFilteredList() {
+        return preFilteredList;
     }
 
-    private boolean isInFilter(Member member, String filterPattern) {
-
-        String fullname = "";
-
-        if (member.first_name != null) {
-            fullname = fullname + member.first_name.toLowerCase() + " ";
-        }
-
-        if (member.middle_name != null) {
-            fullname = fullname + member.middle_name.toLowerCase() + " ";
-        }
-
-        if (member.last_name != null) {
-            fullname = fullname + member.last_name.toLowerCase();
-        }
-
-        return fullname.contains(filterPattern);
-
+    public void setPreFilteredList(List<Member> preFilteredList) {
+        this.preFilteredList = preFilteredList;
     }
 
-    public void setFullList(List<Member> fullList) {
-        this.fullList = fullList;
-    }
 
-    public static class MemberViewHolder extends RecyclerView.ViewHolder implements
-        View.OnClickListener {
-
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public final ImageView followIcon;
-        private final Context context;
-        private final FollowInterface followInterface;
-        public Member mItem;
-        public boolean isFollowing;
-
-        public MemberViewHolder(View view, Context context, FollowInterface followInterface) {
-            super(view);
-
-            this.mIdView = view.findViewById(R.id.item_number);
-            this.mContentView = view.findViewById(R.id.content);
-            this.followIcon = view.findViewById(R.id.follow_icon);
-            this.context = context;
-            this.followInterface = followInterface;
-
-            this.followIcon.setOnClickListener(this);
-            super.itemView.setOnClickListener(this);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
-        }
-
-        @Override
-        public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.card_view:
-                    context.startActivity(
-                        new Intent(context, MemberDetailsActivity.class)
-                            .putExtra("member", mItem));
-                    break;
-                case R.id.follow_icon:
-                    if (isFollowing) {
-                        followInterface.unfollow(TYPE.Member, mItem.id);
-                        followIcon.setImageResource(R.drawable.heart_open);
-                    } else {
-                        followInterface.follow(TYPE.Member, mItem.id);
-                        followIcon.setImageResource(R.drawable.heart_closed);
-                    }
-                    isFollowing = !isFollowing;
-                    break;
-            }
-        }
-    }
 }
+
