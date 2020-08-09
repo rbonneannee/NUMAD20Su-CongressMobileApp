@@ -48,6 +48,8 @@ public class MyFeedMembersContent implements Listener<String> {
         member.short_title = role.short_title;
         member.state = role.state;
         member.party = role.party;
+        member.phone = role.phone;
+        member.url = result.url;
         this.viewAdapter.add(member);
     }
 
@@ -62,6 +64,7 @@ public class MyFeedMembersContent implements Listener<String> {
         static class Result {
 
             String id;
+            String url;
             String first_name;
             String last_name;
             List<Role> roles;
