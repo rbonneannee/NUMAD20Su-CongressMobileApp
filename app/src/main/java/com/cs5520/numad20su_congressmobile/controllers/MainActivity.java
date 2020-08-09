@@ -1,8 +1,13 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +29,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -87,14 +96,46 @@ public class MainActivity extends AppCompatActivity implements
         return result;
     }
 
+    public void getImage() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, RC_GET_IMAGE);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case RC_GET_IMAGE:
                 if (resultCode == RESULT_OK) {
+                    // Get cloud storage instance
+                    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    StorageReference storageRef = FirebaseStorage
+                        .getInstance()
+                        .getReference("photos/")
+                        .child(uid);
+
+                    // Set image as profile picture
                     Bitmap bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+
                     (activityMainBinding.profilePicture).setImageBitmap(bitmap);
+
+                    // Convert image data to a byte array
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(CompressFormat.JPEG, 100, baos);
+                    byte[] jpgData = baos.toByteArray();
+
+                    // Upload image to cloud storage
+                    Context context = this;
+                    UploadTask uploadTask = storageRef.putBytes(jpgData);
+                    uploadTask.addOnFailureListener(
+                        exception -> Toast.makeText(context, "Failure", Toast.LENGTH_LONG)
+                            .show()).addOnSuccessListener(taskSnapshot -> {
+                        updateUI(firebaseAuthInstance.getCurrentUser());
+                        Toast.makeText(context, "Success", Toast.LENGTH_LONG).show();
+                    });
+
                 }
                 break;
             case RC_SIGN_IN:
@@ -181,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.profile_picture:
-                openSettings();
+                getImage();
                 break;
             case R.id.buttonSignIn:
                 startSignIn();
@@ -202,11 +243,6 @@ public class MainActivity extends AppCompatActivity implements
     protected void onStart() {
         super.onStart();
         updateUI(firebaseAuthInstance.getCurrentUser());
-    }
-
-    public void openSettings() {
-        Intent openSettingsIntent = new Intent(this, SettingsActivity.class);
-        startActivity(openSettingsIntent);
     }
 
     private void signOut() {
@@ -238,12 +274,33 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void updateUI(FirebaseUser user) {
+
         if (user != null) {
+
+            // Get a reference to where the user's profile pic would be stored
+            Drawable fallbackDrawable = getDrawable(R.drawable.placeholder_profile_pic);
+            StorageReference imgRef = FirebaseStorage.getInstance().getReference()
+                .child("photos/" + user.getUid());
+
+            // Download the profile pic, if the user has one, into the image view
+            final long ONE_MEGABYTE = 1024 * 1024;
+            imgRef.getBytes(5 * ONE_MEGABYTE).addOnSuccessListener(bytes -> {
+                // Data for "images/island.jpg" is returns, use this as needed
+                if (bytes.length > 0) {
+                    Bitmap image = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    activityMainBinding.profilePicture.setImageBitmap(image);
+                }
+            });
+
+            // Hide signin layout and show the app
             activityMainBinding.layoutSignin.setVisibility(View.GONE);
             activityMainBinding.layoutMain.setVisibility(View.VISIBLE);
+
         } else {
+
             activityMainBinding.layoutSignin.setVisibility(View.VISIBLE);
             activityMainBinding.layoutMain.setVisibility(View.GONE);
+
         }
     }
 }
