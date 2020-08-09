@@ -6,6 +6,9 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +40,40 @@ public class BillsFragment extends Fragment implements FollowTrigger {
         recyclerView.setAdapter(billsViewContent.getViewAdapter());
         initScrollListener(recyclerView);
 
+        SearchView searchView=view.findViewById(R.id.searchView);
+        searchView.setQueryHint("Keyword search");
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setSubmitButtonEnabled(true);
+        searchView.onActionViewExpanded();
+        searchView.clearFocus();
+
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                billsViewContent.getAllItems();
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                billsViewContent.getBillsWithKeyword(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (s.equals("")) {
+                    billsViewContent.getAllItems();
+                }
+                return false;
+            }
+        });
+
+
+
+        /*
         this.searchFld = view.findViewById(R.id.textInputEditText);
         this.searchFld.setHint("Keyword search");
         view.findViewById(R.id.imageButtonSearch)
@@ -44,6 +81,8 @@ public class BillsFragment extends Fragment implements FollowTrigger {
                 String query = searchFld.getText().toString();
                 billsViewContent.getBillsWithKeyword(query);
             });
+
+         */
         return view;
     }
 
