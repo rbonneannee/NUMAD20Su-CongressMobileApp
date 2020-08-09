@@ -120,8 +120,6 @@ public class BillsViewContent extends AbstractViewContent<Bill> {
                 return BillsJsonTextHandler.extract(jsonText);
             case SUBJECT_SEARCH:
                 return BillsSubjectSearchJsonTextHandler.extract(jsonText);
-            case FILTER:
-                return null;
             default:
                 return null;
         }

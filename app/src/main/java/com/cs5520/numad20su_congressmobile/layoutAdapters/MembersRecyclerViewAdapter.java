@@ -18,7 +18,6 @@ import com.cs5520.numad20su_congressmobile.content.models.Member;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
 import com.cs5520.numad20su_congressmobile.controllers.MemberDetailsActivity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,24 +29,25 @@ public class MembersRecyclerViewAdapter
     extends RecyclerView.Adapter<MembersRecyclerViewAdapter.MemberViewHolder>
     implements Filterable {
 
-  private final List<Member> memberList;
-  private List<Member> memberListFiltered;
-  private List<Member> preFilteredList;
+    private final List<Member> memberList;
+    private List<Member> memberListFiltered;
+    private List<Member> preFilteredList;
 
-  private int lastPosition = -1;
-  private Context context;
-  private FollowInterface followInterface;
+    private int lastPosition = -1;
+    private final Context context;
+    private final FollowInterface followInterface;
 
-  public MembersRecyclerViewAdapter(Context context, List<Member> items, FollowInterface followInterface) {
-    this.context = context;
-    this.memberList = items;
-    this.memberListFiltered = new ArrayList<>(this.memberList);
-    this.preFilteredList = new ArrayList<>(this.memberList);
-    this.followInterface = followInterface;
-  }
+    public MembersRecyclerViewAdapter(Context context, List<Member> items,
+        FollowInterface followInterface) {
+        this.context = context;
+        this.memberList = items;
+        this.memberListFiltered = new ArrayList<>(this.memberList);
+        this.preFilteredList = new ArrayList<>(this.memberList);
+        this.followInterface = followInterface;
+    }
 
     public static class MemberViewHolder extends RecyclerView.ViewHolder implements
-            View.OnClickListener {
+        View.OnClickListener {
 
         public final TextView mIdView;
         public final TextView mContentView;
@@ -81,8 +81,8 @@ public class MembersRecyclerViewAdapter
             switch (view.getId()) {
                 case R.id.card_view:
                     context.startActivity(
-                            new Intent(context, MemberDetailsActivity.class)
-                                    .putExtra("member", mItem));
+                        new Intent(context, MemberDetailsActivity.class)
+                            .putExtra("member", mItem));
                     break;
                 case R.id.follow_icon:
                     if (isFollowing) {
@@ -96,6 +96,11 @@ public class MembersRecyclerViewAdapter
                     break;
             }
         }
+    }
+
+    public void add(Member member) {
+        this.memberList.add(member);
+        this.notifyItemInserted(this.memberList.size() - 1);
     }
 
     @NonNull
@@ -136,62 +141,62 @@ public class MembersRecyclerViewAdapter
         holder.itemView.clearAnimation();
     }
 
-  @Override
-  public Filter getFilter() {
-    return memberFilter;
-  }
-
-  private Filter memberFilter = new Filter() {
     @Override
-    protected FilterResults performFiltering(CharSequence constraint) {
-      List<Member> filteredList = new ArrayList<>();
-      String filterPattern = constraint.toString().toLowerCase().trim();
+    public Filter getFilter() {
+        return memberFilter;
+    }
 
-      if (filterPattern.isEmpty()) {
-        filteredList.clear();
-        filteredList.addAll(preFilteredList);
-      } else {
-        for (Member member : memberList) {
-          if (isInFilter(member, filterPattern)) {
-            filteredList.add(member);
-          }
+    private final Filter memberFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Member> filteredList = new ArrayList<>();
+            String filterPattern = constraint.toString().toLowerCase().trim();
+
+            if (filterPattern.isEmpty()) {
+                filteredList.clear();
+                filteredList.addAll(preFilteredList);
+            } else {
+                for (Member member : memberList) {
+                    if (isInFilter(member, filterPattern)) {
+                        filteredList.add(member);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
         }
-      }
 
-      FilterResults results = new FilterResults();
-      results.values = filteredList;
-
-      return results;
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            memberList.clear();
+            memberListFiltered = (ArrayList<Member>) filterResults.values;
+            memberList.addAll(memberListFiltered);
+            notifyDataSetChanged();
+        }
     };
 
-    @Override
-    protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-      memberList.clear();
-      memberListFiltered = (ArrayList<Member>) filterResults.values;
-      memberList.addAll(memberListFiltered);
-      notifyDataSetChanged();
+    private boolean isInFilter(Member member, String filterPattern) {
+
+        String fullName = "";
+
+        if (member.first_name != null) {
+            fullName = fullName + member.first_name.toLowerCase() + " ";
+        }
+
+        if (member.middle_name != null) {
+            fullName = fullName + member.middle_name.toLowerCase() + " ";
+        }
+
+        if (member.last_name != null) {
+            fullName = fullName + member.last_name.toLowerCase();
+        }
+
+        return fullName.contains(filterPattern);
+
     }
-  };
-
-  private boolean isInFilter(Member member, String filterPattern) {
-
-      String fullname = "";
-
-      if (member.first_name != null) {
-          fullname = fullname + member.first_name.toLowerCase() + " ";
-      }
-
-      if (member.middle_name != null) {
-          fullname = fullname + member.middle_name.toLowerCase() + " ";
-      }
-
-      if (member.last_name != null) {
-          fullname = fullname + member.last_name.toLowerCase();
-      }
-
-      return fullname.contains(filterPattern);
-
-  }
 
     public List<Member> getPreFilteredList() {
         return preFilteredList;

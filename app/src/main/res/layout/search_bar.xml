@@ -6,7 +6,6 @@
   android:orientation="horizontal">
 
   <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/textInputEditText_member"
     android:layout_width="0dp"
     android:layout_weight="0.5"
     android:layout_height="match_parent">

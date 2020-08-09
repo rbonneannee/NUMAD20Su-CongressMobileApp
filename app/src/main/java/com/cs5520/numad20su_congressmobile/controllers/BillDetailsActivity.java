@@ -1,11 +1,9 @@
 package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
@@ -14,11 +12,7 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 public class BillDetailsActivity extends AppCompatActivity {
 
     private Bill bill;
-    private TextView billTitle;
-    private TextView billNumber;
-    private TextView billIntroduced;
     private TextView billSponsor;
-    private TextView billCommittees;
     private String urlText;
 
     private TextView passedHouse;
@@ -31,11 +25,11 @@ public class BillDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_details);
-        billTitle = findViewById(R.id.bill_title);
-        billNumber = findViewById(R.id.bill_number);
-        billIntroduced = findViewById(R.id.bill_introduced);
+        TextView billTitle = findViewById(R.id.bill_title);
+        TextView billNumber = findViewById(R.id.bill_number);
+        TextView billIntroduced = findViewById(R.id.bill_introduced);
         billSponsor = findViewById(R.id.bill_sponsor);
-        billCommittees = findViewById(R.id.bill_committees);
+        TextView billCommittees = findViewById(R.id.bill_committees);
 
         passedHouse = findViewById(R.id.passed_house);
         passedSenate = findViewById(R.id.passed_senate);
@@ -70,22 +64,22 @@ public class BillDetailsActivity extends AppCompatActivity {
 
     private void setUpStatusDiagram() {
         if (bill.house_passage != null) {
-            passedHouse.setText("Passed House");
+            passedHouse.setText(R.string.passed_house);
             passedHouse.append("\n" + bill.house_passage);
             passedHouse.setBackgroundResource(R.drawable.text_border_green);
         }
         if (bill.senate_passage != null) {
-            passedSenate.setText("Passed Senate");
+            passedSenate.setText(R.string.passed_senate);
             passedSenate.append("\n" + bill.senate_passage);
             passedSenate.setBackgroundResource(R.drawable.text_border_green);
         }
         if (bill.vetoed != null) {
             if (bill.enacted != null) {
-                passedPresident.setText("Vetoed, Overridden");
+                passedPresident.setText(R.string.vetoed_overridden);
                 passedPresident.append("\n" + bill.vetoed);
                 passedPresident.setBackgroundResource(R.drawable.text_border_yellow);
             } else {
-                passedPresident.setText("Vetoed");
+                passedPresident.setText(R.string.vetoed);
                 passedPresident.append("\n" + bill.vetoed);
                 passedPresident.setBackgroundResource(R.drawable.text_border_red);
             }
@@ -95,7 +89,7 @@ public class BillDetailsActivity extends AppCompatActivity {
             passedLaw.append("\n" + bill.enacted);
             passedLaw.setBackgroundResource(R.drawable.text_border_green);
             if (bill.vetoed == null) {
-                passedPresident.setText("Approved by President");
+                passedPresident.setText(R.string.approved_by_president);
                 passedPresident.setBackgroundResource(R.drawable.text_border_green);
             }
         }

@@ -4,7 +4,7 @@
   android:layout_height="match_parent">
   <androidx.appcompat.widget.LinearLayoutCompat
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
@@ -13,7 +13,7 @@
       android:layout_weight="0.1"
       android:layout_margin="2dp"
       android:textAlignment="center"
-      android:text="Members" />
+      android:text="@string/members" />
 
     <androidx.recyclerview.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
@@ -32,7 +32,7 @@
       android:layout_weight="0.1"
       android:layout_margin="2dp"
       android:textAlignment="center"
-      android:text="Bills" />
+      android:text="@string/bills" />
 
     <androidx.recyclerview.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
@@ -51,7 +51,7 @@
       android:layout_weight="0.1"
       android:layout_margin="2dp"
       android:textAlignment="center"
-      android:text="Committees" />
+      android:text="@string/committees" />
 
     <androidx.recyclerview.widget.RecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"

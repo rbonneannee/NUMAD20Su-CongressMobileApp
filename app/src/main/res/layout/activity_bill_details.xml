@@ -1,202 +1,201 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".controllers.BillDetailsActivity">
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".controllers.BillDetailsActivity">
 
-    <TextView
-        android:id="@+id/bill_title"
-        android:layout_width="353dp"
-        android:layout_height="wrap_content"
-        android:text="billTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bill_number"
-        app:layout_constraintVertical_bias="0.127" />
+  <TextView
+    android:id="@+id/bill_title"
+    android:layout_width="353dp"
+    android:layout_height="wrap_content"
+    android:text="@string/bill_title"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.491"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/bill_number"
+    app:layout_constraintVertical_bias="0.127" />
 
-    <TextView
-        android:id="@+id/bill_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="bill_number"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.044" />
+  <TextView
+    android:id="@+id/bill_number"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/bill_number"
+    android:textSize="28sp"
+    android:textStyle="bold"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.044" />
 
-    <TextView
-        android:id="@+id/bill_introduced"
-        android:layout_width="165dp"
-        android:layout_height="35dp"
-        android:text="bill_introduced"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/bill_title"
-        app:layout_constraintVertical_bias="0.283" />
+  <TextView
+    android:id="@+id/bill_introduced"
+    android:layout_width="165dp"
+    android:layout_height="35dp"
+    android:text="@string/bill_introduced"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/guideline"
+    app:layout_constraintTop_toBottomOf="@+id/bill_title"
+    app:layout_constraintVertical_bias="0.283" />
 
-    <TextView
-        android:id="@+id/bill_sponsor"
-        android:layout_width="166dp"
-        android:layout_height="52dp"
-        android:text="bill_sponsor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/bill_introduced"
-        app:layout_constraintVertical_bias="0.125" />
+  <TextView
+    android:id="@+id/bill_sponsor"
+    android:layout_width="166dp"
+    android:layout_height="52dp"
+    android:text="@string/bill_sponsor"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/guideline"
+    app:layout_constraintTop_toBottomOf="@+id/bill_introduced"
+    app:layout_constraintVertical_bias="0.125" />
 
-    <TextView
-        android:id="@+id/bill_committees"
-        android:layout_width="169dp"
-        android:layout_height="56dp"
-        android:layout_marginBottom="44dp"
-        android:text="bill_committees"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/bill_sponsor"
-        app:layout_constraintVertical_bias="0.149" />
+  <TextView
+    android:id="@+id/bill_committees"
+    android:layout_width="169dp"
+    android:layout_height="56dp"
+    android:layout_marginBottom="44dp"
+    android:text="@string/bill_committees"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="@+id/guideline"
+    app:layout_constraintTop_toBottomOf="@+id/bill_sponsor"
+    app:layout_constraintVertical_bias="0.149" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="29dp" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_begin="29dp" />
 
-    <TextView
-        android:id="@+id/sponsor_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sponsor"
-        app:layout_constraintBottom_toTopOf="@+id/bill_sponsor"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/sponsor"
+    app:layout_constraintBottom_toTopOf="@+id/bill_sponsor"
+    app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-    <TextView
-        android:id="@+id/sponsor_text3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Committee"
-        app:layout_constraintBottom_toTopOf="@+id/bill_committees"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/committee"
+    app:layout_constraintBottom_toTopOf="@+id/bill_committees"
+    app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-    <TextView
-        android:id="@+id/sponsor_text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Introduced"
-        app:layout_constraintBottom_toTopOf="@+id/bill_introduced"
-        app:layout_constraintStart_toStartOf="@+id/guideline" />
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/introduced"
+    app:layout_constraintBottom_toTopOf="@+id/bill_introduced"
+    app:layout_constraintStart_toStartOf="@+id/guideline" />
 
-    <Button
-        android:id="@+id/full_text_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="goToPDF"
-        android:text="Bill Full Text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:onClick="goToPDF"
+    android:text="@string/bill_full_text"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.976" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="29dp" />
+  <androidx.constraintlayout.widget.Guideline
+    android:id="@+id/guideline2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintGuide_end="29dp" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="50dp"
-        android:layout_height="27dp"
-        android:rotation="-90"
-        app:layout_constraintEnd_toEndOf="@+id/passed_house"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/passed_house"
-        app:layout_constraintTop_toBottomOf="@+id/passed_house"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+  <ImageView
+    android:id="@+id/imageView"
+    android:layout_width="50dp"
+    android:layout_height="27dp"
+    android:rotation="-90"
+    app:layout_constraintEnd_toEndOf="@+id/passed_house"
+    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    app:layout_constraintStart_toStartOf="@+id/passed_house"
+    app:layout_constraintTop_toBottomOf="@+id/passed_house"
+    app:srcCompat="?attr/actionModeCloseDrawable"
+    android:contentDescription="@string/passed_house_indicator" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="50dp"
-        android:layout_height="27dp"
-        android:rotation="-90"
-        app:layout_constraintEnd_toEndOf="@+id/passed_senate"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/passed_senate"
-        app:layout_constraintTop_toBottomOf="@+id/passed_senate"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+  <ImageView
+    android:id="@+id/imageView2"
+    android:layout_width="50dp"
+    android:layout_height="27dp"
+    android:rotation="-90"
+    app:layout_constraintEnd_toEndOf="@+id/passed_senate"
+    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    app:layout_constraintStart_toStartOf="@+id/passed_senate"
+    app:layout_constraintTop_toBottomOf="@+id/passed_senate"
+    app:srcCompat="?attr/actionModeCloseDrawable"
+    android:contentDescription="@string/passed_senate_indicator" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="50dp"
-        android:layout_height="27dp"
-        android:rotation="-90"
-        app:layout_constraintEnd_toEndOf="@+id/passed_president"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/passed_president"
-        app:layout_constraintTop_toBottomOf="@+id/passed_president"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+  <ImageView
+    android:id="@+id/imageView3"
+    android:layout_width="50dp"
+    android:layout_height="27dp"
+    android:rotation="-90"
+    app:layout_constraintEnd_toEndOf="@+id/passed_president"
+    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    app:layout_constraintStart_toStartOf="@+id/passed_president"
+    app:layout_constraintTop_toBottomOf="@+id/passed_president"
+    app:srcCompat="?attr/actionModeCloseDrawable"
+    android:contentDescription="@string/signed_by_president_indicator" />
 
-    <TextView
-        android:id="@+id/passed_house"
-        android:layout_width="70dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/text_border_clear"
-        android:gravity="center"
-        android:text="Needs House Approval"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bill_title" />
+  <TextView
+    android:id="@+id/passed_house"
+    android:layout_width="70dp"
+    android:layout_height="49dp"
+    android:layout_marginTop="44dp"
+    android:background="@drawable/text_border_clear"
+    android:gravity="center"
+    android:text="@string/needs_house_approval"
+    android:textSize="12sp"
+    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    app:layout_constraintTop_toBottomOf="@+id/bill_title" />
 
-    <TextView
-        android:id="@+id/passed_senate"
-        android:layout_width="70dp"
-        android:layout_height="49dp"
-        android:background="@drawable/text_border_clear"
-        android:gravity="center"
-        android:text="Needs Senate Approval"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+  <TextView
+    android:id="@+id/passed_senate"
+    android:layout_width="70dp"
+    android:layout_height="49dp"
+    android:background="@drawable/text_border_clear"
+    android:gravity="center"
+    android:text="@string/needs_senate_approval"
+    android:textSize="12sp"
+    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/passed_president"
-        android:layout_width="70dp"
-        android:layout_height="49dp"
-        android:background="@drawable/text_border_clear"
-        android:gravity="center"
-        android:text="Needs Presidential Approval"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+  <TextView
+    android:id="@+id/passed_president"
+    android:layout_width="70dp"
+    android:layout_height="49dp"
+    android:background="@drawable/text_border_clear"
+    android:gravity="center"
+    android:text="@string/needs_presidential_approval"
+    android:textSize="12sp"
+    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-    <TextView
-        android:id="@+id/became_law"
-        android:layout_width="70dp"
-        android:layout_height="49dp"
-        android:background="@drawable/text_border_clear"
-        android:gravity="center"
-        android:text="Enacted into law"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.0" />
+  <TextView
+    android:id="@+id/became_law"
+    android:layout_width="70dp"
+    android:layout_height="49dp"
+    android:background="@drawable/text_border_clear"
+    android:gravity="center"
+    android:text="@string/enacted_into_law"
+    android:textSize="12sp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toStartOf="@+id/guideline2"
+    app:layout_constraintTop_toBottomOf="@+id/imageView3"
+    app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

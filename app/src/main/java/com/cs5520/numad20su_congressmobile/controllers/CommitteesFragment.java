@@ -2,36 +2,27 @@ package com.cs5520.numad20su_congressmobile.controllers;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.enums.ChamberType;
 import com.cs5520.numad20su_congressmobile.content.services.CommitteesViewContent;
-import com.cs5520.numad20su_congressmobile.layoutAdapters.BillsRecyclerViewAdapter;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
-import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A fragment representing a list of Items.
  */
 public class CommitteesFragment extends Fragment implements FollowTrigger {
 
-  private CommitteesViewContent committeesViewContent;
-  private FollowInterface followInterface;
-  private RadioGroup radioGroupChamber;
+    private CommitteesViewContent committeesViewContent;
+    private FollowInterface followInterface;
 
     public CommitteesFragment() {
     }
@@ -71,15 +62,15 @@ public class CommitteesFragment extends Fragment implements FollowTrigger {
             @Override
             public boolean onQueryTextChange(String query) {
                 CommitteesRecyclerViewAdapter adapter =
-                        (CommitteesRecyclerViewAdapter) committeesViewContent.getViewAdapter();
+                    (CommitteesRecyclerViewAdapter) committeesViewContent.getViewAdapter();
                 adapter.getFilter().filter(query);
                 return false;
             }
         });
 
         // Radio button listener
-        this.radioGroupChamber = view.findViewById(R.id.radioGroup);
-        this.radioGroupChamber.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+        RadioGroup radioGroupChamber = view.findViewById(R.id.radioGroup);
+        radioGroupChamber.setOnCheckedChangeListener((radioGroup, checkedId) -> {
 
             switch (checkedId) {
                 case R.id.radioButton_joint:

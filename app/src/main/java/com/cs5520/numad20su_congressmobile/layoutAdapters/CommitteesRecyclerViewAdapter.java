@@ -15,56 +15,60 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.models.Committee;
-import com.cs5520.numad20su_congressmobile.content.models.Member;
 import com.cs5520.numad20su_congressmobile.controllers.CommitteeDetailsActivity;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CommitteesRecyclerViewAdapter
-        extends RecyclerView.Adapter<CommitteesRecyclerViewAdapter.ViewHolder>
-        implements Filterable {
+    extends RecyclerView.Adapter<CommitteesRecyclerViewAdapter.ViewHolder>
+    implements Filterable {
 
-  private final List<Committee> committeeList;
-  private List<Committee> committeeListFiltered;
-  private List<Committee> preFilteredList;
+    private final List<Committee> committeeList;
+    private List<Committee> committeeListFiltered;
+    private List<Committee> preFilteredList;
 
-  private int lastPosition = -1;
-  private Context context;
-  private FollowInterface followInterface;
+    private int lastPosition = -1;
+    private Context context;
+    private final FollowInterface followInterface;
 
-  public CommitteesRecyclerViewAdapter(List<Committee> items,
-      FollowInterface followInterface) {
-    this.committeeList = items;
-    this.committeeListFiltered = new ArrayList<>(this.committeeList);
-    this.preFilteredList = new ArrayList<>(this.committeeList);
-    this.followInterface = followInterface;
-  }
+    public CommitteesRecyclerViewAdapter(List<Committee> items,
+        FollowInterface followInterface) {
+        this.committeeList = items;
+        this.committeeListFiltered = new ArrayList<>(this.committeeList);
+        this.preFilteredList = new ArrayList<>(this.committeeList);
+        this.followInterface = followInterface;
+    }
 
-  @Override
-  public void onBindViewHolder(final ViewHolder holder, int position) {
-    Committee committee = this.committeeList.get(position);
-    holder.mItem = committee;
-    holder.mIdView.setText(committee.id);
-    holder.mContentView.setText(committee.name);
-    holder.isFollowing = (
-        this.followInterface.following(TYPE.Committee).contains(committee.id));
-    holder.followIcon
-        .setImageResource((holder.isFollowing) ? R.drawable.heart_closed : R.drawable.heart_open);
+    public void add(Committee committee) {
+        this.committeeList.add(committee);
+        this.notifyItemInserted(this.committeeList.size() - 1);
+    }
 
-    Animation animation = AnimationUtils.loadAnimation(this.context,
-        (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
-    holder.itemView.startAnimation(animation);
-    lastPosition = position;
-  }
+    @Override
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        Committee committee = this.committeeList.get(position);
+        holder.mItem = committee;
+        holder.mIdView.setText(committee.id);
+        holder.mContentView.setText(committee.name);
+        holder.isFollowing = (
+            this.followInterface.following(TYPE.Committee).contains(committee.id));
+        holder.followIcon
+            .setImageResource(
+                (holder.isFollowing) ? R.drawable.heart_closed : R.drawable.heart_open);
 
-  @Override
-  public int getItemCount() {
-    return committeeList.size();
-  }
+        Animation animation = AnimationUtils.loadAnimation(this.context,
+            (position > lastPosition) ? R.anim.slide_right_anim : R.anim.load_up_anim);
+        holder.itemView.startAnimation(animation);
+        lastPosition = position;
+    }
+
+    @Override
+    public int getItemCount() {
+        return committeeList.size();
+    }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull CommitteesRecyclerViewAdapter.ViewHolder holder) {
@@ -87,7 +91,7 @@ public class CommitteesRecyclerViewAdapter
         return committeeFilter;
     }
 
-    private Filter committeeFilter = new Filter() {
+    private final Filter committeeFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Committee> filteredList = new ArrayList<>();
@@ -107,7 +111,7 @@ public class CommitteesRecyclerViewAdapter
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
-        };
+        }
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
@@ -128,10 +132,7 @@ public class CommitteesRecyclerViewAdapter
             info = info + committee.name.toLowerCase() + " ";
         }
 
-        if (info.contains(filterPattern)) {
-            return true;
-        }
-        return false;
+        return info.contains(filterPattern);
     }
 
     public void setPreFilteredList(List<Committee> preFilteredList) {

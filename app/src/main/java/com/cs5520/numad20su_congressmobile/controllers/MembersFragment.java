@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.RadioGroup;
 import android.widget.SearchView;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,15 +15,14 @@ import com.cs5520.numad20su_congressmobile.R;
 import com.cs5520.numad20su_congressmobile.content.enums.ChamberType;
 import com.cs5520.numad20su_congressmobile.content.services.MembersViewContent;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.MembersRecyclerViewAdapter;
-import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A fragment representing a list of Items.
  */
 public class MembersFragment extends Fragment implements FollowTrigger {
 
-  private FollowInterface followInterface;
-  private MembersViewContent membersViewContent;
+    private FollowInterface followInterface;
+    private MembersViewContent membersViewContent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

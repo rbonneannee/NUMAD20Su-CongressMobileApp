@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -73,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements
                 break;
         }
         databaseReference.child("users").child(this.currentUser.uid).setValue(this.currentUser);
-        new User(this.currentUser);
     }
 
     @Override
@@ -278,7 +276,6 @@ public class MainActivity extends AppCompatActivity implements
         if (user != null) {
 
             // Get a reference to where the user's profile pic would be stored
-            Drawable fallbackDrawable = getDrawable(R.drawable.placeholder_profile_pic);
             StorageReference imgRef = FirebaseStorage.getInstance().getReference()
                 .child("photos/" + user.getUid());
 

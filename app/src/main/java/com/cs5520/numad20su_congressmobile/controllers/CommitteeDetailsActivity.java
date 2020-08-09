@@ -13,22 +13,19 @@ import com.cs5520.numad20su_congressmobile.content.models.Committee;
 public class CommitteeDetailsActivity extends AppCompatActivity {
 
     private Committee committee;
-    private TextView title;
-    private TextView chamber;
     private TextView chair;
     private TextView chairAddon;
-    private TextView website;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_committee_details);
-        title = findViewById(R.id.committee_title);
-        chamber = findViewById(R.id.committee_chamber);
+        TextView title = findViewById(R.id.committee_title);
+        TextView chamber = findViewById(R.id.committee_chamber);
         chair = findViewById(R.id.committee_chair);
         chairAddon = findViewById(R.id.chair_text);
-        website = findViewById(R.id.committee_url);
+        TextView website = findViewById(R.id.committee_url);
 
         Intent openDetailsIntent = getIntent();
 
@@ -41,9 +38,9 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
 
     private void chairSetup() {
         if (committee.chair != null && committee.chair_party != null
-                && committee.chair_state != null) {
+            && committee.chair_state != null) {
             String chairText = committee.chair + " (" +
-                    committee.chair_party + ", " + committee.chair_state + ")";
+                committee.chair_party + ", " + committee.chair_state + ")";
             chair.setText(chairText);
         } else {
             chairAddon.setText("");

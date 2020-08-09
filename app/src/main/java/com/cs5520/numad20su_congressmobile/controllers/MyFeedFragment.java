@@ -12,6 +12,10 @@ import com.cs5520.numad20su_congressmobile.content.services.MyFeedBillsContent;
 import com.cs5520.numad20su_congressmobile.content.services.MyFeedCommitteesContent;
 import com.cs5520.numad20su_congressmobile.content.services.MyFeedMembersContent;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.BillsRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.CommitteesRecyclerViewAdapter;
+import com.cs5520.numad20su_congressmobile.layoutAdapters.MembersRecyclerViewAdapter;
+import java.util.ArrayList;
 
 public class MyFeedFragment extends Fragment implements FollowTrigger {
 
@@ -41,13 +45,17 @@ public class MyFeedFragment extends Fragment implements FollowTrigger {
         // Create the content providers
         MyFeedBillsContent myFeedBillsContent =
             new MyFeedBillsContent(
-                followInterface.following(TYPE.Bill), this.getContext(), followInterface);
+                followInterface.following(TYPE.Bill), this.getContext(),
+                new BillsRecyclerViewAdapter(new ArrayList<>(), followInterface));
         MyFeedCommitteesContent myFeedCommitteesContent =
             new MyFeedCommitteesContent(
-                followInterface.following(TYPE.Committee), this.getContext(), followInterface);
+                followInterface.following(TYPE.Committee), this.getContext(),
+                new CommitteesRecyclerViewAdapter(new ArrayList<>(), followInterface));
         MyFeedMembersContent myFeedMembersContent =
             new MyFeedMembersContent(
-                followInterface.following(TYPE.Member), this.getContext(), followInterface);
+                followInterface.following(TYPE.Member), this.getContext(),
+                new MembersRecyclerViewAdapter(this.getContext(), new ArrayList<>(),
+                    followInterface));
 
         // Set the adapters
         billsView.setAdapter(myFeedBillsContent.getAdapter());

@@ -18,30 +18,29 @@ import com.cs5520.numad20su_congressmobile.content.models.Bill;
 import com.cs5520.numad20su_congressmobile.controllers.BillDetailsActivity;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.controllers.FollowInterface.TYPE;
-
-import java.util.ArrayList;
 import java.util.List;
 
 // TODO Get a list of followed bills so that the follow_icon for each can be drawn appropriately
 public class BillsRecyclerViewAdapter
-        extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder>
-        implements Filterable {
+    extends RecyclerView.Adapter<BillsRecyclerViewAdapter.ViewHolder>
+    implements Filterable {
 
-  private List<Bill> items;
-  private List<Bill> billListFiltered;
-  private List<Bill> preFilteredList;
+    private final List<Bill> items;
 
-  private final FollowInterface followInterface;
-  private int lastPosition = -1;
-  private Context context;
+    private final FollowInterface followInterface;
+    private int lastPosition = -1;
+    private Context context;
 
-  public BillsRecyclerViewAdapter(List<Bill> items,
-      FollowInterface followInterface) {
-    this.items = items;
-    this.billListFiltered = new ArrayList<>(this.items);
-    this.preFilteredList = new ArrayList<>(this.items);
-    this.followInterface = followInterface;
-  }
+    public BillsRecyclerViewAdapter(List<Bill> items,
+        FollowInterface followInterface) {
+        this.items = items;
+        this.followInterface = followInterface;
+    }
+
+    public void add(Bill bill) {
+        this.items.add(bill);
+        this.notifyItemInserted(this.items.size() - 1);
+    }
 
     @Override
     public int getItemCount() {
@@ -80,12 +79,12 @@ public class BillsRecyclerViewAdapter
         holder.itemView.clearAnimation();
     }
 
-  @Override
-  public Filter getFilter() {
-    return null;
-  }
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
 
-  public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public final TextView idView;
         public final TextView contentView;

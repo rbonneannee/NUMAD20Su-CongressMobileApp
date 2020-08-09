@@ -8,10 +8,8 @@ import com.cs5520.numad20su_congressmobile.content.models.Member;
 import com.cs5520.numad20su_congressmobile.content.models.Role;
 import com.cs5520.numad20su_congressmobile.content.services.AbstractViewContent.ProPublicaRequest;
 import com.cs5520.numad20su_congressmobile.content.services.MyFeedMembersContent.Response.Result;
-import com.cs5520.numad20su_congressmobile.controllers.FollowInterface;
 import com.cs5520.numad20su_congressmobile.layoutAdapters.MembersRecyclerViewAdapter;
 import com.google.gson.Gson;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,15 +18,13 @@ public class MyFeedMembersContent implements Listener<String> {
     private static final String ENDPOINT = "https://api.propublica.org/congress/v1/members/";
 
     private final VolleySingleton volleySingleton;
-    private final List<Member> members;
     private final MembersRecyclerViewAdapter viewAdapter;
 
     public MyFeedMembersContent(List<String> memberIds,
         Context context,
-        FollowInterface followInterface) {
+        MembersRecyclerViewAdapter viewAdapter) {
         this.volleySingleton = VolleySingleton.getInstance(context);
-        this.members = new ArrayList<>();
-        this.viewAdapter = new MembersRecyclerViewAdapter(context, this.members, followInterface);
+        this.viewAdapter = viewAdapter;
         requestMembers(memberIds);
     }
 
@@ -52,8 +48,7 @@ public class MyFeedMembersContent implements Listener<String> {
         member.short_title = role.short_title;
         member.state = role.state;
         member.party = role.party;
-        members.add(member);
-        this.viewAdapter.notifyItemInserted(this.members.size() - 1);
+        this.viewAdapter.add(member);
     }
 
     public MembersRecyclerViewAdapter getAdapter() {
