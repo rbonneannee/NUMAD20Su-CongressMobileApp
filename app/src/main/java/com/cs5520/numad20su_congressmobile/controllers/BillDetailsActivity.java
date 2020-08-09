@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.cs5520.numad20su_congressmobile.R;
@@ -20,13 +21,16 @@ public class BillDetailsActivity extends AppCompatActivity {
     private TextView billSponsor;
     private TextView billCommittees;
     private String urlText;
+    //private Button followButton;
+    //private Boolean isFollowing;
 
-    //private TextView sampleText;
 
     private TextView passedHouse;
     private TextView passedSenate;
     private TextView passedPresident;
     private TextView passedLaw;
+
+    //private FollowInterface followInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +41,12 @@ public class BillDetailsActivity extends AppCompatActivity {
         billIntroduced = findViewById(R.id.bill_introduced);
         billSponsor = findViewById(R.id.bill_sponsor);
         billCommittees = findViewById(R.id.bill_committees);
+        //followButton = findViewById(R.id.follow_button);
 
         passedHouse = findViewById(R.id.passed_house);
         passedSenate = findViewById(R.id.passed_senate);
         passedPresident = findViewById(R.id.passed_president);
         passedLaw = findViewById(R.id.became_law);
-
-        //sampleText = findViewById(R.id.sample_text);
 
         Intent openDetailsIntent = getIntent();
 
@@ -55,8 +58,14 @@ public class BillDetailsActivity extends AppCompatActivity {
         billCommittees.setText(bill.committees);
         urlText = bill.congressdotgov_url + "/text";
 
-        //sampleText.setText("veto: " + bill.vetoed + "\n enacted:" + bill.enacted);
-        //bill.vetoed = "yes";
+//        isFollowing = openDetailsIntent.getBooleanExtra("isFollowing", false);
+//        if (isFollowing) {
+//            followButton.setText("Unfollow");
+//        }
+//        else {
+//            followButton.setText("Follow");
+//        }
+
         setUpStatusDiagram();
     }
 
@@ -68,17 +77,26 @@ public class BillDetailsActivity extends AppCompatActivity {
     }
 
     public void goToPDF(View v) {
-        //Uri uriUrl = Uri.parse("https://www.congress.gov/bill/114th-congress/house-bill/1314/text");
         Uri uriUrl = Uri.parse(urlText);
         Intent launchFullText = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchFullText);
     }
+//
+//    public void followUnfollow (View v) {
+//        if (isFollowing) {
+//            followInterface.unfollow(FollowInterface.TYPE.Bill, bill.bill_id);
+//            //followIcon.setImageResource(R.drawable.heart_open);
+//        } else {
+//            followInterface.follow(FollowInterface.TYPE.Bill, bill.bill_id);
+//            //followIcon.setImageResource(R.drawable.heart_closed);
+//        }
+//        isFollowing = !isFollowing;
+//    }
 
     private void setUpStatusDiagram() {
         if (bill.house_passage != null) {
             passedHouse.setText("Passed House");
             passedHouse.append("\n" + bill.house_passage);
-            //passedHouse.setBackgroundColor(Color.parseColor("#D3F1B1"));
             passedHouse.setBackgroundResource(R.drawable.text_border_green);
         }
         if (bill.senate_passage != null) {
@@ -102,11 +120,9 @@ public class BillDetailsActivity extends AppCompatActivity {
             passedLaw.append("\n" + bill.enacted);
             passedLaw.setBackgroundResource(R.drawable.text_border_green);
             if (bill.vetoed == null) {
-                //Note that I can't find a way to date this with ProPublica
                 passedPresident.setText("Approved by President");
                 passedPresident.setBackgroundResource(R.drawable.text_border_green);
             }
         }
     }
-
 }

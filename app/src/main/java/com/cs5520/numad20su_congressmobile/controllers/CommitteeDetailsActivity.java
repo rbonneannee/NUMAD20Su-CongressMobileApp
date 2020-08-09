@@ -19,9 +19,6 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
     private TextView chair;
     private TextView chairAddon;
     private TextView website;
-    //private TextView
-    //private TextView
-    //private TextView
 
 
     @Override
@@ -40,7 +37,6 @@ public class CommitteeDetailsActivity extends AppCompatActivity {
         title.setText(committee.name);
         chamber.setText(committee.chamber);
         website.setText(committee.url);
-        //chair.setText(committee.chair +);
         chairSetup();
     }
 

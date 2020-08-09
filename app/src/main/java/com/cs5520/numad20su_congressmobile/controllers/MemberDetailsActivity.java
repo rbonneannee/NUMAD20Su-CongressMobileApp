@@ -18,6 +18,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
     private TextView partyState;
     private TextView website;
     private TextView phone;
+    private TextView leader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class MemberDetailsActivity extends AppCompatActivity {
         partyState = findViewById(R.id.member_party_state);
         website = findViewById(R.id.member_link);
         phone = findViewById(R.id.member_phone);
+        leader = findViewById(R.id.leadership_role);
 
         Intent openDetailsIntent = getIntent();
 
@@ -36,6 +38,12 @@ public class MemberDetailsActivity extends AppCompatActivity {
         createPartyState();
         website.setText(member.url);
         phone.setText(member.phone);
+        if (member.leadership_role == null) {
+            leader.setText("");
+        }
+        else {
+            leader.setText(member.leadership_role);
+        }
     }
 
     private void createName() {

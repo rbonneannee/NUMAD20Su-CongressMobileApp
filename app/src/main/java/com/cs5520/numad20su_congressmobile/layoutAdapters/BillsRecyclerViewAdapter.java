@@ -117,7 +117,7 @@ public class BillsRecyclerViewAdapter
             return super.toString() + " '" + contentView.getText() + "'";
         }
 
-        //
+
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
