@@ -8,7 +8,7 @@ ability to subscribe to notifications for a particular bill or policy area, the 
 specific interests of each individual user, alerting them of updates they may find appealing and worthy of 
 attention.
 
-Target Users
+**Target Users**
 Our target audience are politically active American residents of voting age. The application not only seeks 
 to inform its users of federal legislation, but also to educate them on the legislative process, thus 
 bridging potential knowledge gaps that new voters may have. People who are becoming acquainted with public 
